@@ -1,0 +1,22 @@
+h3{
+    margin: 20px ;
+}
+#isi-menu{
+    margin: 20px 10px;
+}
+#isi-menu .table{
+    box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+#isi-menu .table tbody tr td{
+    text-align: center;
+    vertical-align: middle;
+}
+
+@media (max-width: 768px) {
+    #isi-menu {
+        width: 95%;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
