@@ -3,8 +3,8 @@
 
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Product } from '../models/product.model';
+import { catchError, map, Observable, throwError } from 'rxjs';
+import { Category } from '../models/category.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,13 @@ export class CategoryService {
 
   constructor(private http: HttpClient) { }
 
-  getcategory():Observable<Product[]>{
-    return this.http.get<Product[]>(this.api_url_category);
+  getcategory():Observable<Category[]>{
+    return this.http.get<{ isSuccess: boolean; data: Category[] }>(this.api_url_category).pipe(
+      map(response => response.data),
+      catchError(error => {
+        console.error('Terjadi kesalahan saat mengambil produk:', error);
+        return throwError(() => new Error('Gagal mengambil data produk'));
+      })
+    );
   }
 }
