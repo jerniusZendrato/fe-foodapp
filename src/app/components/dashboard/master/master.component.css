@@ -11,6 +11,13 @@ h3{
 #isi-menu .table tbody tr td{
     text-align: center;
     vertical-align: middle;
+    align-items: center;
+}
+.modal-body form{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
 }
 
 @media (max-width: 768px) {

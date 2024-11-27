@@ -1,39 +1,99 @@
 <h3>Master Product</h3>
 <div id="isi-menu">
     <div *ngFor="let category of category" class="btn-group me-2" role="group" aria-label="First group">
-        <button  type="button" id="{{category.name}}" (click)="onButtonClick($event)" class="btn btn-outline-secondary">{{category.name}}</button>
-      </div>
-<table class="table table-bordered">
-    <thead>
-        <tr>
-          <th scope="col">Name</th>
-          <th scope="col">Image</th>
-          <th scope="col">Harga</th>
-          <th scope="col">Description</th>
-          <th scope="col">category</th>
-          <th scope="col">Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let product of product">
-            <td>
-                {{product.name}}
-            </td>
-            <td>
-                <img src="{{product.urlImage}}" alt=""width="150" height="mb-auto">
-            </td>
-            <td>
-                {{product.price}}
-            </td>
-            <td>
-                {{product.description}}
-            </td>
-            <td>
-                {{product.category}}
-            </td>
-        </tr>
-      </tbody>
-  </table>
+        <button type="button" id="{{category.name}}" (click)="onButtonClick($event)"
+            class="btn btn-outline-secondary">{{category.name}}</button>
+    </div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Image</th>
+                <th scope="col">Harga</th>
+                <th scope="col">Description</th>
+                <!-- <th scope="col">category</th> -->
+                <th scope="col">Status</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let product of product">
+                <td>
+                    {{product.name}}
+                </td>
+                <td>
+                    <img src="{{product.urlImage}}" alt="" width="150" height="mb-auto">
+                </td>
+                <td>
+                    {{product.price}}
+                </td>
+                <td>
+                    {{product.description}}
+                </td>
 
-  
+
+                <td>
+                    <div style="margin: 0; display: flex; justify-content: center;" class="form-check form-switch">
+                        <input disabled class="form-check-input" type="checkbox" role="switch"
+                            [checked]="product.isActivated">
+                    </div>
+                </td>
+                <td>
+                    <div (click)="onEditProduct(product)" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <i style="font-size: 20px; color: green; cursor: pointer;"
+                            class="fa-solid fa-pen-to-square"></i>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Product</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div *ngIf="productToEdit">
+                        <form>
+                            <div id="modal_data">
+                                <div class="mb-3">
+                                    <label for="productName" class="form-label">Product Name</label>
+                                    <input type="text" class="form-control" [(ngModel)]="productToEdit.name"
+                                        id="productName" name="name" required />
+                                </div>
+                                <div class="mb-3">
+                                    <label for="productPrice" class="form-label">Price</label>
+                                    <input type="number" class="form-control" [(ngModel)]="productToEdit.price"
+                                        id="productPrice" name="price" required />
+                                </div>
+                                <div class="mb-3">
+                                    <label for="productDescription" class="form-label">Description</label>
+                                    <textarea class="form-control" [(ngModel)]="productToEdit.description"
+                                        id="productDescription" name="description"></textarea>
+                                </div>
+                            </div>
+                            <div id="modal_img">
+                                <img [src]="productToEdit?.urlImage" alt="Product Image" width="150" height="auto">
+
+                            </div>
+                        </form>
+                    </div>
+                    <div *ngIf="!productToEdit">
+                        <p>No product selected for editing.</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
 </div>
