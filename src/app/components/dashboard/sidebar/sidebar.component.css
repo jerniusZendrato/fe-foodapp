@@ -17,6 +17,7 @@ body {
   #menu-sidebar{
     display: flex;
     flex-direction: column;
+    
     flex: 1;
   }
   .sidebar ul li{
@@ -90,7 +91,9 @@ body {
     }
     .sidebar{
       position: fixed;
+      z-index: 1;
       height: 90vh;
+      background-color: white;
     }
     .main-content {
       overflow-x: auto;

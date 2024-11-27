@@ -13,7 +13,7 @@ h3{
     vertical-align: middle;
     align-items: center;
 }
-.modal-body form{
+.modal-body form #modal_data{
     display: flex;
     flex-direction: row;
     justify-content: space-around;

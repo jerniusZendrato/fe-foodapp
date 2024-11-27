@@ -79,7 +79,6 @@ export class MasterComponent implements OnInit {
     this.productservice.getproduct().subscribe(
       (Response: Product[]) => {
         if (Response) {
-          console.log("cek asdfsdf")
           this.product = Response.filter(product => product.category === buttonId)
           console.log(Response, "this producttt", buttonId)
         }

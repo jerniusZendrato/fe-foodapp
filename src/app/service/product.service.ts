@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { Product } from '../models/product.model';
+import { environment } from '../environment/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,9 +10,6 @@ import { Product } from '../models/product.model';
 export class ProductService {
   
 
-  // private api_url_products = 'https://order-food-app-3db245cdb31e.herokuapp.com/api/v1/product'
-  private api_url_products = 'http://localhost:3000/api/v1/product'
-  
 
 
 
@@ -33,7 +31,7 @@ export class ProductService {
 
 
   getproduct(): Observable<Product[]> {
-    return this.http.get<{ isSuccess: boolean; data: Product[] }>(this.api_url_products).pipe(
+    return this.http.get<{ isSuccess: boolean; data: Product[] }>(`${environment.API_URL}/product`).pipe(
       map(response => response.data),
       catchError(error => {
         console.error('Terjadi kesalahan saat mengambil produk:', error);

@@ -1,9 +1,10 @@
 <h3>Master Product</h3>
-<div id="isi-menu">
-    <div *ngFor="let category of category" class="btn-group me-2" role="group" aria-label="First group">
+<div *ngFor="let category of category" class="btn-group me-2" role="group" aria-label="First group">
         <button type="button" id="{{category.name}}" (click)="onButtonClick($event)"
             class="btn btn-outline-secondary">{{category.name}}</button>
     </div>
+<div id="isi-menu">
+    
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -60,26 +61,33 @@
                     <div *ngIf="productToEdit">
                         <form>
                             <div id="modal_data">
-                                <div class="mb-3">
-                                    <label for="productName" class="form-label">Product Name</label>
-                                    <input type="text" class="form-control" [(ngModel)]="productToEdit.name"
-                                        id="productName" name="name" required />
+                                <div id="data_edit">
+                                    <div class="mb-3">
+                                        <label for="productName" class="form-label">Product Name</label>
+                                        <input type="text" class="form-control" value={{productToEdit.name}}
+                                            id="productName" name="name" required />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="productPrice" class="form-label">Price</label>
+                                        <input type="number" class="form-control" value={{productToEdit.price}}
+                                            id="productPrice" name="price" required />
+                                    </div>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="productPrice" class="form-label">Price</label>
-                                    <input type="number" class="form-control" [(ngModel)]="productToEdit.price"
-                                        id="productPrice" name="price" required />
-                                </div>
-                                <div class="mb-3">
-                                    <label for="productDescription" class="form-label">Description</label>
-                                    <textarea class="form-control" [(ngModel)]="productToEdit.description"
-                                        id="productDescription" name="description"></textarea>
-                                </div>
-                            </div>
-                            <div id="modal_img">
-                                <img [src]="productToEdit?.urlImage" alt="Product Image" width="150" height="auto">
+                                <div id="modal_img">
+                                    <img [src]="productToEdit.urlImage" alt="Product Image" width="150" height="auto">
 
+                                </div>
                             </div>
+                            <div class="mb-3">
+                                <label for="productDescription" class="form-label">Description</label>
+                                <textarea class="form-control" value={{productToEdit.description}}
+                                    id="productDescription" name="description"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="formFile" class="form-label">Default file input example</label>
+                                <input class="form-control" type="file" id="formFile">
+                                <a style="text-decoration: none;color: blue; font-size: 14px;" href="#"> Lihat Foto</a>
+                              </div>
                         </form>
                     </div>
                     <div *ngIf="!productToEdit">
