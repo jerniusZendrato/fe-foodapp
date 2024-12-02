@@ -13,6 +13,7 @@ import { ProductService } from 'src/app/service/product.service';
 })
 export class MasterComponent implements OnInit {
   modalService: any;
+  isSecondCheckboxDisabled = true;
 
   constructor(
     private productservice: ProductService,
@@ -49,6 +50,10 @@ export class MasterComponent implements OnInit {
     const buttonId = (event.target as HTMLButtonElement).id;
     this.datacategory = buttonId;
     this.loadproduct(this.datacategory)
+  }
+  editstatusproduct(event:Event):void{
+    const isChecked = (event.target as HTMLInputElement).checked;
+    this.isSecondCheckboxDisabled = !isChecked;
   }
 
   onEditProduct(product:EditProduct) :void{

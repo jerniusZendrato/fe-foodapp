@@ -11,7 +11,6 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SidebarComponent } from './components/dashboard/sidebar/sidebar.component';
 import { DashboardMenuComponent } from './components/dashboard/dashboard-menu/dashboard-menu.component';
 import { MasterComponent } from './components/dashboard/master/master.component';
-import { ModalEditProductComponent } from './components/dashboard/modal-edit-product/modal-edit-product.component';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
@@ -23,14 +22,14 @@ import { FormsModule } from '@angular/forms';
     DashboardComponent,
     SidebarComponent,
     DashboardMenuComponent,
-    MasterComponent,
-    ModalEditProductComponent
+    MasterComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
