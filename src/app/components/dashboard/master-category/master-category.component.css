@@ -19,10 +19,13 @@ h3{
 }
 
 .row .btn-link{
-    font-size: 100px;
+    font-size: 125px;
     opacity: 50%;
     /* cursor: pointer; */
     text-decoration: none;
+}
+.card{
+    height: 230px;
 }
 .card-body {
     /* Membungkus kata yang terlalu panjang */
@@ -34,11 +37,3 @@ h3{
     white-space: normal; 
 }
 
-/* .card-body p { */
-     /* Pastikan lebar maksimal mengikuti kontainer */
-    /* max-width: 100%; */
-    /* Hilangkan elemen yang melampaui batas */
-    /* overflow: hidden;  */
-    /* Tambahkan elipsis jika teks terlalu panjang */
-    /* text-overflow: ellipsis;  */
-/* } */
