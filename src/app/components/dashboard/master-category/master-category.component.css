@@ -1,0 +1,26 @@
+h3{
+    margin: 20px ;
+}
+
+#header-menu{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    /* margin: 0 30px; */
+}
+#isi-menu{
+    margin: 20px 10px;
+    width: 98%;
+    padding: 20px 10px;
+    /* height: 100vh; */
+    box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.15);
+    /* overflow-x: auto; */
+}
+
+#isi-menu .btn-link{
+    font-size: 180px;
+    opacity: 50%;
+    /* cursor: pointer; */
+    text-decoration: none;
+}
