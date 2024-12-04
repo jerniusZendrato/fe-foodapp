@@ -18,9 +18,27 @@ h3{
     /* overflow-x: auto; */
 }
 
-#isi-menu .btn-link{
-    font-size: 180px;
+.row .btn-link{
+    font-size: 100px;
     opacity: 50%;
     /* cursor: pointer; */
     text-decoration: none;
 }
+.card-body {
+    /* Membungkus kata yang terlalu panjang */
+    /* word-wrap: break-word;  */
+    /* Untuk kata yang panjang tanpa spasi */
+    /* overflow-wrap: break-word; */
+
+    /* Pastikan teks tidak memanjang dalam satu baris */ 
+    white-space: normal; 
+}
+
+/* .card-body p { */
+     /* Pastikan lebar maksimal mengikuti kontainer */
+    /* max-width: 100%; */
+    /* Hilangkan elemen yang melampaui batas */
+    /* overflow: hidden;  */
+    /* Tambahkan elipsis jika teks terlalu panjang */
+    /* text-overflow: ellipsis;  */
+/* } */
