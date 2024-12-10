@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Category } from 'src/app/models/category.model';
-import { EditProduct } from 'src/app/models/edit-product.model';
 import { Product } from 'src/app/models/product.model';
 import { CategoryService } from 'src/app/service/category.service';
 import { ProductService } from 'src/app/service/product.service';
@@ -17,13 +16,12 @@ export class MasterComponent implements OnInit {
 
   constructor(
     private productservice: ProductService,
-    private categoryservice: CategoryService,
+    private categoryservice: CategoryService 
     
   ) { }
 
   public product: Product[] = []
   public category: Category[] = []
-  public editproduct: EditProduct[] = []
 
   //variabel unutk menjadi parameter 
   //memunculkan product berdasarkan kategory
@@ -31,7 +29,10 @@ export class MasterComponent implements OnInit {
   public datacategory: string = this.onecategory;
 
   // variabel edit
-  productToEdit: EditProduct | null = null;
+  productToEdit: Product | null = null;
+
+    // variabel save
+  productToSave: Product[]  = [];
   
 
 
@@ -56,9 +57,27 @@ export class MasterComponent implements OnInit {
     this.isSecondCheckboxDisabled = !isChecked;
   }
 
-  onEditProduct(product:EditProduct) :void{
+  onEditProduct(product:Product) :void{
     this.productToEdit = product;
     console.log(this.productToEdit)
+  }
+
+  buttonsaveproduct() :void{
+    this.productToSave = [...this.product];
+    console.log(this.productToSave)
+
+    this.productservice.saveProducts(this.productToSave).subscribe(
+      (response) => {
+        if (response) {
+          console.log('All products saved successfully');
+        } else {
+          console.error('Failed to save products');
+        }
+      },
+      (error) => {
+        console.error('Error saving products:', error);
+      }
+    );
   }
 
 
@@ -70,6 +89,7 @@ export class MasterComponent implements OnInit {
           if (Response) {
             this.category = Response
             this.onecategory = this.category[0]['name']
+            // console.log("ini this.category",this.category)
             resolve();
           }
           else

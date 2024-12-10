@@ -2,19 +2,22 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashboardMenuComponent } from '../components/dashboard/dashboard-menu/dashboard-menu.component';
 import { MasterComponent } from '../components/dashboard/master/master.component';
-import { Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
+import { MasterCategoryComponent } from '../components/dashboard/master-category/master-category.component';
 
 const routes: Routes = [
   { path: 'home', component: DashboardMenuComponent },
   { path: 'product', component: MasterComponent },
-  { path: '', redirectTo: '/home', pathMatch: 'full' }, // Redirect ke /home jika URL kosong
-  { path: '**', redirectTo: '/home' }, // Redirect ke /home untuk URL yang tidak ditemukan
+  { path: 'category', component:MasterCategoryComponent},
+  { path: '**', component: DashboardMenuComponent } 
 ];
+console.log('Defined Routes:', routes);
 
 @NgModule({
-  declarations: [],
-  imports: [
-    CommonModule
-  ]
-})
+  declarations: [
+
+  ],
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})  
 export class AppRoutingModule { }

@@ -21,69 +21,75 @@
     </div> -->
 
 
-    <div class="col-sm-2 mb-3 mb-sm-0">
+    <div class="col-sm-2 mb-12 mb-sm-0" *ngFor="let category of category">
         <div class="card text-center">
             <div class="card-body">
-                <h5 class="card-title">Special title treatment</h5>
+                <h5 style="margin: 0;" class="card-title">{{ category.name }}</h5>
             </div>
             <!-- <p class="card-text"></p> -->
-            <img src="https://img.freepik.com/free-photo/tasty-burger-isolated-white-background-fresh-hamburger-fastfood-with-beef-cheese_90220-1063.jpg" style="width: auto; height: 80px;" class="rounded mx-auto d-block" alt="...">
+            <img src="{{category.urlImage}}" style="width: auto; height: 80px;" class="rounded mx-auto d-block"
+                alt="...">
             <div class="card-footer" style="border: 0; background-color: white;">
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-sm-2 mb-3 mb-sm-0">
-        <div class="card text-center">
-            <div class="card-body">
-                <h5 class="card-title">Special title treatment</h5>
-            </div>
-            <p class="card-text"></p>
-            <div class="card-footer" style="border: 0; background-color: white;">
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-sm-2 mb-3 mb-sm-0">
-        <div class="card text-center">
-            <div class="card-body">
-                <h5 class="card-title">Special title treatment</h5>
-            </div>
-            <p class="card-text"></p>
-            <div class="card-footer" style="border: 0; background-color: white;">
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-sm-2 mb-3 mb-sm-0">
-        <div class="card text-center">
-            <div class="card-body">
-                <h5 class="card-title">Special title treatment</h5>
-            </div>
-            <p class="card-text"></p>
-            <div class="card-footer" style="border: 0; background-color: white;">
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                <a (click)="onDetailCategory(category)" class="btn btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#exampleModaldetailcategory">Detail</a>
             </div>
         </div>
     </div>
 
 
-    <div  class="col-sm-2 mb-3 mb-sm-0">
+
+    <div class="col-sm-2 mb-10 mb-sm-0">
         <div class="card text-center">
             <button type="button" class="btn btn-link">
                 <i class="fa-thin fa-plus"></i>
             </button>
-            
         </div>
-
-
     </div>
 </div>
 
 
-<div class="row">
 
+<div class="modal fade" id="exampleModaldetailcategory" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Detail Category</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div *ngIf="detailcategory">
+                <div class="modal-body">
+
+                    <h1 style="display: flex; justify-content: center; align-content: center;">{{detailcategory.name}}
+                    </h1>
+                    <div id="modal_data">
+                        <div id="data_detail" style="display: flex; justify-content: center; align-content: center;">
+                            <img src="{{detailcategory.urlImage}}" alt="" height="200px">
+                        </div>
+                        <div class="mb-3">
+                            <label for="productName" class="form-label">Category Name</label>
+                            <input type="text" class="form-control" value={{detailcategory.name}} id="productName"
+                                name="name" required />
+                        </div>
+                        <div class="md-3">
+                            <label for="formFile" class="form-label">Change Image</label>
+                            <input class="form-control" type="file" id="formFile">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+            <div *ngIf="!detailcategory">
+                <div style="margin: 10px 20px;">
+                    <p>Error 404: Data Tidak Ditemukan. Silakan coba lagi atau hubungi tim dukungan.</p>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

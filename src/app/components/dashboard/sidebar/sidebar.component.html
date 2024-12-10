@@ -15,10 +15,10 @@
                     </a>
                     <div class="collapse" id="collapseExample" >
                         <div>
-                            <a href="#" class="nav-link">
+                            <a routerLink="/product" class="nav-link">
                                 Product
                             </a>
-                            <a href="#" class="nav-link">
+                            <a routerLink="/category" class="nav-link">
                                 Category
                             </a>
                             <a href="#" class="nav-link">
@@ -92,8 +92,8 @@
                     <i class="fa-solid fa-database"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                    <li><a class="dropdown-item" href="#">Product</a></li>
-                    <li><a class="dropdown-item" href="#">Category</a></li>
+                    <li><a class="dropdown-item" routerLink="/product">Product</a></li>
+                    <li><a class="dropdown-item" routerLink="/category">Category</a></li>
                     <li><a class="dropdown-item" href="#">Table</a></li>
                 </ul>
                 <!-- </li> -->
@@ -147,7 +147,10 @@
 
         <!-- <app-dashboard-menu></app-dashboard-menu> -->
         <!-- <app-master></app-master> -->
-         <app-master-category></app-master-category>
+        <!-- <app-master-category></app-master-category> -->
+        <router-outlet></router-outlet>
+        
+          
 
         
     

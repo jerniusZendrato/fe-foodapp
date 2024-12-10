@@ -35,5 +35,9 @@ h3{
 
     /* Pastikan teks tidak memanjang dalam satu baris */ 
     white-space: normal; 
+    /* display: flex; */
+    justify-content: center;
+    align-content: center;
+    padding: 0;
 }
 

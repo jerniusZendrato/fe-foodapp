@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { HttpClientModule } from '@angular/common/http';
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from './app-routing/app-routing.module';
 import { AppComponent } from './app.component';
 import { AutenticationsComponent } from './components/autentications/autentications.component';
 import { LoginComponent } from './components/autentications/login/login.component';
@@ -30,8 +30,7 @@ import { MasterCategoryComponent } from './components/dashboard/master-category/
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule,
-    AppRoutingModule
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

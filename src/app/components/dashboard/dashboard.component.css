@@ -1,7 +1,5 @@
 
 #bg-home{
-    /* position: fixed; */
-    /* background: linear-gradient(to bottom, #e2a34a, #357ABD, #2C608F, #1B3B5A, #24364a); */
     background-color: rgb(255, 111, 0);
     display: flex;
     flex-direction: column;
@@ -11,16 +9,18 @@
 }
 
 #bg-sub-home{
-    background-color: rgba(255, 111, 0, 0.517);
+    /* background-color: rgba(255, 111, 0, 0.517); */
+    background-color: rgb(255, 111, 0);
     position: fixed;
     display: flex;
     flex-direction: row;
     align-items: center;
-    /* height: 100%;  */
     z-index: 4;
     width: 100%;
+    margin: 10px 10px 0 10px;
     /* padding:3vh 0; */
 }
+
 
 
 #bagian1-home{

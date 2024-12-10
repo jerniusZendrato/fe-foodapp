@@ -3,12 +3,13 @@
     <div id="sub-header-menu">
         <div *ngFor="let category of category" class="btn-group me-2" role="group" aria-label="First group">
             <button type="button" id="{{category.name}}" (click)="onButtonClick($event)"
-            class="btn btn-outline-secondary">{{category.name}}</button>
+                class="btn btn-outline-secondary">{{category.name}}</button>
         </div>
     </div>
     <div id="edit-status" class="form-check form-switch ">
-        <label class="form-check-label"  for="flexSwitchCheckDefault">Edit</label>
-        <input style="font-size: 20px;" (change)="editstatusproduct($event)" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+        <label class="form-check-label" for="flexSwitchCheckDefault">Edit</label>
+        <input style="font-size: 20px;" (change)="editstatusproduct($event)" class="form-check-input" type="checkbox"
+            role="switch" id="flexSwitchCheckDefault">
     </div>
 </div>
 
@@ -44,22 +45,22 @@
 
                 <td>
                     <div style="margin: 0; display: flex; justify-content: center;" class="form-check form-switch">
-                        <input  class="form-check-input" type="checkbox" role="switch"
-                            [checked]="product.isActivated"
+                        <input class="form-check-input" type="checkbox" role="switch" [(ngModel)]="product.isActivated"
                             [disabled]="isSecondCheckboxDisabled">
                     </div>
                 </td>
                 <td>
-                    <div  (click)="onEditProduct(product)" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <div (click)="onEditProduct(product)" data-bs-toggle="modal" data-bs-target="#exampleModal">
                         <i style="font-size: 20px; color: green; cursor: pointer;"
-                            class="fa-solid fa-pen-to-square" ></i>
+                            class="fa-solid fa-pen-to-square"></i>
                     </div>
                 </td>
             </tr>
         </tbody>
     </table>
 </div>
-<button style="margin: 0 10px;" type="button" class="btn btn-secondary" [disabled]="isSecondCheckboxDisabled">Save</button>
+<button style="margin: 0 10px;" type="button" class="btn btn-secondary"  (click)="buttonsaveproduct()" [disabled]="isSecondCheckboxDisabled">Save {{product[0].category}}</button>
+    
 
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -91,8 +92,8 @@
                         </div>
                         <div class="mb-3">
                             <label for="productDescription" class="form-label">Description</label>
-                            <textarea class="form-control" value={{productToEdit.description}}
-                                id="productDescription" name="description"></textarea>
+                            <textarea class="form-control" value={{productToEdit.description}} id="productDescription"
+                                name="description"></textarea>
                         </div>
                         <div class="mb-3">
                             <label for="formFile" class="form-label">Default file input example</label>

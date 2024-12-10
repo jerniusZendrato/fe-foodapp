@@ -39,5 +39,20 @@ export class ProductService {
       })
     );
   }
+
+
+  saveProducts(products: Product[]): Observable<any> {
+
+
+    if (products && products.length > 0) {
+      const dataToSend = products;  // Data produk yang akan dikirimkan langsung
+      return this.http.put< {isSuccess: boolean} >(`${environment.API_URL}/product`, dataToSend);
+    } else {
+      return new Observable((observer) => {
+        observer.error('No valid products to save');
+      });
+    }
+
+  }
   
 }
