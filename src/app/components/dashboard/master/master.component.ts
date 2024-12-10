@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Category } from 'src/app/models/category.model';
 import { Product } from 'src/app/models/product.model';
 import { CategoryService } from 'src/app/service/category.service';
+import { LoaderService } from 'src/app/service/loader.service';
 import { ProductService } from 'src/app/service/product.service';
 // import { ModalEditProductComponent } from '../modal-edit-product/modal-edit-product.component';
 
@@ -16,7 +17,8 @@ export class MasterComponent implements OnInit {
 
   constructor(
     private productservice: ProductService,
-    private categoryservice: CategoryService 
+    private categoryservice: CategoryService,
+    private loaderService: LoaderService
     
   ) { }
 
@@ -33,6 +35,8 @@ export class MasterComponent implements OnInit {
 
     // variabel save
   productToSave: Product[]  = [];
+
+  isLoading: boolean = false;
   
 
 
@@ -66,16 +70,19 @@ export class MasterComponent implements OnInit {
     this.productToSave = [...this.product];
     console.log(this.productToSave)
 
+    this.loaderService.show(); 
     this.productservice.saveProducts(this.productToSave).subscribe(
       (response) => {
-        if (response) {
-          console.log('All products saved successfully');
+        if (response['isSuccess']==true) {
+          console.log('All products saved successfully',response);
         } else {
           console.error('Failed to save products');
         }
+        this.loaderService.hideWithDelay(2000);
       },
       (error) => {
         console.error('Error saving products:', error);
+        this.loaderService.hideWithDelay(2000);
       }
     );
   }
@@ -84,16 +91,19 @@ export class MasterComponent implements OnInit {
 
   loadcategory(): Promise<void> {
     return new Promise((resolve, reject) => {
+      this.loaderService.show(); 
       this.categoryservice.getcategory().subscribe(
         (Response: Category[]) => {
           if (Response) {
             this.category = Response
             this.onecategory = this.category[0]['name']
             // console.log("ini this.category",this.category)
+            this.loaderService.hideWithDelay(1000);
             resolve();
           }
           else
             console.log("data tidak isSuccess=true")
+            this.loaderService.hideWithDelay(1000);
           reject()
         }
       )
@@ -101,13 +111,16 @@ export class MasterComponent implements OnInit {
   }
 
   loadproduct(buttonId: string): void {
+    // this.loaderService.show();
     this.productservice.getproduct().subscribe(
       (Response: Product[]) => {
         if (Response) {
           this.product = Response.filter(product => product.category === buttonId)
+          // this.loaderService.hideWithDelay(100);
           console.log(Response, "this producttt", buttonId)
         }
         else
+        // this.loaderService.hideWithDelay(100);
           console.log("data tidak isSuccess=true")
       }
     )
