@@ -14,6 +14,7 @@ import { MasterComponent } from './components/dashboard/master/master.component'
 import { FormsModule } from '@angular/forms';
 import { MasterCategoryComponent } from './components/dashboard/master-category/master-category.component';
 import { LoaderComponent } from './loader/loader.component';
+import { NotificationComponent } from './notification/notification.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { LoaderComponent } from './loader/loader.component';
     DashboardMenuComponent,
     MasterComponent,
     MasterCategoryComponent,
-    LoaderComponent
+    LoaderComponent,
+    NotificationComponent
   ],
   imports: [
     BrowserModule,
