@@ -1,162 +1,212 @@
 <div class="containerr">
-    <!-- Sidebar -->
-    <div style="border-radius: 20px 0 0 0; " class="sidebar" [class.hidden]="isSidebarVisible">
-        <div id="menu-sidebar">
-            <a id="judul-sidebar">
-                <span class="fs-4">Sidebar</span>
-            </a>
-            <hr>
-            <ul class="nav nav-pills flex-column mb-auto">
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#collapseExample" role="button"
-                        aria-expanded="false" aria-controls="collapseExample">
-                        <i class="fa-solid fa-database"></i>
-                        Master
-                    </a>
-                    <div class="collapse" id="collapseExample" >
-                        <div>
-                            <a routerLink="/product" class="nav-link">
-                                Product
-                            </a>
-                            <a routerLink="/category" class="nav-link">
-                                Category
-                            </a>
-                            <a href="#" class="nav-link">
-                                Table
-                            </a>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <a class="nav-link" data-bs-toggle="collapse" href="#collapseExample2" role="button"
-                        aria-expanded="false" aria-controls="collapseExample">
-                        <i class="fa-solid fa-chart-line"></i>
-                        Transaksi
-                    </a>
-                    <div class="collapse" id="collapseExample2" >
-                        <div>
-                            <a href="#" class="nav-link">
-                                Orderan Proses
-                            </a>
-                            <a href="#" class="nav-link">
-                                Proses Selesai
-                            </a>
-                            <a href="#" class="nav-link">
-                                Riwayat Orderan
-                            </a>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <a href="#" class="nav-link ">
-                        <i class="fa-solid fa-bars-progress"></i>
-                        Finansial
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="nav-link ">
-                        <i class="fa-solid fa-users"></i>
-                        Manajemen User
-                    </a>
-                </li>
-
-            </ul>
-        </div>
-        <div style="bottom: 50px; right: 30px;" class="dropdown position-absolute">
-            <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
-                id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-                <!-- <strong>mdo</strong> -->
-            </a>
-            <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-                <li><a class="dropdown-item" href="#">New project...</a></li>
-                <li><a class="dropdown-item" href="#">Settings</a></li>
-                <li><a class="dropdown-item" href="#">Profile</a></li>
-                <li>
-                    <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="#">Sign out</a></li>
-            </ul>
-        </div>
+  <!-- Sidebar -->
+  <div
+    style="border-radius: 20px 0 0 0"
+    class="sidebar"
+    [class.hidden]="isSidebarVisible"
+  >
+    <div id="menu-sidebar">
+      <a id="judul-sidebar">
+        <span class="fs-4">Sidebar</span>
+      </a>
+      <hr />
+      <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            data-bs-toggle="collapse"
+            href="#collapseExample"
+            role="button"
+            aria-expanded="false"
+            aria-controls="collapseExample"
+          >
+            <i class="fa-solid fa-database"></i>
+            Master
+          </a>
+          <div class="collapse" id="collapseExample">
+            <div>
+              <a routerLink="/admin/product" class="nav-link"> Product </a>
+              <a routerLink="/admin/category" class="nav-link"> Category </a>
+              <a href="#" class="nav-link"> Table </a>
+            </div>
+          </div>
+        </li>
+        <li>
+          <a
+            class="nav-link"
+            data-bs-toggle="collapse"
+            href="#collapseExample2"
+            role="button"
+            aria-expanded="false"
+            aria-controls="collapseExample"
+          >
+            <i class="fa-solid fa-chart-line"></i>
+            Transaksi
+          </a>
+          <div class="collapse" id="collapseExample2">
+            <div>
+              <a href="#" class="nav-link"> Orderan Proses </a>
+              <a href="#" class="nav-link"> Proses Selesai </a>
+              <a href="#" class="nav-link"> Riwayat Orderan </a>
+            </div>
+          </div>
+        </li>
+        <li>
+          <a href="#" class="nav-link">
+            <i class="fa-solid fa-bars-progress"></i>
+            Finansial
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nav-link">
+            <i class="fa-solid fa-users"></i>
+            Manajemen User
+          </a>
+        </li>
+      </ul>
     </div>
+    <div style="bottom: 50px; right: 30px" class="dropdown position-absolute">
+      <a
+        href="#"
+        class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
+        id="dropdownUser2"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        <img
+          src="https://github.com/mdo.png"
+          alt=""
+          width="32"
+          height="32"
+          class="rounded-circle me-2"
+        />
+        <!-- <strong>mdo</strong> -->
+      </a>
+      <ul
+        class="dropdown-menu text-small shadow"
+        aria-labelledby="dropdownUser2"
+      >
+        <li><a class="dropdown-item" href="#">New project...</a></li>
+        <li><a class="dropdown-item" href="#">Settings</a></li>
+        <li><a class="dropdown-item" href="#">Profile</a></li>
+        <li>
+          <hr class="dropdown-divider" />
+        </li>
+        <li><a class="dropdown-item" href="#">Sign out</a></li>
+      </ul>
+    </div>
+  </div>
 
-    <div class="sidebar2" style="border-radius: 20px 0 0 0;" [class.hidden]="!isSidebarVisible">
-
-        <br>
-        <hr>
-        <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
-            <div class="btn-group dropend">
-                <!-- <li class="nav-item"> -->
-                <a href="#" id="dropdownMenuButton" class="nav-link py-2 dropdown-toggle" role="button"
-                    data-bs-toggle="dropdown" aria-expanded="false" title="Home">
-                    <i class="fa-solid fa-database"></i>
-                </a>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                    <li><a class="dropdown-item" routerLink="/product">Product</a></li>
-                    <li><a class="dropdown-item" routerLink="/category">Category</a></li>
-                    <li><a class="dropdown-item" href="#">Table</a></li>
-                </ul>
-                <!-- </li> -->
-            </div>
-            <div class="btn-group dropend">
-                <!-- <li class="nav-item"> -->
-                <a href="#" id="dropdownMenuButton" class="nav-link py-2 dropdown-toggle" role="button"
-                    data-bs-toggle="dropdown" aria-expanded="false" title="Home">
-                    <i class="fa-solid fa-chart-line"></i>
-                </a>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                    <li><a class="dropdown-item" href="#">Daftar Orderan Proses</a></li>
-                    <li><a class="dropdown-item" href="#">Riwayat Orderan</a></li>
-                </ul>
-                <!-- </li> -->
-            </div>
-
-            <div class="btn-group dropend">
-                <!-- <li class="nav-item"> -->
-                <a href="#" id="dropdownMenuButton" class="nav-link py-2 dropdown-toggle" role="button"
-                    data-bs-toggle="dropdown" aria-expanded="false" title="Home">
-                    <i class="fa-solid fa-bars-progress"></i>
-                </a>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                    <li><a class="dropdown-item" href="#">Keuangan</a></li>
-                </ul>
-                <!-- </li> -->
-            </div>
-
-            <div class="btn-group dropend">
-                <!-- <li class="nav-item"> -->
-                <a href="#" id="dropdownMenuButton" class="nav-link py-2 dropdown-toggle" role="button"
-                    data-bs-toggle="dropdown" aria-expanded="false" title="Home">
-                    <i class="fa-solid fa-users"></i>
-                </a>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                    <li><a class="dropdown-item" href="#">Manajemen User</a></li>
-                </ul>
-                <!-- </li> -->
-            </div>
+  <div
+    class="sidebar2"
+    style="border-radius: 20px 0 0 0"
+    [class.hidden]="!isSidebarVisible"
+  >
+    <br />
+    <hr />
+    <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
+      <div class="btn-group dropend">
+        <!-- <li class="nav-item"> -->
+        <a
+          href="#"
+          id="dropdownMenuButton"
+          class="nav-link py-2 dropdown-toggle"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+          title="Home"
+        >
+          <i class="fa-solid fa-database"></i>
+        </a>
+        <ul
+          class="dropdown-menu dropdown-menu-end"
+          aria-labelledby="dropdownMenuButton"
+        >
+          <li><a class="dropdown-item" routerLink="/admin/product">Product</a></li>
+          <li><a class="dropdown-item" routerLink="/admin/category">Category</a></li>
+          <li><a class="dropdown-item" href="#">Table</a></li>
         </ul>
+        <!-- </li> -->
+      </div>
+      <div class="btn-group dropend">
+        <!-- <li class="nav-item"> -->
+        <a
+          href="#"
+          id="dropdownMenuButton"
+          class="nav-link py-2 dropdown-toggle"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+          title="Home"
+        >
+          <i class="fa-solid fa-chart-line"></i>
+        </a>
+        <ul
+          class="dropdown-menu dropdown-menu-end"
+          aria-labelledby="dropdownMenuButton"
+        >
+          <li><a class="dropdown-item" href="#">Daftar Orderan Proses</a></li>
+          <li><a class="dropdown-item" href="#">Riwayat Orderan</a></li>
+        </ul>
+        <!-- </li> -->
+      </div>
 
-    </div>
+      <div class="btn-group dropend">
+        <!-- <li class="nav-item"> -->
+        <a
+          href="#"
+          id="dropdownMenuButton"
+          class="nav-link py-2 dropdown-toggle"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+          title="Home"
+        >
+          <i class="fa-solid fa-bars-progress"></i>
+        </a>
+        <ul
+          class="dropdown-menu dropdown-menu-end"
+          aria-labelledby="dropdownMenuButton"
+        >
+          <li><a class="dropdown-item" href="#">Keuangan</a></li>
+        </ul>
+        <!-- </li> -->
+      </div>
 
-    <!-- Main Content -->
-    <div style="border-radius:0 20px  0 0;" class="main-content">
+      <div class="btn-group dropend">
+        <!-- <li class="nav-item"> -->
+        <a
+          href="#"
+          id="dropdownMenuButton"
+          class="nav-link py-2 dropdown-toggle"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+          title="Home"
+        >
+          <i class="fa-solid fa-users"></i>
+        </a>
+        <ul
+          class="dropdown-menu dropdown-menu-end"
+          aria-labelledby="dropdownMenuButton"
+        >
+          <li><a class="dropdown-item" href="#">Manajemen User</a></li>
+        </ul>
+        <!-- </li> -->
+      </div>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <!-- <div style="border-radius:0 20px  0 0;" class="main-content">
         <div id="bagian1-login" class="col-xl-3 col-md-6  text-center">
-            <!-- <img class="img-fluid" src="{{ url_for('static', filename='images/berger.jpg') }}" alt="Image"> -->
-            <!-- <img src="https://fooddesk.dexignlab.com/react/demo/static/media/pic-5.7dba4fa4b2b813e643ad.jpg" alt=""> -->
-        </div>
+        </div> -->
 
-        <!-- <app-dashboard-menu></app-dashboard-menu> -->
-        <!-- <app-master></app-master> -->
-        <!-- <app-master-category></app-master-category> -->
-        <!-- <app-loader></app-loader> -->
-        <router-outlet></router-outlet>
-        
-          
+  <!-- <app-dashboard-menu></app-dashboard-menu> -->
+  <!-- <app-master></app-master> -->
+  <!-- <app-master-category></app-master-category> -->
+  <!-- <app-loader></app-loader> -->
+  <!-- <router-outlet></router-outlet> -->
 
-        
-    
-    </div>
+  <!-- </div> -->
 </div>
-
-
-
