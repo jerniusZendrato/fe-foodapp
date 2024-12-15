@@ -18,9 +18,7 @@ export class MasterCategoryComponent implements OnInit {
 
   constructor(
     private categoryservice: CategoryService,
-    private loaderService: LoaderService,
-    private notification: Notification
-    
+    private loaderService: LoaderService
   ){}
 
   public category: Category[] = []
