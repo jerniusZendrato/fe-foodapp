@@ -13,6 +13,10 @@ import { DashboardMenuComponent } from './components/dashboard/dashboard-menu/da
 import { MasterComponent } from './components/dashboard/master/master.component';
 import { FormsModule } from '@angular/forms';
 import { MasterCategoryComponent } from './components/dashboard/master-category/master-category.component';
+import { MenuComponent } from './components/costumer/menu/menu.component';
+import { CostumerComponent } from './components/costumer/costumer.component';
+import { FilterByCategoryPipe } from './components/costumer/menu/filter-by-category.pipe';
+import { CartComponent } from './components/costumer/cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +28,11 @@ import { MasterCategoryComponent } from './components/dashboard/master-category/
     SidebarComponent,
     DashboardMenuComponent,
     MasterComponent,
-    MasterCategoryComponent
+    MasterCategoryComponent,
+    MenuComponent,
+    CostumerComponent,
+    FilterByCategoryPipe,
+    CartComponent
   ],
   imports: [
     BrowserModule,

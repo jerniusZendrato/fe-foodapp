@@ -1,0 +1,118 @@
+<header>
+  <div class="d-flex justify-content-between align-items-center">
+    <button class="btn p-0" aria-label="Go Back" routerLink="/menu">
+      <i class="fa-solid fa-arrow-left"> </i>
+      <span class="mx-3">Pesanan saya</span>
+    </button>
+  </div>
+</header>
+
+<!-- Pesanan -->
+<main style="margin-top: 50px">
+  <hr />
+
+  <div class="mb-3 row align-items-center">
+    <label for="staticEmail" class="col-6 col-form-label fw-bold"
+      >Nama meja :
+    </label>
+    <div class="col-6">
+      <input
+        type="text"
+        readonly
+        class="form-control-plaintext"
+        id="staticEmail"
+        value="ini nama meja"
+      />
+    </div>
+  </div>
+  <hr />
+  <!-- Informasi Pemesan -->
+  <div class="mb-4">
+    <label for="name" class="form-label fw-bold"
+      >Nama <span class="text-danger">*</span></label
+    >
+    <input type="text" id="name" class="form-control" required />
+  </div>
+  <!-- Metode Pembayaran -->
+  <hr />
+
+  <div class="mb-4">
+    <h6 class="fw-bold">Metode Pembayaran</h6>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="metodePembayaran"
+        id="bayarKasir"
+        checked
+      />
+      <label class="form-check-label" for="bayarKasir"> Bayar di Kasir </label>
+    </div>
+  </div>
+
+  <!-- Pesanan Baru -->
+  <hr />
+
+  <div class="mb-4">
+    <h6 class="fw-bold">Pesanan Baru</h6>
+    <div *ngFor="let productOrder of orders.productOrders" class="card mb-2 shadow-sm">
+        <div class="row g-0 align-items-center">
+          <div class="col-3 text-center">
+            <img
+              [src]="productOrder.urlImage"
+              class="img-fluid rounded"
+              alt="{{ productOrder.name }}"
+              style="width: 100px; height: 100px; object-fit: cover;"
+            />
+          </div>
+          <div class="col-5">
+            <div class="card-body p-2">
+              <h6 class="card-title mb-1">{{ productOrder.name }}</h6>
+              <p class="card-text mb-0">Rp {{ productOrder.price }}</p>
+            </div>
+          </div>
+          <div class="col-4 d-flex align-items-center justify-content-center">
+            <button class="btn btn-outline-secondary btn-sm me-1">-</button>
+            <span class="mx-2">{{ productOrder.quantity }}</span>
+            <button class="btn btn-outline-secondary btn-sm ms-1">+</button>
+          </div>
+        </div>
+      </div>
+  </div>
+
+  <!-- Footer -->
+  
+  <div class="d-flex flex-column fixed-bottom p-3 bg-light shadow">
+    <div class="row mb-2">
+      <div class="col text-start">Total Harga</div>
+      <div class="col text-end">{{ orders.totalPrice | currency:'Rp ':'symbol':'1.0-0' }}</div>
+    </div>
+    <button type="button" class="btn btn-warning w-100" data-bs-toggle="modal" data-bs-target="#confirmationModal">
+      Kirim Pesanan
+    </button>
+  </div>
+  <br /><br /><br /><br />
+</main>
+<!-- Modal Konfirmasi -->
+
+
+<!-- Button trigger modal -->
+
+  
+  <!-- Modal -->
+  <div class="modal fade" id="confirmationModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            Apakah Anda yakin ingin mengirim pesanan ini?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" (click)="saveOrder()">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>

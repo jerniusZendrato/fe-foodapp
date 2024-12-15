@@ -9,6 +9,7 @@ import { environment } from '../environment/environment';
 })
 export class ProductService {
   
+  private apiUrl = `${environment.API_URL}/product`;
 
 
 
@@ -38,6 +39,10 @@ export class ProductService {
         return throwError(() => new Error('Gagal mengambil data produk'));
       })
     );
+  }
+
+  getProducts(): Observable<Product[]> {
+    return this.http.get<Product[]>(this.apiUrl);
   }
 
 
