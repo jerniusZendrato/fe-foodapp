@@ -15,6 +15,10 @@ import { FormsModule } from '@angular/forms';
 import { MasterCategoryComponent } from './components/dashboard/master-category/master-category.component';
 import { LoaderComponent } from './loader/loader.component';
 import { NotificationComponent } from './notification/notification.component';
+import { MenuComponent } from './components/costumer/menu/menu.component';
+import { CostumerComponent } from './components/costumer/costumer.component';
+import { FilterByCategoryPipe } from './components/costumer/menu/filter-by-category.pipe';
+import { CartComponent } from './components/costumer/cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +33,10 @@ import { NotificationComponent } from './notification/notification.component';
     MasterCategoryComponent,
     LoaderComponent,
     NotificationComponent
+    MenuComponent,
+    CostumerComponent,
+    FilterByCategoryPipe,
+    CartComponent
   ],
   imports: [
     BrowserModule,

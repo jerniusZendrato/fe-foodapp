@@ -26,4 +26,10 @@ export class CategoryService {
       })
     );
   }
+
+  getCategories(): Observable< Category[]> {
+    console.log('servive getCategories :>> ');
+    return this.http.get<Category[]>(`${environment.API_URL}/category`);
+  }
+
 }
