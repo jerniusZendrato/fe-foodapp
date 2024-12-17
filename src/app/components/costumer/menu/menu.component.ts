@@ -4,7 +4,7 @@ import { Product } from 'src/app/models/product.model';
 import { Order } from 'src/app/models/order.model';
 import { CategoryService } from 'src/app/service/category.service';
 import { ProductService } from 'src/app/service/product.service';
-import { OrderService } from 'src/app/service/order.service';
+import { OrderService } from 'src/app/service/order.costumer.service';
 
 @Component({
   selector: 'app-menu',
@@ -12,9 +12,8 @@ import { OrderService } from 'src/app/service/order.service';
   styleUrls: ['./menu.component.css'],
 })
 export class MenuComponent {
-  categories?: Category[];
+  categories?:   Category[];
   products: Product[] = [];
-  order: Order = { userId: '19282bbd-b7a6-48f8-9ef4-b62aace832aa', productOrders: [] };
 
   cartItemCount = 0;
   totalPrice = 0;
@@ -24,16 +23,12 @@ export class MenuComponent {
   constructor(
     private categoryService: CategoryService,
     private productService: ProductService,
-    private orderService: OrderService
+    public orderService: OrderService
   ) {}
 
   ngOnInit() {
-    console.log('ngOnInit :>> ');
     this.getCategory();
     this.getProducts();
-    this.order = this.orderService.getOrder() || this.order;
-    this.updateData();
-    
   }
 
   getCategory() {
@@ -67,57 +62,10 @@ export class MenuComponent {
     );
   }
 
-  placeOrder() {
-    this.orderService.addOrder(this.order);
-    console.log('Order placed:', this.order); // Untuk debugging
-  }
 
-  decreaseQuantity(product: Product) {
-    // Check if the product is already in the cart
-    const existingProduct = this.order?.productOrders.find(
-      (item) => item.id === product.id
-    );
 
-    if (existingProduct) {
-      existingProduct.quantity -= 1;
-      if (existingProduct.quantity < 1) {
-        this.order.productOrders = this.order.productOrders.filter(
-          (item) => item.id !== product.id
-        );
-      }
-    }
 
-    console.log('this.order :>> ', this.order);
-    this.updateData()
-  }
 
-  increaseQuantity(product: Product) {
-    // Check if the product is already in the cart
-    const existingProduct = this.order?.productOrders.find(
-      (item) => item.id === product.id
-    );
-
-    if (existingProduct) {
-      existingProduct.quantity += 1;
-    } else {
-      this.order?.productOrders.push({
-        id: product.id,
-        quantity: 1,
-        name: product.name,
-        price: product.price,
-        urlImage: product.urlImage
-      });
-    }
-    console.log('this.order :>> ', this.order);
-    this.updateData()
-  }
-
-  getProductQuantity(productId: string): number {
-    const productOrder = this.order.productOrders.find(
-      (item) => item.id === productId
-    );
-    return productOrder ? productOrder.quantity : 0;
-  }
   // end - service
 
   formatPriceToRupiah(price: number): string {
@@ -171,15 +119,9 @@ export class MenuComponent {
     if (!foundActiveCategory) {
       this.activeCategoryId = null;
     }
-    console.log('this.activeCategoryId :>> ', this.activeCategoryId);
+    // console.log('this.activeCategoryId :>> ', this.activeCategoryId);
   }
 
 
 
-  updateData(){
-    this.cartItemCount = this.order.productOrders.length;
-    this.order.totalPrice = this.order.productOrders.reduce((total, item) => {
-      return total + (item.price * item.quantity);
-    }, 0);
-  }
 }
