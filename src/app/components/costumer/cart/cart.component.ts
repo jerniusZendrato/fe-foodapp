@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Order } from 'src/app/models/order.model';
-import { OrderService } from 'src/app/service/order.service';
+import { OrderService } from 'src/app/service/order.costumer.service';
 
 @Component({
   selector: 'app-cart',
@@ -12,7 +12,9 @@ export class CartComponent implements OnInit{
   orders: Order = { userId: '19282bbd-b7a6-48f8-9ef4-b62aace832aa', productOrders: [] };
 
 
-  constructor(private orderService: OrderService) {}
+  constructor(
+    public orderService: OrderService
+  ) {}
 
   ngOnInit() {
     this.orders = this.orderService.getOrder() || this.orders; ;
