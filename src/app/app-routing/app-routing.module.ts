@@ -11,14 +11,14 @@ import { CartComponent } from '../components/costumer/cart/cart.component';
 import { DashboardComponent } from '../components/dashboard/dashboard.component';
 
 const routes: Routes = [
-  { path: 'admin', 
+  { path: 'admin', component: DashboardComponent,
     children: [
       { path: 'home', component: DashboardMenuComponent },
       { path: 'product', component: MasterComponent },
       { path: 'category', component:MasterCategoryComponent},
     ]
   },
-  { path: 'customer', component: CostumerComponent, 
+  { path: '', component: CostumerComponent, 
     children: [
       { path: 'menu', component: MenuComponent },
       { path: 'cart', component: CartComponent },

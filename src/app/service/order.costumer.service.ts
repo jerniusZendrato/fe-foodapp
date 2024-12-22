@@ -54,7 +54,7 @@ export class OrderService {
     console.log('this.order :>> ', this.order);
   }
 
-  increaseQuantity(product: Product) {
+  increaseQuantity(product: any) {
     const existingProduct = this.order?.productOrders.find(
       (item) => item.id === product.id
     );
