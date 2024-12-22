@@ -72,7 +72,8 @@
             </div>
           </div>
           <div class="col-4 d-flex align-items-center justify-content-center">
-            <button class="btn btn-outline-secondary btn-sm me-1">-</button>
+            <button class="btn btn-outline-secondary btn-sm me-1"
+            (click)="orderService.increaseQuantity(productOrder)">-</button>
             <span class="mx-2">{{ productOrder.quantity }}</span>
             <button class="btn btn-outline-secondary btn-sm ms-1">+</button>
           </div>
@@ -85,7 +86,9 @@
   <div class="d-flex flex-column fixed-bottom p-3 bg-light shadow">
     <div class="row mb-2">
       <div class="col text-start">Total Harga</div>
-      <div class="col text-end">{{ orders.totalPrice | currency:'Rp ':'symbol':'1.0-0' }}</div>
+      
+      <div class="col text-end">{{ orderService.getTotalPrice() | currency:'Rp ':'symbol':'1.0-0' }}</div>
+      
     </div>
     <button type="button" class="btn btn-warning w-100" data-bs-toggle="modal" data-bs-target="#confirmationModal">
       Kirim Pesanan
