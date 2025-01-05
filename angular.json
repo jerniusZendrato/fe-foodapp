@@ -58,7 +58,7 @@
         },
         "serve": {
           "options": {
-            "host": "192.168.100.43",
+            "host": "192.168.50.22",
             "port": 4201},
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
@@ -93,7 +93,9 @@
               "src/styles.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+            ]
           }
         }
       }

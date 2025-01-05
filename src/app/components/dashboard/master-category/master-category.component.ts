@@ -19,6 +19,7 @@ export class MasterCategoryComponent implements OnInit {
   constructor(
     private categoryservice: CategoryService,
     private loaderService: LoaderService
+    
   ){}
 
   public category: Category[] = []
