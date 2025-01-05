@@ -87,6 +87,13 @@ export class MasterComponent implements OnInit {
     console.log(this.productToEdit)
   }
 
+  isDisabled: boolean = true; // Status awal ( disable)
+
+  toggleDisabled(): void {
+    this.isDisabled = !this.isDisabled;
+    console.log("cek 123456") // Toggle status
+  }
+
   // buttonsaveproduct() :void{
   //   this.productToSave = [...this.product];
   //   console.log(this.productToSave)
@@ -213,6 +220,24 @@ groupProductsByCategory(): void {
     }, {});
   }
 
+  // menu simpan gambar..................
+
+  previewUrl: string | ArrayBuffer | null = null;
+  
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        this.previewUrl = reader.result; // Simpan URL pratinjau ke variabel
+      };
+
+      reader.readAsDataURL(file); // Baca file sebagai Data URL
+    }
+  }
 
 
 // ProductsByCategory() : Promise<void>{
