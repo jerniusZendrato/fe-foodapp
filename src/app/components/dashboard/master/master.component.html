@@ -73,6 +73,8 @@
   </div>
 
   <div id="isi-menu" style="border-radius: 30px 30px 0 0;">
+
+
     <div
     id="fileter_kategory"
     tabindex="0"
@@ -80,14 +82,20 @@
     data-bs-trigger="hover focus"
     data-bs-content="Disabled popover"
   >
-    <!-- <i class="fa-solid fa-filter"></i> -->
     <div style="display: flex; flex-direction: row; align-items: center">
-      <i
+      <!-- menu filter pertama -->
+      <!-- <i
         class="fa-solid fa-filter"
         data-bs-toggle="modal"
         data-bs-target="#modalselectbycategory"
         style="margin-right: 10px"
-      ></i>
+      ></i> -->
+
+      <!-- menu filter ke dua -->
+      <div id="menu-filter">
+        <i class="fa-solid fa-filter"></i>
+      </div>
+
       <form class="d-flex" role="search" style="margin-left: 30px">
         <input
           [(ngModel)]="searchKeyword"
@@ -99,6 +107,9 @@
         />
       </form>
     </div>
+
+
+
     <div style="display: flex; flex-direction: row">
       <a
         href=""
@@ -114,6 +125,22 @@
       <!-- <button type="button" class="btn btn-primary">Primary</button> -->
     </div>
   </div>
+
+
+  <div id="isi-menu-filter">
+    <div class="dropdown-center">
+      <button class="btn dropdown-toggle" style="background-color: #EFEFEF;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Centered dropdown
+      </button>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="#">Action</a></li>
+        <li><a class="dropdown-item" href="#">Action two</a></li>
+        <li><a class="dropdown-item" href="#">Action three</a></li>
+      </ul>
+    </div>
+
+  </div>
+
   <div
     style="display: flex; flex-direction: row; margin-left: 30px; gap: 5px"
   >
@@ -143,8 +170,6 @@
 
   <div id="isi-menu">
    
-    <!-- </div> -->
-
     <table id="isitabel_product" class="table table-bordered">
       <thead>
             <tr>
@@ -316,16 +341,7 @@
 
 
 
-<div class="btn-group dropend">
-    <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-      Dropend
-    </button>
-    <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#">Action</a></li>
-    <li><a class="dropdown-item" href="#">Action two</a></li>
-    <li><a class="dropdown-item" href="#">Action three</a></li>
-    </ul>
-  </div>
+
 
 <!-- Toast -->
 <div class="toast-container position-fixed bottom-0 end-0 p-3">

@@ -54,6 +54,24 @@ h3{
     align-items: center;
 }
 
+#isi-menu-filter{
+    /* border: 2px solid black; */
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    width: 100%;
+    height: 100%;
+    overflow-x: scroll;
+
+}
+#isi-menu-filter::-webkit-scrollbar {
+    display: none;
+  }
+
+
+
+
+
 @media (max-width: 768px) {
     #isi-menu {
         width: 95%;
