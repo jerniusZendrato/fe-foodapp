@@ -1,118 +1,314 @@
-<div style="width: 100%; box-sizing: border-box;">
-<h3>Master Product</h3>
-<div id="header-menu">
-    <div id="sub-header-menu">
+<div style="width: 100%; box-sizing: border-box">
+  <div id="header-menu">
+    <h3>Master Product</h3>
+    <!-- <div id="sub-header-menu">
         <div *ngFor="let category of category" class="btn-group me-2" role="group" aria-label="First group">
             <button type="button" id="{{category.name}}" (click)="onButtonClick($event)"
                 class="btn btn-outline-secondary">{{category.name}}</button>
         </div>
-    </div>
-    <div id="edit-status" class="form-check form-switch ">
-        <label class="form-check-label" for="flexSwitchCheckDefault">Edit</label>
-        <input style="font-size: 20px;" (change)="editstatusproduct($event)" class="form-check-input" type="checkbox"
-            role="switch" id="flexSwitchCheckDefault">
-    </div>
-</div>
+    </div> -->
 
-<div id="isi-menu">
+    <div id="edit-status" class="form-check form-switch">
+      <label class="form-check-label" for="flexSwitchCheckDefault">Edit</label>
+      <input
+        style="font-size: 20px"
+        (change)="editstatusproduct($event)"
+        class="form-check-input"
+        type="checkbox"
+        role="switch"
+        id="flexSwitchCheckDefault"
+      />
+    </div>
+  </div>
 
-    <table class="table table-bordered">
-        <thead>
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="modalselectbycategory"
+    data-bs-keyboard="false"
+    tabindex="-1"
+    aria-labelledby="staticBackdropLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title fs-5" id="staticBackdropLabel">
+            Search by Category
+          </h2>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-check" *ngFor="let categories of categories">
+            <input
+              class="form-check-input"
+              [(ngModel)]="categories.checked"
+              (ngModelChange)="groupProductsByCategory()"
+              type="checkbox"
+              value=""
+              id="flexCheckDefault"
+            />
+            <label class="form-check-label" for="flexCheckDefault">
+              {{ categories.name }}
+            </label>
+          </div>
+          <!-- <div class="form-check">
+                <input class="form-check-input"  [(ngModel)]="categories.checked" type="checkbox" value="" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">
+                    {{categories.checked}}
+                </label>
+              </div> -->
+        </div>
+        <!-- <div class="modal-footer"> -->
+        <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+        <!-- <button type="button" class="btn btn-primary">OK</button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
+  <div id="isi-menu" style="border-radius: 30px 30px 0 0;">
+    <div
+    id="fileter_kategory"
+    tabindex="0"
+    data-bs-toggle="popover"
+    data-bs-trigger="hover focus"
+    data-bs-content="Disabled popover"
+  >
+    <!-- <i class="fa-solid fa-filter"></i> -->
+    <div style="display: flex; flex-direction: row; align-items: center">
+      <i
+        class="fa-solid fa-filter"
+        data-bs-toggle="modal"
+        data-bs-target="#modalselectbycategory"
+        style="margin-right: 10px"
+      ></i>
+      <form class="d-flex" role="search" style="margin-left: 30px">
+        <input
+          [(ngModel)]="searchKeyword"
+          (ngModelChange)="filterGroupedProducts()"
+          class="form-control me-2"
+          type="search"
+          placeholder="Search"
+          aria-label="Search"
+        />
+      </form>
+    </div>
+    <div style="display: flex; flex-direction: row">
+      <a
+        href=""
+        style="
+          text-decoration: none;
+          border: 2px solid rgb(0, 0, 0);
+          padding: 2px 10px;
+          border-radius: 8px;
+          color: black;
+        "
+        ><i class="fa-solid fa-plus"></i> Add</a
+      >
+      <!-- <button type="button" class="btn btn-primary">Primary</button> -->
+    </div>
+  </div>
+  <div
+    style="display: flex; flex-direction: row; margin-left: 30px; gap: 5px"
+  >
+    <div class="tag-list" *ngFor="let tag of categories">
+      <div
+        class="tag-item"
+        *ngIf="tag.checked"
+        style="
+          border: 2px solid #dcb5c2;
+          padding: 4px 8px;
+          border-radius: 10px;
+          background-color: #fce4ec;
+          font-size: 14px;
+        "
+      >
+        <span style="margin-right: 5px">{{ tag.name }}</span>
+        <i
+          class="fa-solid fa-x"
+          style="color: #f80000; font-size: 10px"
+          (click)="removeTag(tag)"
+        ></i>
+      </div>
+    </div>
+  </div>
+  
+  </div>
+
+  <div id="isi-menu">
+   
+    <!-- </div> -->
+
+    <table id="isitabel_product" class="table table-bordered">
+      <thead>
             <tr>
                 <th scope="col">Name</th>
                 <th scope="col">Image</th>
                 <th scope="col">Harga</th>
                 <th scope="col">Description</th>
-                <!-- <th scope="col">category</th> -->
-                <th scope="col">Status</th>
+                <!-- <th scope="col">Status</th> -->
                 <th scope="col">Action</th>
             </tr>
         </thead>
-        <tbody>
-            <tr *ngFor="let product of product">
-                <td>
-                    {{product.name}}
-                </td>
-                <td>
-                    <img src="{{product.urlImage}}" alt="" width="150" height="mb-auto">
-                </td>
-                <td>
-                    {{product.price}}
-                </td>
-                <td>
-                    {{product.description}}
-                </td>
-
-
-                <td>
-                    <div style="margin: 0; display: flex; justify-content: center;" class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" role="switch" [(ngModel)]="product.isActivated"
-                            [disabled]="isSecondCheckboxDisabled">
-                    </div>
-                </td>
-                <td>
-                    <div (click)="onEditProduct(product)" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        <i style="font-size: 20px; color: green; cursor: pointer;"
-                            class="fa-solid fa-pen-to-square"></i>
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-<button style="margin: 0 10px;" type="button" class="btn btn-secondary"  (click)="buttonsaveproduct()" [disabled]="isSecondCheckboxDisabled">Save {{product[0].category}}</button>
     
+      <tbody *ngFor="let category of groupedProducts | keyvalue">
+        <!-- <h6 style="margin-left: 10px;">{{ category.key }}</h6> -->
+        <tr *ngFor="let products of category.value">
+          <td>
+            {{ products.name }}
+          </td>
+          <td>
+            <img
+              src="{{ products.urlImage }}"
+              alt=""
+              width="150"
+              height="150"
+            />
+          </td>
+          <td>
+            {{ products.price }}
+          </td>
+          <td>
+            {{ products.description }}
+          </td>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <td>
+            <div style="display: flex;flex-direction: row;justify-content: space-between; align-items: center;">
+              <div class="form-check form-switch" style="margin: 0;">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  role="switch"
+                  [(ngModel)]="products.isActivated"
+                  [disabled]="isSecondCheckboxDisabled"
+                />
+              </div>
+
+              <div
+                (click)="onEditProduct(products)"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+                style="margin: 0; padding: 0;"
+              >
+                <i
+                  style="font-size: 20px; color: green; cursor: pointer;"
+                  class="fa-solid fa-pen-to-square"
+                ></i>
+              </div>
+              <div style="color: #f80000;font-size: 20px; margin: 0;">
+                <i class="fa-solid fa-trash"></i>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- <button style="margin: 0 10px;" type="button" class="btn btn-secondary"  (click)="buttonsaveproduct()" [disabled]="isSecondCheckboxDisabled">Save {{product[0].category}}</button> -->
+
+  <div
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
     <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Edit Product</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div *ngIf="productToEdit">
-                    <form>
-                        <div id="modal_data">
-                            <div id="data_edit">
-                                <div class="mb-3">
-                                    <label for="productName" class="form-label">Product Name</label>
-                                    <input type="text" class="form-control" value={{productToEdit.name}}
-                                        id="productName" name="name" required />
-                                </div>
-                                <div class="mb-3">
-                                    <label for="productPrice" class="form-label">Price</label>
-                                    <input type="number" class="form-control" value={{productToEdit.price}}
-                                        id="productPrice" name="price" required />
-                                </div>
-                            </div>
-                            <div id="modal_img">
-                                <img [src]="productToEdit.urlImage" alt="Product Image" width="150" height="auto">
-
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="productDescription" class="form-label">Description</label>
-                            <textarea class="form-control" value={{productToEdit.description}} id="productDescription"
-                                name="description"></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="formFile" class="form-label">Default file input example</label>
-                            <input class="form-control" type="file" id="formFile">
-                            <a style="text-decoration: none;color: blue; font-size: 14px;" href="#"> Lihat Foto</a>
-                        </div>
-                    </form>
-                </div>
-                <div *ngIf="!productToEdit">
-                    <p>No product selected for editing.</p>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edit Product</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
         </div>
+        <div class="modal-body">
+          <div *ngIf="productToEdit">
+            <form>
+              <div id="modal_data">
+                <div id="data_edit">
+                  <div class="mb-3">
+                    <label for="productName" class="form-label"
+                      >Product Name</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      value="{{ productToEdit.name }}"
+                      id="productName"
+                      name="name"
+                      required
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="productPrice" class="form-label">Price</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      value="{{ productToEdit.price }}"
+                      id="productPrice"
+                      name="price"
+                      required
+                    />
+                  </div>
+                </div>
+                <div id="modal_img">
+                  <img
+                    [src]="productToEdit.urlImage"
+                    alt="Product Image"
+                    width="150"
+                    height="auto"
+                  />
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="productDescription" class="form-label"
+                  >Description</label
+                >
+                <textarea
+                  class="form-control"
+                  value="{{ productToEdit.description }}"
+                  id="productDescription"
+                  name="description"
+                ></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="formFile" class="form-label"
+                  >Default file input example</label
+                >
+                <input class="form-control" type="file" id="formFile" />
+                <a
+                  style="text-decoration: none; color: blue; font-size: 14px"
+                  href="#"
+                >
+                  Lihat Foto</a
+                >
+              </div>
+            </form>
+          </div>
+          <div *ngIf="!productToEdit">
+            <p>No product selected for editing.</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
     </div>
-</div>
-
+  </div>
 </div>
