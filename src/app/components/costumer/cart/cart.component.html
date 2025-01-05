@@ -87,7 +87,7 @@
     <div class="row mb-2">
       <div class="col text-start">Total Harga</div>
       
-      <div class="col text-end">{{ orderService.getTotalPrice() | currency:'Rp ':'symbol':'1.0-0' }}</div>
+      <div class="col text-end">{{ orderService.getTotalPrice() }}</div>
       
     </div>
     <button type="button" class="btn btn-warning w-100" data-bs-toggle="modal" data-bs-target="#confirmationModal">

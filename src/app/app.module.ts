@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { HttpClientModule } from '@angular/common/http';
-import { AppRoutingModule } from './app-routing/app-routing.module';
+
 import { AppComponent } from './app.component';
 import { AutenticationsComponent } from './components/autentications/autentications.component';
 import { LoginComponent } from './components/autentications/login/login.component';
@@ -14,7 +13,7 @@ import { MasterComponent } from './components/dashboard/master/master.component'
 import { FormsModule } from '@angular/forms';
 import { MasterCategoryComponent } from './components/dashboard/master-category/master-category.component';
 import { LoaderComponent } from './loader/loader.component';
-import { NotificationComponent } from './notification/notification.component';
+import { AppRoutingModule } from './app-routing/app-routing.module';
 
 @NgModule({
   declarations: [
@@ -27,8 +26,7 @@ import { NotificationComponent } from './notification/notification.component';
     DashboardMenuComponent,
     MasterComponent,
     MasterCategoryComponent,
-    LoaderComponent,
-    NotificationComponent
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
