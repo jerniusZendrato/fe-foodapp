@@ -195,6 +195,7 @@
           </td>
           <td>
             <img
+            style="object-fit: cover; object-position: center;"
               src="{{ products.urlImage }}"
               alt=""
               width="150"
@@ -399,13 +400,14 @@
                   />
                 </div>
               </div>
-              <div id="modal_img" >
+              <div id="modal_img" style=" display: flex; justify-content: center; align-items: center; border: 2px solid black; width: 155px; height: 155px; margin-right: 30px;  border-radius: 8px;" >
                 <img
+                style="object-fit: cover; object-position: center; border-radius: 9px; "
                 [src]="previewUrl"
                   alt="Product Image"
                   height="150"
                   width="150"
-                  height="auto" 
+                  
                 />
               </div>
             </div>
