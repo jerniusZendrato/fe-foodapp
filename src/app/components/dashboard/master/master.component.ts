@@ -35,8 +35,6 @@ export class MasterComponent implements OnInit {
   public groupedProducts: { [key: string]: Product[] } = {};
 
 
-  //variabel unutk menjadi parameter 
-  //memunculkan product berdasarkan kategory
   public onecategory: string = ''
   public datacategory: string = this.onecategory;
   private categoriesSubject = new BehaviorSubject<any[]>([]); // Observable categories
@@ -69,14 +67,6 @@ export class MasterComponent implements OnInit {
   
 
   
-
-
-
-  // onButtonClick(event: Event): void {
-  //   const buttonId = (event.target as HTMLButtonElement).id;
-  //   this.datacategory = buttonId;
-  //   this.loadproduct(this.datacategory)
-  // }
   editstatusproduct(event:Event):void{
     const isChecked = (event.target as HTMLInputElement).checked;
     this.isSecondCheckboxDisabled = !isChecked;
@@ -142,6 +132,7 @@ export class MasterComponent implements OnInit {
       )
     });
   }
+
 
   removeTag(tag: any): void {
     tag.checked = false;
@@ -220,10 +211,12 @@ groupProductsByCategory(): void {
     }, {});
   }
 
+  // menu add save.......................
   // menu simpan gambar..................
 
   previewUrl: string | ArrayBuffer | null = null;
   
+  selectedCategory: string = '';
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -238,6 +231,10 @@ groupProductsByCategory(): void {
       reader.readAsDataURL(file); // Baca file sebagai Data URL
     }
   }
+
+
+
+
 
 
 // ProductsByCategory() : Promise<void>{

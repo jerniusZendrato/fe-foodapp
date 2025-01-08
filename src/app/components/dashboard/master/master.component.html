@@ -381,12 +381,33 @@
                     >Product Name</label
                   >
                   <input
+                    placeholder="insert product name"
                     type="text"
                     class="form-control"
                     id="productName"
                     name="name"
                     required
                   />
+                </div>
+
+                <div class="mb-3">
+                  <label for="category" class="form-label"
+                    >Category Name</label
+                  >
+                  <select
+                    type="text"
+                    class="form-control"
+                    id="productName"
+                    name="name"
+                    [(ngModel)]="selectedCategory"
+                    required
+                  >
+                  <option value="" disabled selected>Choose Category</option>
+                  <option *ngFor="let category of categories" [value]="category.id">
+                    {{ category.name }}
+                  </option>
+              
+                </select>
                 </div>
                 <div class="mb-3">
                   <label for="productPrice" class="form-label">Price</label>
