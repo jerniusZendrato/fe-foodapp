@@ -65,20 +65,24 @@ export class MasterComponent implements OnInit {
     this.groupProductsByCategory()
     
     this.cekstatus()
-
+    this.dataproductawal()
 
      // Simpan salinan data awal
-    this.originalProducts = Object.values(this.groupedProducts).flat().map(product => ({
-    ...product, // Salin semua properti
-    isActivated: product.isActivated // Simpan status awal
-
-    }));
+    
     console.log("originalProducts",this.originalProducts)
 
   }
 
   
-
+  public groupedProductsawal: { [key: string]: Product[] } = {};
+  dataproductawal(){
+    this.groupedProductsawal= { ...this.groupedProducts }
+    this.originalProducts = Object.values(this.groupedProducts).flat().map(product => ({
+      ...product, // Salin semua properti
+      isActivated: product.isActivated // Simpan status awal
+  
+      }));
+  }
   
   editstatusproduct(event:Event):void{
     const isChecked = (event.target as HTMLInputElement).checked;
@@ -103,6 +107,12 @@ export class MasterComponent implements OnInit {
 
   // edi status product.....................................................
 
+
+  // refreshTable() {
+  //   this.categories = { ...this.originalProducts };
+  //   this.groupProductsByCategory()
+  // }
+
   changedProducts: any[] = [];
   public allProducts: Product[] = []
   // Mengambil semua data dari groupedProducts
@@ -118,9 +128,6 @@ export class MasterComponent implements OnInit {
     return product.isActivated !== this.originalProducts[index].isActivated; // Bandingkan status
 
   });
-  console.log("Data awal:", this.originalProducts);
-  console.log("Data terkini:", this.allProducts);
-  console.log("Data yang berubah:", this.changedProducts);
 
   if (this.changedProducts.length > 0) {
     const modalElement = document.getElementById('changeModal');
@@ -168,13 +175,14 @@ export class MasterComponent implements OnInit {
           this.closeModal();
           this.showErrorToast()
         }
-        // this.closeModal();
+        this.dataproductawal()
         this.loaderService.hideWithDelay(2000);
       },
       (error) => {
         console.error('Error saving products:', error);
         this.closeModal();
         this.showErrorToast()
+        this.dataproductawal()
         this.loaderService.hideWithDelay(2000);
       }
     );
