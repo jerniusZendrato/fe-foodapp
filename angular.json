@@ -58,7 +58,7 @@
         },
         "serve": {
           "options": {
-            "host": "10.4.204.162",
+            "host": "10.4.204.80",
             "port": 4201},
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
@@ -90,8 +90,9 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css",
-              "node_modules/bootstrap/dist/css/bootstrap.min.css"
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/bootstrap-icons/font/bootstrap-icons.css",
+              "src/styles.css"
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"

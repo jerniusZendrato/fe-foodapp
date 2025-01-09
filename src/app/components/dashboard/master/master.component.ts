@@ -6,6 +6,7 @@ import { ProductsByCategory } from 'src/app/models/products-by-category.model';
 import { CategoryService } from 'src/app/service/category.service';
 import { LoaderService } from 'src/app/service/loader.service';
 import { ProductService } from 'src/app/service/product.service';
+// import * as bootstrap from 'bootstrap';
 
 
 // import { ModalEditProductComponent } from '../modal-edit-product/modal-edit-product.component';
@@ -49,7 +50,8 @@ export class MasterComponent implements OnInit {
   categories: any[] = [];
 
   isLoading: boolean = false;
-  
+  // Properti untuk menyimpan data awal
+  originalProducts: any[] = [];
 
 
   
@@ -61,6 +63,17 @@ export class MasterComponent implements OnInit {
     await this.loadproducts();
     console.log("cek products aja",this.products)
     this.groupProductsByCategory()
+    
+    this.cekstatus()
+
+
+     // Simpan salinan data awal
+    this.originalProducts = Object.values(this.groupedProducts).flat().map(product => ({
+    ...product, // Salin semua properti
+    isActivated: product.isActivated // Simpan status awal
+
+    }));
+    console.log("originalProducts",this.originalProducts)
 
   }
 
@@ -70,6 +83,9 @@ export class MasterComponent implements OnInit {
   editstatusproduct(event:Event):void{
     const isChecked = (event.target as HTMLInputElement).checked;
     this.isSecondCheckboxDisabled = !isChecked;
+    if (!isChecked) {
+      this.cekstatus();  // Menjalankan fungsi cekstatus jika checkbox unchecked
+    }
   }
 
   onEditProduct(product:Product) :void{
@@ -84,26 +100,85 @@ export class MasterComponent implements OnInit {
     console.log("cek 123456") // Toggle status
   }
 
-  // buttonsaveproduct() :void{
-  //   this.productToSave = [...this.product];
-  //   console.log(this.productToSave)
 
-  //   this.loaderService.show(); 
-  //   this.productservice.saveProducts(this.productToSave).subscribe(
-  //     (response) => {
-  //       if (response['isSuccess']==true) {
-  //         console.log('All products saved successfully',response);
-  //       } else {
-  //         console.error('Failed to save products');
-  //       }
-  //       this.loaderService.hideWithDelay(2000);
-  //     },
-  //     (error) => {
-  //       console.error('Error saving products:', error);
-  //       this.loaderService.hideWithDelay(2000);
-  //     }
-  //   );
-  // }
+  // edi status product.....................................................
+
+  changedProducts: any[] = [];
+  public allProducts: Product[] = []
+  // Mengambil semua data dari groupedProducts
+  cekstatus(): void{
+
+  this.allProducts = Object.values(this.groupedProducts).flat(); // Data saat ini
+
+  if (this.allProducts.length !== this.originalProducts.length) {
+    console.error('Jumlah produk tidak sesuai antara allProducts dan originalProducts');
+    return;
+  }
+  this.changedProducts = this.allProducts.filter((product, index) => {
+    return product.isActivated !== this.originalProducts[index].isActivated; // Bandingkan status
+
+  });
+  console.log("Data awal:", this.originalProducts);
+  console.log("Data terkini:", this.allProducts);
+  console.log("Data yang berubah:", this.changedProducts);
+
+  if (this.changedProducts.length > 0) {
+    const modalElement = document.getElementById('changeModal');
+    // Jika ada perubahan, buka modal
+    const changeModal = new (window as any).bootstrap.Modal(modalElement);
+    changeModal.show();
+  } else {
+    console.log("Tidak ada perubahan.");
+  }
+
+
+  }
+
+
+  closeModal() {
+    const modalElement = document.getElementById('changeModal');
+    const changeModal = new (window as any).bootstrap.Modal(modalElement);
+    changeModal.hide();
+  }
+  showErrorToast(): void {
+    const toastElement = document.getElementById('errorToast');
+    const toast = new (window as any).bootstrap.Toast(toastElement);
+    toast.show();
+  }
+  showsuccessToast(): void {
+    const toastElement = document.getElementById('successToast');
+    const toast = new (window as any).bootstrap.Toast(toastElement);
+    toast.show();
+  }
+  
+
+  buttonsaveproduct() :void{
+    this.productToSave = [...this.allProducts];
+    console.log(this.productToSave)
+
+    this.loaderService.show(); 
+    this.productservice.saveProducts(this.productToSave).subscribe(
+      (response) => {
+        if (response['isSuccess']==true) {
+          console.log('All products saved successfully',response);
+          this.closeModal();
+          this.showsuccessToast()
+        } else {
+          console.error('Failed to save products');
+          this.closeModal();
+          this.showErrorToast()
+        }
+        // this.closeModal();
+        this.loaderService.hideWithDelay(2000);
+      },
+      (error) => {
+        console.error('Error saving products:', error);
+        this.closeModal();
+        this.showErrorToast()
+        this.loaderService.hideWithDelay(2000);
+      }
+    );
+  }
 
 
 
@@ -192,6 +267,7 @@ groupProductsByCategory(): void {
   this.groupedProducts = filteredProducts.reduce((grouped: any, product: any) => {
     (grouped[product.category] = grouped[product.category] || []).push(product);
     return grouped;
+  
   }, {});}
 
   // search menu------------------------------------------------

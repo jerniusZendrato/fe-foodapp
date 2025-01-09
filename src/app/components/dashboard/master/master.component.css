@@ -28,6 +28,14 @@ h3{
 
 } */
 
+.fa-xmark{
+    font-size: 12px;
+    cursor: pointer;
+}
+.fa-xmark:hover{
+    color: #F80000;
+}
+
 #fileter_kategory{
     margin: 20px 0;
     font-size: 20px;
@@ -57,7 +65,7 @@ h3{
 #isi-menu-filter{
     /* border: 2px solid black; */
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 5px;
     width: 100%;
     height: 100%;
@@ -67,6 +75,16 @@ h3{
 .color-menu-filter{
     color: #F80000;
 }
+#garis-menu-filter{
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    margin:0; 
+    width: 100%; 
+    height: 10px; 
+    padding: 0;
+    opacity: 30%;
+}
 
 #add-button{
     text-decoration: none;
@@ -74,7 +92,8 @@ h3{
     border: 2px solid rgb(136, 136, 136);
     padding: 1px 10px;
     border-radius: 8px;
-    color: rgb(119, 119, 119);
+    /* color: rgb(119, 119, 119); */
+    color: black;
     transition: background-color 0.3s ease;
     cursor: pointer;
 }
