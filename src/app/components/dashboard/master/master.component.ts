@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { FormBuilder,FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { Category } from 'src/app/models/category.model';
 import { Product } from 'src/app/models/product.model';
@@ -6,10 +7,7 @@ import { ProductsByCategory } from 'src/app/models/products-by-category.model';
 import { CategoryService } from 'src/app/service/category.service';
 import { LoaderService } from 'src/app/service/loader.service';
 import { ProductService } from 'src/app/service/product.service';
-// import * as bootstrap from 'bootstrap';
 
-
-// import { ModalEditProductComponent } from '../modal-edit-product/modal-edit-product.component';
 
 @Component({
   selector: 'app-master',
@@ -20,13 +18,33 @@ export class MasterComponent implements OnInit {
   modalService: any;
   isSecondCheckboxDisabled = true;
 
+
+
+  productForm: FormGroup;
+  visible: boolean = false;
+  productName: string | undefined;
+  selectedCategory: Category | undefined;
+  // categories?: Category[];
+  image: File | null = null;
+
+  
   constructor(
+    private formBuilder: FormBuilder,
     private productservice: ProductService,
     private categoryservice: CategoryService,
     private loaderService: LoaderService,
     private cdr: ChangeDetectorRef
     
-  ) { }
+  ) { 
+    this.productForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      category: [null, Validators.required],
+      price: ['', Validators.required],
+      image: [''],
+      description: [''],
+      isActivated: [true],
+    });
+  }
 
   public product: Product[] = []
   public products: Product[] = []
@@ -62,10 +80,12 @@ export class MasterComponent implements OnInit {
     // this.loadproduct(this.onecategory); // Panggil loadProduct setelahnya
     await this.loadproducts();
     console.log("cek products aja",this.products)
-    this.groupProductsByCategory()
-    
+    if (!this.statusedit) {
+      this.groupProductsByCategory()    
+    }
+    // this.groupProductsByCategory()
     this.cekstatus()
-    this.dataproductawal()
+    // this.dataproductawal()
 
      // Simpan salinan data awal
     
@@ -73,15 +93,16 @@ export class MasterComponent implements OnInit {
 
   }
 
-  
-  public groupedProductsawal: { [key: string]: Product[] } = {};
+  public originalGroupedProducts: { [key: string]: Product[] } = {};
   dataproductawal(){
-    this.groupedProductsawal= { ...this.groupedProducts }
     this.originalProducts = Object.values(this.groupedProducts).flat().map(product => ({
       ...product, // Salin semua properti
       isActivated: product.isActivated // Simpan status awal
   
       }));
+      // this.originalGroupedProducts = { ...this.groupedProducts };
+      this.originalGroupedProducts = JSON.parse(JSON.stringify(this.groupedProducts));
+      console.log("ini data originalGroupedProducts",this.originalGroupedProducts)
   }
   
   editstatusproduct(event:Event):void{
@@ -107,19 +128,37 @@ export class MasterComponent implements OnInit {
 
   // edi status product.....................................................
 
+  statusedit: string = '';
+  refreshTable() {
+    console.log("...............")
 
-  // refreshTable() {
-  //   this.categories = { ...this.originalProducts };
-  //   this.groupProductsByCategory()
-  // }
+    console.log("this.groupedProducts ", this.groupedProducts )
+    console.log("his.originalGroupedProducts ", this.originalGroupedProducts)
+
+    // this.groupedProducts = { ...this.originalGroupedProducts };
+    this.groupedProducts = JSON.parse(JSON.stringify(this.originalGroupedProducts));
+    console.log("...............")
+    console.log("this.groupedProducts ", this.groupedProducts )
+    console.log("his.originalGroupedProducts ", this.originalGroupedProducts)
+    console.log("...............")
+
+    // console.log('groupedProducts sebelum reset:', this.groupedProducts);
+    // this.groupedProducts = JSON.parse(JSON.stringify(this.originalGroupedProducts));
+    this.cdr.detectChanges();
+    console.log("detectChanges()",this.cdr.detectChanges())
+    this.statusedit ="on" 
+    console.log('groupedProducts setelah reset:', this.groupedProducts);
+    // window.location.reload();
+
+  }
 
   changedProducts: any[] = [];
   public allProducts: Product[] = []
+
+
   // Mengambil semua data dari groupedProducts
   cekstatus(): void{
-
   this.allProducts = Object.values(this.groupedProducts).flat(); // Data saat ini
-
   if (this.allProducts.length !== this.originalProducts.length) {
     console.error('Jumlah produk tidak sesuai antara allProducts dan originalProducts');
     return;
@@ -160,7 +199,8 @@ export class MasterComponent implements OnInit {
   
 
   buttonsaveproduct() :void{
-    this.productToSave = [...this.allProducts];
+    // this.productToSave = [...this.allProducts];
+    this.productToSave = JSON.parse(JSON.stringify(this.allProducts));
     console.log(this.productToSave)
 
     this.loaderService.show(); 
@@ -275,8 +315,11 @@ groupProductsByCategory(): void {
   this.groupedProducts = filteredProducts.reduce((grouped: any, product: any) => {
     (grouped[product.category] = grouped[product.category] || []).push(product);
     return grouped;
+    
+  }, {})
+  this.dataproductawal()
   
-  }, {});}
+  ;}
 
   // search menu------------------------------------------------
   searchKeyword: string = '';
@@ -300,19 +343,79 @@ groupProductsByCategory(): void {
 
   previewUrl: string | ArrayBuffer | null = null;
   
-  selectedCategory: string = '';
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
-      const file = input.files[0];
+      this.image = input.files[0];
       const reader = new FileReader();
 
       reader.onload = () => {
         this.previewUrl = reader.result; // Simpan URL pratinjau ke variabel
       };
 
-      reader.readAsDataURL(file); // Baca file sebagai Data URL
+      reader.readAsDataURL(this.image); // Baca file sebagai Data URL
+    }
+  }
+
+
+  saveProduct() {
+    this.loaderService.show();
+    console.log('save product');
+    // console.log('this.productForm :>> ', this.productForm);
+
+    if (this.productForm.valid) {
+      const product: Product = {
+        name: this.productForm.get('name')?.value,
+        price: this.productForm.get('price')?.value,
+        description: this.productForm.get('description')?.value,
+        isActivated: this.productForm.get('isActivated')?.value,
+        categoryId: this.productForm.get('category')?.value?.id,
+      };
+
+      console.log('Saving product:', product);
+      // this.messageService.add({
+      //   severity: 'success',
+      //   summary: 'Product Saved',
+      //   detail: 'The product has been saved successfully.',
+      // });
+
+      // this.loaderService.show();
+      if (this.image) {
+        this.productservice.addProduct(product, this.image).subscribe(
+          (savedProduct) => {
+            this.showsuccessToast()
+            window.location.reload();
+
+          },
+          (error) => {
+            console.log('error :>> ', error);
+            // this.messageService.add({
+            //   severity: 'error',
+            //   summary: 'Error Saving Product',
+            //   detail: 'There was an error saving the product.',
+            // });
+            this.loaderService.hideWithDelay(2000);
+            this.showErrorToast()
+          }
+        );
+      } else {
+        // this.messageService.add({
+        //   severity: 'error',
+        //   summary: 'Image Required',
+        //   detail: 'Please upload an image before saving the product.',
+        // });
+        this.showErrorToast()
+        this.loaderService.hideWithDelay(2000);
+      }
+    } else {
+      // this.messageService.add({
+      //   severity: 'error',
+      //   summary: 'Form Invalid',
+      //   detail: 'Please fill in all the required fields.',
+      // });
+      this.showErrorToast()
+      this.loaderService.hideWithDelay(2000);
     }
   }
 

@@ -1,10 +1,10 @@
 export interface Product {
-  id: string;
+  id?: string;
   name: string;
-  urlImage: string| null;
+  urlImage?: string| null;
   price: number;
   description: string;
-  category: string;
+  category?: string;
   categoryId: string;
   isActivated: Boolean;
 } 

@@ -12,6 +12,7 @@ import { SidebarComponent } from './components/dashboard/sidebar/sidebar.compone
 import { DashboardMenuComponent } from './components/dashboard/dashboard-menu/dashboard-menu.component';
 import { MasterComponent } from './components/dashboard/master/master.component';
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms'; 
 import { MasterCategoryComponent } from './components/dashboard/master-category/master-category.component';
 import { LoaderComponent } from './loader/loader.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
@@ -39,6 +40,7 @@ import { FilterByCategoryPipe } from './components/costumer/menu/filter-by-categ
     BrowserModule,
     CommonModule,
     AppRoutingModule,
+    ReactiveFormsModule,
 
     HttpClientModule,
     FormsModule
