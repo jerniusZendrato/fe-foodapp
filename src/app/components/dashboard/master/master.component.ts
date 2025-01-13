@@ -366,8 +366,9 @@ groupProductsByCategory(): void {
       if (this.image) {
         this.productservice.addProduct(product, this.image).subscribe(
           (savedProduct) => {
+            // window.location.reload();
             this.showsuccessToast()
-            window.location.reload();
+            
 
           },
           (error) => {
@@ -377,8 +378,8 @@ groupProductsByCategory(): void {
             //   summary: 'Error Saving Product',
             //   detail: 'There was an error saving the product.',
             // });
-            this.loaderService.hideWithDelay(2000);
             this.showErrorToast()
+            this.loaderService.hideWithDelay(2000);
           }
         );
       } else {
