@@ -32,4 +32,15 @@ export class CategoryService {
     return this.http.get<Category[]>(`${environment.API_URL}/category`);
   }
 
+  saveCategory(category: Category[]): Observable<any> {
+    if (category && category.length > 0) {
+      const dataToSend = category;  // Data produk yang akan dikirimkan langsung
+      return this.http.put< {isSuccess: boolean} >(`${environment.API_URL}/category`, dataToSend);
+    } else {
+      return new Observable((observer) => {
+        observer.error('No valid category to save');
+      });
+    }
+  }
+
 }

@@ -76,18 +76,11 @@ export class MasterComponent implements OnInit {
 
   async ngOnInit() {
     await this.loadcategory(); // Tunggu hingga loadCategory selesai
-    // console.log(this.onecategory)
-    // this.loadproduct(this.onecategory); // Panggil loadProduct setelahnya
-    await this.loadproducts();
-    console.log("cek products aja",this.products)
-    if (!this.statusedit) {
-      this.groupProductsByCategory()    
-    }
-    // this.groupProductsByCategory()
-    this.cekstatus()
-    // this.dataproductawal()
 
-     // Simpan salinan data awal
+    await this.loadproducts();
+   
+    this.groupProductsByCategory()   
+    this.cekstatus()
     
     console.log("originalProducts",this.originalProducts)
 
@@ -105,12 +98,16 @@ export class MasterComponent implements OnInit {
       console.log("ini data originalGroupedProducts",this.originalGroupedProducts)
   }
   
+
   editstatusproduct(event:Event):void{
     const isChecked = (event.target as HTMLInputElement).checked;
+
+   
     this.isSecondCheckboxDisabled = !isChecked;
     if (!isChecked) {
       this.cekstatus();  // Menjalankan fungsi cekstatus jika checkbox unchecked
     }
+
   }
 
   onEditProduct(product:Product) :void{
@@ -128,27 +125,10 @@ export class MasterComponent implements OnInit {
 
   // edi status product.....................................................
 
-  statusedit: string = '';
   refreshTable() {
-    console.log("...............")
 
-    console.log("this.groupedProducts ", this.groupedProducts )
-    console.log("his.originalGroupedProducts ", this.originalGroupedProducts)
-
-    // this.groupedProducts = { ...this.originalGroupedProducts };
     this.groupedProducts = JSON.parse(JSON.stringify(this.originalGroupedProducts));
-    console.log("...............")
-    console.log("this.groupedProducts ", this.groupedProducts )
-    console.log("his.originalGroupedProducts ", this.originalGroupedProducts)
-    console.log("...............")
 
-    // console.log('groupedProducts sebelum reset:', this.groupedProducts);
-    // this.groupedProducts = JSON.parse(JSON.stringify(this.originalGroupedProducts));
-    this.cdr.detectChanges();
-    console.log("detectChanges()",this.cdr.detectChanges())
-    this.statusedit ="on" 
-    console.log('groupedProducts setelah reset:', this.groupedProducts);
-    // window.location.reload();
 
   }
 
@@ -212,6 +192,7 @@ export class MasterComponent implements OnInit {
           this.showsuccessToast()
         } else {
           console.error('Failed to save products');
+          this.refreshTable()
           this.closeModal();
           this.showErrorToast()
         }
@@ -220,6 +201,7 @@ export class MasterComponent implements OnInit {
       },
       (error) => {
         console.error('Error saving products:', error);
+        this.refreshTable()
         this.closeModal();
         this.showErrorToast()
         this.dataproductawal()
@@ -416,6 +398,24 @@ groupProductsByCategory(): void {
       // });
       this.showErrorToast()
       this.loaderService.hideWithDelay(2000);
+    }
+  }
+
+
+  // preview gambar di tabel
+
+  selectedImage: string | null = null;
+
+  openImageModal(imageUrl: string): void {
+    console.log ("imageUrl",imageUrl)
+    if (imageUrl) {
+      this.selectedImage = imageUrl;
+      const modal = new (window as any).bootstrap.Modal(
+        document.getElementById('imageModal')
+      );
+      modal.show();
+    } else {
+      console.log('Image URL is invalid or empty:', imageUrl);
     }
   }
 

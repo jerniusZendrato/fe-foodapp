@@ -1,95 +1,208 @@
-<h3>Master Category</h3>
+<div style="width: 100%; box-sizing: border-box">
+  <div
+    style="
+      display: flex;
+      flex-direction: column;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      background-color: #fff9f9;
+    "
+  >
+    <div id="header-menu">
+      <h3>Master Category</h3>
 
-
-<div style="margin: 20px 10px;" class="row">
-
-
-    <!-- <div class="col-sm-3 mb-3 mb-sm-0">
-        <div class="card text-center">
-            <div class="card-header">
-                Featured
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">Special title treatment</h5>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-            <div class="card-footer text-body-secondary">
-                2 days ago
-            </div>
-        </div>
-    </div> -->
-
-
-    <div class="col-sm-2 mb-12 mb-sm-0" *ngFor="let category of category">
-        <div class="card text-center">
-            <div class="card-body">
-                <h5 style="margin: 0;" class="card-title">{{ category.name }}</h5>
-            </div>
-            <!-- <p class="card-text"></p> -->
-            <img src="{{category.urlImage}}" style="width: auto; height: 80px;" class="rounded mx-auto d-block"
-                alt="...">
-            <div class="card-footer" style="border: 0; background-color: white;">
-                <a (click)="onDetailCategory(category)" class="btn btn-primary" data-bs-toggle="modal"
-                    data-bs-target="#exampleModaldetailcategory">Detail</a>
-            </div>
-        </div>
+      <div id="edit-status" class="form-check form-switch">
+        <label class="form-check-label" for="flexSwitchCheckDefault"
+          >Edit</label
+        >
+        <input
+          style="font-size: 20px"
+          (change)="editstatusproduct($event)"
+          class="form-check-input"
+          type="checkbox"
+          role="switch"
+          id="flexSwitchCheckDefault"
+        />
+      </div>
     </div>
 
-
-
-    <div class="col-sm-2 mb-10 mb-sm-0">
-        <div class="card text-center">
-            <button type="button" class="btn btn-link">
-                <i class="fa-thin fa-plus"></i>
-            </button>
+    <div id="isi-menu02" style="border-radius: 30px 30px 0 0">
+      <div
+        id="fileter_kategory"
+        tabindex="0"
+        data-bs-toggle="popover"
+        data-bs-trigger="hover focus"
+        data-bs-content="Disabled popover"
+      >
+        <div style="display: flex; flex-direction: row; align-items: center">
+          <form class="d-flex" role="search" style="margin-left: 30px">
+            <input
+              class="form-control me-2"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+            />
+          </form>
         </div>
+
+        <div style="display: flex; flex-direction: row">
+          <a
+            id="add-button"
+            data-bs-toggle="modal"
+            data-bs-target="#addrpoductModal"
+            ><i class="fa-solid fa-plus"></i> Add</a
+          >
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: row; gap: 5px"></div>
     </div>
-</div>
+  </div>
 
+  <div id="isi-menu">
+    <table id="isitabel_product" class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Category</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
 
+      <tbody>
+        <!-- <h6 style="margin-left: 10px;">{{ category.key }}</h6> -->
+        <tr *ngFor="let category of category">
+          <td>
+            {{ category.name }}
+          </td>
 
-<div class="modal fade" id="exampleModaldetailcategory" tabindex="-1" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+          <td>
+            {{ category.quantity }}
+          </td>
+          <td>
+            <div
+              style="
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                gap: 30px;
+                align-items: center;
+                margin: 0 20px;
+              "
+            >
+              <div class="form-check form-switch" style="margin: 0">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  role="switch"
+                  [(ngModel)]="category.isActivated"
+                  [disabled]="isSecondCheckboxDisabled"
+                />
+              </div>
+
+              <div style="color: #f80000; font-size: 20px; margin: 0">
+                <i class="fa-solid fa-trash"></i>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modal jika ada perubahan status -->
+  <div
+    class="modal fade"
+    id="changeModal"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+    aria-labelledby="staticBackdropLabel"
+    aria-hidden="true"
+  >
     <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Detail Category</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div *ngIf="detailcategory">
-                <div class="modal-body">
-
-                    <h1 style="display: flex; justify-content: center; align-content: center;">{{detailcategory.name}}
-                    </h1>
-                    <div id="modal_data">
-                        <div id="data_detail" style="display: flex; justify-content: center; align-content: center;">
-                            <img src="{{detailcategory.urlImage}}" alt="" height="200px">
-                        </div>
-                        <div class="mb-3">
-                            <label for="productName" class="form-label">Category Name</label>
-                            <input type="text" class="form-control" value={{detailcategory.name}} id="productName"
-                                name="name" required />
-                        </div>
-                        <div class="md-3">
-                            <label for="formFile" class="form-label">Change Image</label>
-                            <input class="form-control" type="file" id="formFile">
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-            <div *ngIf="!detailcategory">
-                <div style="margin: 10px 20px;">
-                    <p>Error 404: Data Tidak Ditemukan. Silakan coba lagi atau hubungi tim dukungan.</p>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="changeModalLabel">Update Status</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
         </div>
+        <div class="modal-body">
+          <p>Data berikut telah mengalami perubahan:</p>
+          <ul>
+            <li *ngFor="let product of changedProducts">
+              <strong>{{ product.name }}</strong> - Status:
+              {{ product.isActivated ? "Aktif" : "Tidak Aktif" }}
+            </li>
+          </ul>
+          <p>apakah Anda yakin?</p>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+            (click)="refreshTable()"
+          >
+            Close
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-dismiss="modal"
+            (click)="buttonsavecategory()"
+          >
+            Save
+          </button>
+        </div>
+      </div>
     </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div
+      id="successToast"
+      class="toast align-items-center text-bg-success border-0"
+      role="alert"
+      aria-live="assertive"
+      aria-atomic="true"
+    >
+      <div class="d-flex">
+        <div class="toast-body">Your operation was successful!</div>
+        <button
+          type="button"
+          class="btn-close btn-close-white me-2 m-auto"
+          data-bs-dismiss="toast"
+          aria-label="Close"
+        ></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Error -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div
+      id="errorToast"
+      class="toast align-items-center text-bg-danger border-0"
+      role="alert"
+      aria-live="assertive"
+      aria-atomic="true"
+    >
+      <div class="d-flex">
+        <div class="toast-body">Something went wrong! Please try again.</div>
+        <button
+          type="button"
+          class="btn-close btn-close-white me-2 m-auto"
+          data-bs-dismiss="toast"
+          aria-label="Close"
+        ></button>
+      </div>
+    </div>
+  </div>
 </div>

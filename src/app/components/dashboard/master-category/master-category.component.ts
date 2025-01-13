@@ -13,6 +13,7 @@ export class MasterCategoryComponent implements OnInit {
   async ngOnInit() {
     await this.loadcategory(); 
     console.log("ini hasil dari category",this.category)
+    this.dataproductawal()
   }
 
 
@@ -51,6 +52,104 @@ export class MasterCategoryComponent implements OnInit {
   onDetailCategory(category:Category) :void{
     this.detailcategory = category;
     console.log(this.detailcategory)
+  }
+
+  refreshTable() {
+
+    this.category = JSON.parse(JSON.stringify(this.originalCategory));
+
+
+  }
+
+  // Properti untuk menyimpan data awal
+  originalCategory: any[] = [];
+  dataproductawal(){
+    this.originalCategory = JSON.parse(JSON.stringify(this.category));
+    
+  }
+
+  public allCategory: Category[] = []
+  changedProducts: any[] = [];
+  cekstatus(): void{
+    this.allCategory = JSON.parse(JSON.stringify(this.category));
+    if (this.allCategory.length !== this.originalCategory.length) {
+      console.error('Jumlah produk tidak sesuai antara allcategory dan originalcategory');
+      return;
+    }
+    this.changedProducts = this.allCategory.filter((category, index) => {
+      return category.isActivated !== this.originalCategory[index].isActivated; // Bandingkan status
+  
+    });
+
+    if (this.changedProducts.length > 0) {
+      const modalElement = document.getElementById('changeModal');
+      // Jika ada perubahan, buka modal
+      const changeModal = new (window as any).bootstrap.Modal(modalElement);
+      changeModal.show();
+    } else {
+      console.log("Tidak ada perubahan.");
+    }
+
+  }
+
+  closeModal() {
+    const modalElement = document.getElementById('changeModal');
+    const changeModal = new (window as any).bootstrap.Modal(modalElement);
+    changeModal.hide();
+  }
+  showErrorToast(): void {
+    const toastElement = document.getElementById('errorToast');
+    const toast = new (window as any).bootstrap.Toast(toastElement);
+    toast.show();
+  }
+  showsuccessToast(): void {
+    const toastElement = document.getElementById('successToast');
+    const toast = new (window as any).bootstrap.Toast(toastElement);
+    toast.show();
+  }
+
+  private categoryToSave: Category[] = []
+  buttonsavecategory() :void{
+    this.categoryToSave = JSON.parse(JSON.stringify(this.allCategory));
+    
+
+    this.loaderService.show(); 
+    this.categoryservice.saveCategory(this.categoryToSave).subscribe(
+      (response) => {
+        if (response['isSuccess']==true) {
+          console.log('All products saved successfully',response);
+          this.closeModal();
+          this.showsuccessToast()
+        } else {
+          console.error('Failed to save products');
+          this.refreshTable()
+          this.closeModal();
+          this.showErrorToast()
+        }
+        this.dataproductawal()
+        this.loaderService.hideWithDelay(2000);
+      },
+      (error) => {
+        console.error('Error saving products:', error);
+        this.refreshTable()
+        this.closeModal();
+        this.showErrorToast()
+        this.dataproductawal()
+        this.loaderService.hideWithDelay(2000);
+      }
+    );
+  }
+
+
+
+  isSecondCheckboxDisabled = true;
+  editstatusproduct(event:Event):void{
+    const isChecked = (event.target as HTMLInputElement).checked;
+    this.isSecondCheckboxDisabled = !isChecked;
+    if (!isChecked) {
+      this.cekstatus();  // Menjalankan fungsi cekstatus jika checkbox unchecked
+      console.log("cek kalau sudah uncheck")
+    }
   }
 
 }

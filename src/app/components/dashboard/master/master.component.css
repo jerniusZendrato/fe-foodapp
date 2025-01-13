@@ -9,7 +9,7 @@ h3{
     padding: 0 30px;
 }
 #isi-menu{
-    padding: 20px 50px;
+    padding: 20px 0;
     margin: 6px 10px;
     background-color: white;
     box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.4);
@@ -46,6 +46,10 @@ h3{
     color: #F80000;
 }
 
+#edit-status .edit{
+    position: absolute;
+}
+
 #fileter_kategory{
     margin: 20px 0;
     font-size: 20px;
@@ -61,6 +65,12 @@ h3{
 /* } */
 
 #isi-menu #isitabel_product tbody tr{
+    text-align: center;
+    vertical-align: middle;
+    align-items: center;
+}
+
+#isi-menu #isitabel_product thead tr{
     text-align: center;
     vertical-align: middle;
     align-items: center;
