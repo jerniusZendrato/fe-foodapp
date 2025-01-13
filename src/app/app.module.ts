@@ -18,6 +18,7 @@ import { MenuComponent } from './components/costumer/menu/menu.component';
 import { CostumerComponent } from './components/costumer/costumer.component';
 import { FilterByCategoryPipe } from './components/costumer/menu/filter-by-category.pipe';
 import { CartComponent } from './components/costumer/cart/cart.component';
+import { WelcomeComponent } from './custumer/welcome/welcome.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { CartComponent } from './components/costumer/cart/cart.component';
     MenuComponent,
     CostumerComponent,
     FilterByCategoryPipe,
-    CartComponent
+    CartComponent,
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,

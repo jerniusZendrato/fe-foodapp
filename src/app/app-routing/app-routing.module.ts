@@ -9,6 +9,7 @@ import { CostumerComponent } from '../components/costumer/costumer.component';
 import { SidebarComponent } from '../components/dashboard/sidebar/sidebar.component';
 import { CartComponent } from '../components/costumer/cart/cart.component';
 import { DashboardComponent } from '../components/dashboard/dashboard.component';
+import { WelcomeComponent } from '../custumer/welcome/welcome.component';
 
 const routes: Routes = [
   { path: 'admin', component: DashboardComponent,
@@ -20,9 +21,10 @@ const routes: Routes = [
   },
   { path: '', component: CostumerComponent, 
     children: [
+      { path: 'welcome', component: WelcomeComponent },
       { path: 'menu', component: MenuComponent },
       { path: 'cart', component: CartComponent },
-      { path: '', redirectTo: 'menu', pathMatch: 'full' }
+      { path: '', redirectTo: 'welcome', pathMatch: 'full' }
     ]
   },
 ];
