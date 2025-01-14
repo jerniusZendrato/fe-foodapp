@@ -3,7 +3,8 @@
     margin: 0 10px;
     background-color: white;
     box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.4);
-    border-radius: 0 0 30px 30px;
+    /* border-radius: 0 0 20px 20px; */
+    border-radius: 20px 20px 0 0;
     align-items: center;
 }
 h3{
@@ -22,18 +23,47 @@ h3{
     padding: 0 30px;
 }
 
+#isi-menu-body{
+    display: flex;
+    flex-direction: row;
+}
+
 #isi-menu{
-    padding: 20px 0;
+    padding: 20px 30px ;
     margin: 6px 10px;
     background-color: white;
     box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.4);
-    border-radius: 0 0 0 30px;
+    border-radius: 0 0 0 20px;
     align-items: center;
-    width: 50%; 
+    width: 55%; 
     overflow-y: auto; 
     height: 65vh;
 
 }
+#category-name{
+    cursor: pointer;
+}
+#category-name:hover{
+    color: #F80000;
+}
+
+
+#isi-menu03{
+    padding: 20px 60px ;
+    position: relative;
+    margin: 6px 10px;
+    background-color: white;
+    box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.4);
+    border-radius: 0 0 20px 0;
+    align-items: center;
+    width: 45%; 
+    overflow-y: auto;
+    height: 65vh;
+
+}
+
+
+
 
 #isi-menu::-webkit-scrollbar {
     display: none;

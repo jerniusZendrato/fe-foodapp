@@ -140,6 +140,17 @@ export class MasterCategoryComponent implements OnInit {
     );
   }
 
+  // fungsi change category
+
+  selectedCategory: string | null = null;
+  selectCategory(categoryName: string): void {
+    this.selectedCategory = categoryName;
+    console.log('Selected Category:', this.selectedCategory);
+  }
+  clearselectedCategory(): void{
+    this.selectedCategory = null;
+  }
+
 
 
   isSecondCheckboxDisabled = true;
