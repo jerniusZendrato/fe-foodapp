@@ -9,6 +9,7 @@ import { CostumerComponent } from '../components/costumer/costumer.component';
 import { SidebarComponent } from '../components/dashboard/sidebar/sidebar.component';
 import { CartComponent } from '../components/costumer/cart/cart.component';
 import { DashboardComponent } from '../components/dashboard/dashboard.component';
+import {MasterTableComponent} from '../components/dashboard/master-table/master-table.component';
 
 const routes: Routes = [
   { path: 'admin', component: DashboardComponent,
@@ -16,6 +17,7 @@ const routes: Routes = [
       { path: 'home', component: DashboardMenuComponent },
       { path: 'product', component: MasterComponent },
       { path: 'category', component:MasterCategoryComponent},
+      { path: 'table', component:MasterTableComponent},
     ]
   },
   { path: '', component: CostumerComponent, 

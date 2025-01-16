@@ -10,7 +10,7 @@
     "
   >
     <div id="header-menu">
-      <h3>Master Category</h3>
+      <h3>Master Table</h3>
 
       <div id="edit-status" class="form-check form-switch">
         <label class="form-check-label" for="flexSwitchCheckDefault"
@@ -59,28 +59,33 @@
       <div style="display: flex; flex-direction: row; gap: 5px"></div>
     </div>
   </div>
+
   <div id="isi-menu-body">
     <div id="isi-menu">
       <table id="isitabel_product" class="table table-striped">
         <thead>
           <tr>
-            <th scope="col">Category</th>
-            <th scope="col">Quantity</th>
+            <th scope="col">Table Number</th>
+            <th scope="col">QR</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
 
         <tbody>
           <!-- <h6 style="margin-left: 10px;">{{ category.key }}</h6> -->
-          <tr
-            *ngFor="let category of category"
-          >
-            <td id="category-name" (click)="selectCategory(category.name)">
-              {{ category.name }}
+          <tr *ngFor="let table of table">
+            <td id="category-name" (click)="selecttable(table.qrImageUrl)">
+              {{ table.name }}
             </td>
 
             <td>
-              {{ category.quantity }}
+              <img
+                style="object-fit: cover; object-position: center"
+                src="{{ table.qrImageUrl }}"
+                alt="QR Code for {{ table.name }}"
+                width="50"
+                height="50"
+              />
             </td>
             <td>
               <div
@@ -98,7 +103,7 @@
                     class="form-check-input"
                     type="checkbox"
                     role="switch"
-                    [(ngModel)]="category.isActivated"
+                    [(ngModel)]="table.activated"
                     [disabled]="isSecondCheckboxDisabled"
                   />
                 </div>
@@ -117,54 +122,32 @@
         <thead>
           <tr>
             <th scope="col">
-              Category
+              Detail Table Number
               <i class="fa-solid fa-pen-to-square" style="color: #f80000"></i>
             </th>
           </tr>
         </thead>
       </table>
       <!-- input yang keluar jika nama category belum di click atau sudah diclick cancel-->
-      <div *ngIf="!selectedCategory">
-        <input
-          class="form-control"
-          type="text"
-          value=" Click the category name to change it"
-          aria-label="Disabled input example"
-          disabled
-          readonly
-        />
+      <div *ngIf="!selectedtable" style="display: flex; flex-direction: column;width: 100%; height: 50%;justify-content: center; align-items: center;">
+        <h6 style="opacity: 40%;">Select a table name to view details.</h6>
       </div>
       <!-- akan keluar jika nama category di click -->
-      <div *ngIf="selectedCategory">
-        <input
-          class="form-control"
-          type="text"
-          value="{{ selectedCategory }}"
-          aria-label="Disabled input example"
-          disabled
-          readonly
+      <div *ngIf="selectedtable"  style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+        <img
+          style="object-fit: cover; object-position: center; align-items: center;"
+          src="{{ selectedtable }}"
+          alt="QR Code for {{ selectedtable }}"
+          width="60%"
         />
-        <input style="margin-top: 10px;"
-          type="text"
-          class="form-control"
-          id="exampleFormControlInput1"
-          placeholder="Insert change name"
-        />
-        <div style="position: absolute; bottom: 15%; right: 15%">
+
+        <div>
           <button
             type="button"
-            class="btn btn-secondary btn-sm"
-            data-bs-dismiss="modal"
-            (click)="clearselectedCategory()"
-          >
-            Cancel
-          </button>
-          <button
-            type="button"
-            style="margin-left: 5px"
+            style="position: absolute; right: 5%; bottom: 10%;"
             class="btn btn-primary btn-sm"
           >
-            Save changes
+            Download
           </button>
         </div>
       </div>
@@ -195,9 +178,9 @@
         <div class="modal-body">
           <p>Data berikut telah mengalami perubahan:</p>
           <ul>
-            <li *ngFor="let product of changedProducts">
-              <strong>{{ product.name }}</strong> - Status:
-              {{ product.isActivated ? "Aktif" : "Tidak Aktif" }}
+            <li *ngFor="let changedTable of changedTable">
+              <strong>{{ changedTable.name }}</strong> - Status:
+              {{ changedTable.activated ? "Aktif" : "Tidak Aktif" }}
             </li>
           </ul>
           <p>apakah Anda yakin?</p>
@@ -211,12 +194,7 @@
           >
             Close
           </button>
-          <button
-            type="button"
-            class="btn btn-primary"
-            data-bs-dismiss="modal"
-            (click)="buttonsavecategory()"
-          >
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
             Save
           </button>
         </div>

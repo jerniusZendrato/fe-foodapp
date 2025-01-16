@@ -126,6 +126,7 @@ export class MasterCategoryComponent implements OnInit {
           this.closeModal();
           this.showErrorToast()
         }
+        // supaya menyimpan data awal yang sudah di update
         this.dataproductawal()
         this.loaderService.hideWithDelay(2000);
       },
@@ -134,7 +135,9 @@ export class MasterCategoryComponent implements OnInit {
         this.refreshTable()
         this.closeModal();
         this.showErrorToast()
+        // supaya menyimpan data awal yang sudah di update
         this.dataproductawal()
+
         this.loaderService.hideWithDelay(2000);
       }
     );

@@ -19,6 +19,7 @@ import { AppRoutingModule } from './app-routing/app-routing.module';
 import { CostumerComponent } from './components/costumer/costumer.component';
 import { MenuComponent } from './components/costumer/menu/menu.component';
 import { FilterByCategoryPipe } from './components/costumer/menu/filter-by-category.pipe';
+import { MasterTableComponent } from './components/dashboard/master-table/master-table.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { FilterByCategoryPipe } from './components/costumer/menu/filter-by-categ
     MasterCategoryComponent,
     LoaderComponent,
     CostumerComponent,
-    FilterByCategoryPipe
+    FilterByCategoryPipe,
+    MasterTableComponent
   ],
   imports: [
     BrowserModule,
