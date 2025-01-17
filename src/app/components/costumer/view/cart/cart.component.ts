@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Order } from 'src/app/models/order.model';
-import { OrderService } from 'src/app/service/order.costumer.service';
+import { OrderService } from 'src/app/components/costumer/service/order.service';
 
 @Component({
   selector: 'app-cart',
@@ -9,7 +9,7 @@ import { OrderService } from 'src/app/service/order.costumer.service';
 })
 export class CartComponent implements OnInit{
 
-  orders: Order = { userId: '19282bbd-b7a6-48f8-9ef4-b62aace832aa', productOrders: [] };
+  orders: Order = { userName: '19282bbd-b7a6-48f8-9ef4-b62aace832aa', productOrders: [] };
 
 
   constructor(

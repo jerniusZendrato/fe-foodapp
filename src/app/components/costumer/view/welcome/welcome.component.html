@@ -1,4 +1,4 @@
-<div style="margin-top: 82px">
+<div class="responsive-margin-top">
   <div class="d-flex justify-content-center">
     <img
       src="https://image-storage-order-app.s3.eu-north-1.amazonaws.com/product_image/logo-red.png"
@@ -24,8 +24,8 @@
 </div>
 
 <div
-  class="card-group d-flex flex-nowrap justify-content-center align-items-center"
-  style="margin-top: 30%; height: 200px"
+  class="card-group d-flex flex-nowrap justify-content-center align-items-center responsive-margin-top responsive-margin-bottom"
+  style="height: 200px; margin-right: 20px; margin-left: 20px"
 >
   <div
     class="card d-flex justify-content-center align-items-center"
@@ -67,7 +67,7 @@
         line-height: normal;
       "
       class=""
-      >7</a
+      >{{ tableNumber }}</a
     >
   </div>
 </div>
@@ -159,4 +159,23 @@
       style="color: #fff"
     ></i>
   </button>
+</div>
+
+
+<div *ngIf="showModal" class="modal fade show" style="display: block;" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      
+      <div class="modal-body">
+        <div class="form-floating">
+          <input type="text" class="form-control" id="tableNumber" placeholder="Table Number" [(ngModel)]="tableNumber"
+          >
+          <label for="tableNumber">Table Number</label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="saveTableNumber()">save</button>
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,39 +1,39 @@
 import { Injectable } from '@angular/core';
-import { Order } from '../models/order.model';
+import { Order } from '../../../models/order.model';
 import { catchError, Observable, of, tap } from 'rxjs';
-import { environment } from '../environment/environment';
+import { environment } from '../../../environment/environment';
 import { HttpClient } from '@angular/common/http';
-import { Product } from '../models/product.model';
+import { Product } from '../../../models/product.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OrderService {
   private apiUrl = `${environment.API_URL}/order`;
-  private storageKey = 'costumerOrder'; // Key for localStorage
+  private storageKey = 'costumerOrder';
 
   order: Order = {
-    userId: '19282bbd-b7a6-48f8-9ef4-b62aace832aa',
+    userName: '19282bbd-b7a6-48f8-9ef4-b62aace832aa',
     productOrders: [],
   };
 
   constructor(private http: HttpClient) {}
 
   getOrder(): Order | undefined {
-    const storedOrder = localStorage.getItem(this.storageKey); // Retrieve the order from local storage
+    const storedOrder = localStorage.getItem(this.storageKey);
     if (storedOrder) {
-      this.order = JSON.parse(storedOrder); // Parse the JSON string back to an Order object
-      return this.order; // Return the current order
+      this.order = JSON.parse(storedOrder);
+      return this.order;
     }
-    return undefined; // Return undefined if no order is found
+    return undefined;
   }
 
   clearOrder() {
-    localStorage.removeItem(this.storageKey); // Clear the order from localStorage
+    localStorage.removeItem(this.storageKey);
   }
 
   private updateLocalStorage() {
-    localStorage.setItem(this.storageKey, JSON.stringify(this.order)); // Update localStorage with the current order
+    localStorage.setItem(this.storageKey, JSON.stringify(this.order));
   }
 
   decreaseQuantity(product: Product) {
@@ -48,7 +48,7 @@ export class OrderService {
           (item) => item.id !== product.id
         );
       }
-      this.updateLocalStorage(); // Update localStorage after changing quantity
+      this.updateLocalStorage();
     }
 
     console.log('this.order :>> ', this.order);
@@ -137,6 +137,7 @@ export class OrderService {
       ) || 0
     );
   }
+
   getTotalPrice(): number {
     // Retrieve the order from local storage
     const storedOrder = localStorage.getItem(this.storageKey);
@@ -144,9 +145,17 @@ export class OrderService {
       this.order = JSON.parse(storedOrder); // Parse the JSON string back to an Order object
     }
     return (
-      this.order.productOrders.reduce((total: number, item: { price: number; quantity: number; }) => total + (item.price * item.quantity),
+      this.order.productOrders.reduce(
+        (total: number, item: { price: number; quantity: number }) =>
+          total + item.price * item.quantity,
         0
       ) || 0
     );
+  }
+
+  updateNameAndNoTabelOrder(customerName: string, NoTableOrder?: number) {
+    this.order.userName = customerName; 
+    this.order.noTable = NoTableOrder;
+    this.updateLocalStorage()
   }
 }

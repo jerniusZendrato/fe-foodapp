@@ -14,11 +14,12 @@ import { MasterComponent } from './components/dashboard/master/master.component'
 import { FormsModule } from '@angular/forms';
 import { MasterCategoryComponent } from './components/dashboard/master-category/master-category.component';
 import { LoaderComponent } from './loader/loader.component';
-import { MenuComponent } from './components/costumer/menu/menu.component';
-import { CostumerComponent } from './components/costumer/costumer.component';
-import { FilterByCategoryPipe } from './components/costumer/menu/filter-by-category.pipe';
-import { CartComponent } from './components/costumer/cart/cart.component';
-import { WelcomeComponent } from './custumer/welcome/welcome.component';
+import { MenuComponent } from './components/costumer/view/menu/menu.component';
+import { CostumerComponent } from './components/costumer/view/costumer.component';
+import { FilterByCategoryPipe } from './components/costumer/view/menu/filter-by-category.pipe';
+import { CartComponent } from './components/costumer/view/cart/cart.component';
+import { WelcomeComponent } from './components/costumer/view/welcome/welcome.component';
+import { MenuCardComponent } from './costumer/view/menu/menu-card/menu-card.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { WelcomeComponent } from './custumer/welcome/welcome.component';
     CostumerComponent,
     FilterByCategoryPipe,
     CartComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    MenuCardComponent
   ],
   imports: [
     BrowserModule,

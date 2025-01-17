@@ -7,7 +7,8 @@ export interface ProductOrder {
 }
 
 export interface Order {
-    userId?: string;
+    userName?: string;
+    noTable?: number;
     totalPrice?: number;
     productOrders: ProductOrder[];
 }
