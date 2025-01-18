@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { OrderService } from 'src/app/components/costumer/service/order.service';
+import { OrderService } from 'src/app/components/costomer/service/order.service';
 
 @Component({
   selector: 'app-welcome',

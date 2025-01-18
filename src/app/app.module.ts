@@ -14,12 +14,13 @@ import { MasterComponent } from './components/dashboard/master/master.component'
 import { FormsModule } from '@angular/forms';
 import { MasterCategoryComponent } from './components/dashboard/master-category/master-category.component';
 import { LoaderComponent } from './loader/loader.component';
-import { MenuComponent } from './components/costumer/view/menu/menu.component';
-import { CostumerComponent } from './components/costumer/view/costumer.component';
-import { FilterByCategoryPipe } from './components/costumer/view/menu/filter-by-category.pipe';
-import { CartComponent } from './components/costumer/view/cart/cart.component';
-import { WelcomeComponent } from './components/costumer/view/welcome/welcome.component';
-import { MenuCardComponent } from './costumer/view/menu/menu-card/menu-card.component';
+import { MenuComponent } from './components/costomer/view/menu/menu.component';
+import { CostumerComponent } from './components/costomer/view/costumer.component';
+import { FilterByCategoryPipe } from './components/costomer/view/menu/filter-by-category.pipe';
+import { CartComponent } from './components/costomer/view/cart/cart.component';
+import { WelcomeComponent } from './components/costomer/view/welcome/welcome.component';
+import { ProductCardComponent } from './components/costomer/components/product-card/product-card.component';
+import { StatusComponent } from './components/costomer/view/status/status.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { MenuCardComponent } from './costumer/view/menu/menu-card/menu-card.comp
     FilterByCategoryPipe,
     CartComponent,
     WelcomeComponent,
-    MenuCardComponent
+    ProductCardComponent,
+    StatusComponent
   ],
   imports: [
     BrowserModule,

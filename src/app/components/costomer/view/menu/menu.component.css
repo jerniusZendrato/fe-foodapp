@@ -1,12 +1,4 @@
-header {
-  position: fixed; 
-  top: 0; /* Aligns it to the top of the viewport */
-  left: 0; /* Aligns it to the left */
-  right: 0; /* Ensures it stretches across the width */
-  background-color: white;
-  z-index: 1000; /* Ensures it stays above other content */
-  padding: 10px; /* Optional: adds some padding */
-}
+@import url(../costumer.component.css);
 
 .border-red--focus:focus {
   border: 1px solid #E0E0E0  !;

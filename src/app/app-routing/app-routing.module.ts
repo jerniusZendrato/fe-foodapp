@@ -4,12 +4,13 @@ import { DashboardMenuComponent } from '../components/dashboard/dashboard-menu/d
 import { MasterComponent } from '../components/dashboard/master/master.component';
 import { RouterModule, Routes } from '@angular/router';
 import { MasterCategoryComponent } from '../components/dashboard/master-category/master-category.component';
-import { MenuComponent } from '../components/costumer/view/menu/menu.component';
-import { CostumerComponent } from '../components/costumer/view/costumer.component';
+import { MenuComponent } from '../components/costomer/view/menu/menu.component';
+import { CostumerComponent } from '../components/costomer/view/costumer.component';
 import { SidebarComponent } from '../components/dashboard/sidebar/sidebar.component';
-import { CartComponent } from '../components/costumer/view/cart/cart.component';
+import { CartComponent } from '../components/costomer/view/cart/cart.component';
 import { DashboardComponent } from '../components/dashboard/dashboard.component';
-import { WelcomeComponent } from '../components/costumer/view/welcome/welcome.component';
+import { WelcomeComponent } from '../components/costomer/view/welcome/welcome.component';
+import { StatusComponent } from '../components/costomer/view/status/status.component';
 
 const routes: Routes = [
   { path: 'admin', component: DashboardComponent,
@@ -24,6 +25,7 @@ const routes: Routes = [
       { path: 'welcome', component: WelcomeComponent },
       { path: 'menu', component: MenuComponent },
       { path: 'cart', component: CartComponent },
+      { path: 'status', component: StatusComponent },
       { path: '', redirectTo: 'welcome', pathMatch: 'full' }
     ]
   },

@@ -77,7 +77,7 @@ export class OrderService {
     // Retrieve the order from local storage
     const storedOrder = localStorage.getItem(this.storageKey);
     if (storedOrder) {
-      this.order = JSON.parse(storedOrder); // Parse the JSON string back to an Order object
+      this.order = JSON.parse(storedOrder);
     }
 
     // Find the product in the order
@@ -126,7 +126,7 @@ export class OrderService {
     // Retrieve the order from local storage
     const storedOrder = localStorage.getItem(this.storageKey);
     if (storedOrder) {
-      this.order = JSON.parse(storedOrder); // Parse the JSON string back to an Order object
+      this.order = JSON.parse(storedOrder);
     }
 
     // Calculate the total quantity of items in the order
@@ -139,10 +139,9 @@ export class OrderService {
   }
 
   getTotalPrice(): number {
-    // Retrieve the order from local storage
     const storedOrder = localStorage.getItem(this.storageKey);
     if (storedOrder) {
-      this.order = JSON.parse(storedOrder); // Parse the JSON string back to an Order object
+      this.order = JSON.parse(storedOrder);
     }
     return (
       this.order.productOrders.reduce(
@@ -153,9 +152,35 @@ export class OrderService {
     );
   }
 
+  getTableNo(): number | undefined {
+    const storedOrder = localStorage.getItem(this.storageKey);
+    if (storedOrder) {
+      this.order = JSON.parse(storedOrder);
+      return this.order.noTable;
+    }
+    return undefined;
+  }
+
+  getCustomerName(): string | undefined {
+    const storedOrder = localStorage.getItem(this.storageKey);
+    if (storedOrder) {
+      this.order = JSON.parse(storedOrder);
+      return this.order.userName;
+    }
+    return undefined;
+  }
+
+  getTax(): number {
+      return (this.getTotalPrice()*0.10);
+  }
+
   updateNameAndNoTabelOrder(customerName: string, NoTableOrder?: number) {
-    this.order.userName = customerName; 
+    this.order.userName = customerName;
     this.order.noTable = NoTableOrder;
-    this.updateLocalStorage()
+    this.updateLocalStorage();
+  }
+
+  getTotalTotalPrice(): number {
+   return this.getTotalPrice() + this.getTax(); 
   }
 }
