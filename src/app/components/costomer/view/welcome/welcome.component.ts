@@ -52,7 +52,7 @@ export class WelcomeComponent implements OnInit {
         this.customerName,
         this.tableNumber ?? 0
       );
-      this.router.navigate(['/menu']); // Navigate to the menu
+      this.router.navigate(['/menu']); 
     }
 
     console.log('this.nameError :>> ', this.nameError);

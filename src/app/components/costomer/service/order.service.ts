@@ -4,6 +4,7 @@ import { catchError, Observable, of, tap } from 'rxjs';
 import { environment } from '../../../environment/environment';
 import { HttpClient } from '@angular/common/http';
 import { Product } from '../../../models/product.model';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,11 @@ export class OrderService {
     productOrders: [],
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   getOrder(): Order | undefined {
     const storedOrder = localStorage.getItem(this.storageKey);
@@ -29,7 +34,21 @@ export class OrderService {
   }
 
   clearOrder() {
+   
+    const userName = this.order.userName ? this.order.userName : '-';
+    const noTable = this.order.noTable;
+
     localStorage.removeItem(this.storageKey);
+
+ 
+
+    // Memperbarui nama dan nomor meja
+    
+    this.router.navigate(['/menu']);
+    console.log('userName :>> ', userName);
+    console.log('noTable :>> ', noTable);
+    
+    this.updateNameAndNoTabelOrder(userName, noTable) 
   }
 
   private updateLocalStorage() {
@@ -171,7 +190,7 @@ export class OrderService {
   }
 
   getTax(): number {
-      return (this.getTotalPrice()*0.10);
+    return this.getTotalPrice() * 0.1;
   }
 
   updateNameAndNoTabelOrder(customerName: string, NoTableOrder?: number) {
@@ -181,6 +200,6 @@ export class OrderService {
   }
 
   getTotalTotalPrice(): number {
-   return this.getTotalPrice() + this.getTax(); 
+    return this.getTotalPrice() + this.getTax();
   }
 }
