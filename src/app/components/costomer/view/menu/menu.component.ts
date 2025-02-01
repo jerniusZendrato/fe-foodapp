@@ -4,7 +4,7 @@ import { Product } from 'src/app/models/product.model';
 import { Order } from 'src/app/models/order.model';
 import { CategoryService } from 'src/app/service/category.service';
 import { ProductService } from 'src/app/service/product.service';
-import { OrderService } from 'src/app/components/costomer/service/order.service';
+import { OrderService } from 'src/app/components/costomer/service/order-costomer.service';
 
 @Component({
   selector: 'app-menu',

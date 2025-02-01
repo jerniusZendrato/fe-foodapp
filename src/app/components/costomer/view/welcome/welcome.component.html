@@ -67,7 +67,7 @@
         line-height: normal;
       "
       class=""
-      >{{ tableNumber }}</a
+      >{{ tableNum }}</a
     >
   </div>
 </div>
@@ -161,21 +161,3 @@
   </button>
 </div>
 
-
-<div *ngIf="showModal" class="modal fade show" style="display: block;" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      
-      <div class="modal-body">
-        <div class="form-floating">
-          <input type="text" class="form-control" id="tableNumber" placeholder="Table Number" [(ngModel)]="tableNumber"
-          >
-          <label for="tableNumber">Table Number</label>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="saveTableNumber()">save</button>
-      </div>
-    </div>
-  </div>
-</div>

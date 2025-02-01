@@ -21,6 +21,7 @@ import { CartComponent } from './components/costomer/view/cart/cart.component';
 import { WelcomeComponent } from './components/costomer/view/welcome/welcome.component';
 import { ProductCardComponent } from './components/costomer/components/product-card/product-card.component';
 import { StatusComponent } from './components/costomer/view/status/status.component';
+import { PageNotFoundComponent } from './components/costomer/view/page-not-found/page-not-found.component'
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { StatusComponent } from './components/costomer/view/status/status.compon
     CartComponent,
     WelcomeComponent,
     ProductCardComponent,
-    StatusComponent
+    StatusComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,

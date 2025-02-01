@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Order } from 'src/app/models/order.model';
-import { OrderService } from 'src/app/components/costomer/service/order.service';
+import { OrderService } from 'src/app/components/costomer/service/order-costomer.service';
 
 interface OrderInfo {
   key : string;

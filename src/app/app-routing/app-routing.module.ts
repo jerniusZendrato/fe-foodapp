@@ -11,31 +11,35 @@ import { CartComponent } from '../components/costomer/view/cart/cart.component';
 import { DashboardComponent } from '../components/dashboard/dashboard.component';
 import { WelcomeComponent } from '../components/costomer/view/welcome/welcome.component';
 import { StatusComponent } from '../components/costomer/view/status/status.component';
+import { PageNotFoundComponent } from '../components/costomer/view/page-not-found/page-not-found.component';
 
 const routes: Routes = [
-  { path: 'admin', component: DashboardComponent,
+  {
+    path: 'admin',
+    component: DashboardComponent,
     children: [
       { path: 'home', component: DashboardMenuComponent },
       { path: 'product', component: MasterComponent },
-      { path: 'category', component:MasterCategoryComponent},
-    ]
+      { path: 'category', component: MasterCategoryComponent },
+    ],
   },
-  { path: '', component: CostumerComponent, 
+  {
+    path: '',
+    component: CostumerComponent,
     children: [
       { path: 'welcome', component: WelcomeComponent },
       { path: 'menu', component: MenuComponent },
       { path: 'cart', component: CartComponent },
       { path: 'status', component: StatusComponent },
-      { path: '', redirectTo: 'welcome', pathMatch: 'full' }
-    ]
+      { path: '', redirectTo: 'welcome', pathMatch: 'full' },
+      { path: '404', component:  PageNotFoundComponent},
+    ],
   },
 ];
 
 @NgModule({
-  declarations: [
-
-  ],
-  imports: [RouterModule.forRoot(routes, {useHash: false})],
-  exports: [RouterModule]
-})  
-export class AppRoutingModule { }
+  declarations: [],
+  imports: [RouterModule.forRoot(routes, { useHash: false })],
+  exports: [RouterModule],
+})
+export class AppRoutingModule {}

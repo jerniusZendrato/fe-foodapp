@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { OrderService } from 'src/app/components/costomer/service/order.service';
+import { OrderService } from 'src/app/components/costomer/service/order-costomer.service';
+import { TableCostomerService } from '../../service/table-costomer.service';
+import { Table } from 'src/app/models/table.model';
 
 @Component({
   selector: 'app-welcome',
@@ -11,34 +13,39 @@ export class WelcomeComponent implements OnInit {
   customerName: string = '';
   nameError: boolean = false;
 
-  tableNumber: number | null = null;
+  tableId: string | null = null;
 
-  value: string = 'ag';
+  tableNum: string | null = null;
 
-  showModal: boolean = false;
+  table: Table | null = null;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    public orderService: OrderService
+    public orderService: OrderService,
+    public tableService: TableCostomerService
   ) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
-      const url = params['tableNumber'];
-
-      if (url) {
-        try {
-          this.tableNumber = !isNaN(url) ? url : null;
-          this.showModal = isNaN(url);
-        } catch (error) {
-          console.error('Error extracting number from URL:', error);
-          this.tableNumber = null;
-          this.showModal = true;
-        }
+      const tableId = params['table-id'];
+      if (tableId) {
+        console.log('tableId :>> ', tableId);
+  
+        this.tableService.getTable(tableId).subscribe(
+          (table) => {
+            this.table = table; 
+            this.tableNum = this.table.name.split(' ')[1];
+            console.log('this.table :>> ', this.table);
+          },
+          (error) => {
+            console.error('Error fetching table:', error);
+            this.table = null; 
+            this.router.navigate(['/404']);
+          }
+        );
       } else {
-        this.tableNumber = null;
-        this.showModal = true;
+        this.table = null; 
       }
     });
   }
@@ -48,18 +55,10 @@ export class WelcomeComponent implements OnInit {
       this.nameError = true;
     } else {
       this.nameError = false;
-      this.orderService.updateNameAndNoTabelOrder(
-        this.customerName,
-        this.tableNumber ?? 0
-      );
-      this.router.navigate(['/menu']); 
+      this.orderService.updateNameAndNoTabelOrder(this.customerName);
+      this.router.navigate(['/menu']);
     }
 
     console.log('this.nameError :>> ', this.nameError);
-  }
-
-  saveTableNumber() {
-    this.showModal = false;
-
   }
 }
