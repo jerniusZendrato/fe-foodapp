@@ -1,0 +1,17 @@
+.responsive-margin-top {
+  margin-top: 1vh; /* 5% of the viewport height */
+}
+
+.responsive-margin-bottom {
+  margin-bottom: 1vh; /* 5% of the viewport height */
+}
+
+@media (min-height: 600px) {
+  .responsive-margin-top {
+    margin-top: 7vh; /* 7% of the viewport height for larger screens */
+  }
+
+  .responsive-margin-bottom {
+    margin-bottom: 7vh; /* 7% of the viewport height for larger screens */
+  }
+}

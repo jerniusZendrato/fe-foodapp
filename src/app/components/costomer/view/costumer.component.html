@@ -1,0 +1,39 @@
+<div
+  style="
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+  "
+>
+  <div
+    style="
+      max-width: 480px;
+      width: 100%;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+    "
+  >
+    
+    <div style="box-sizing: border-box; flex: 1; font-family: inter;">
+      <router-outlet></router-outlet>
+
+      <!-- <p *ngFor="let item of [].constructor(100); let i = index">{{ i + 1 }}</p> -->
+    </div>
+
+    <!-- <footer
+      style="
+        background-color: #f0f0f0;
+        padding: 10px;
+        text-align: center;
+        font-size: 0.8em;
+        position: sticky;
+        bottom: 0;
+        z-index: 1000;
+      "
+    >
+      <p style="margin: 0">&copy; 2024 Website Saya</p>
+    </footer> -->
+  </div>
+</div>

@@ -1,0 +1,199 @@
+{
+  "uuid": "11359ee4-30ea-40a2-87fd-8bd59d64902d",
+  "lastMigration": 33,
+  "name": "Moockon",
+  "endpointPrefix": "",
+  "latency": 0,
+  "port": 3002,
+  "hostname": "",
+  "folders": [],
+  "routes": [
+    {
+      "uuid": "b95afc7b-803e-4001-aff9-81b99156e7eb",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "api/v1/product",
+      "responses": [
+        {
+          "uuid": "31183e7d-605b-4520-af6d-87d62eec411b",
+          "body": "{\r\n    \"isSuccess\": true,\r\n    \"data\": [\r\n        {\r\n            \"id\": \"706b0733-ce12-4b4c-bbdf-33e5af2cab07\",\r\n            \"name\": \"Teh Manis\",\r\n            \"urlImage\": \"https://img.freepik.com/free-photo/tasty-burger-isolated-white-background-fresh-hamburger-fastfood-with-beef-cheese_90220-1063.jpg\",\r\n            \"price\": 5000,\r\n            \"description\": \"Teh yang disajikan dengan gula\",\r\n            \"category\": \"ted\",\r\n            \"categoryId\": \"40a0ecda-4b38-4b1e-92d6-74dcbdae6932\",\r\n            \"isActivated\": true\r\n        },\r\n        {\r\n            \"id\": \"2c5bb781-31be-465e-9da7-251480461177\",\r\n            \"name\": \"Sate Ayam\",\r\n            \"urlImage\": \"https://img.freepik.com/free-photo/tasty-burger-isolated-white-background-fresh-hamburger-fastfood-with-beef-cheese_90220-1063.jpg\",\r\n            \"price\": 20000,\r\n            \"description\": \"Sate ayam dengan bumbu kacang\",\r\n            \"category\": \"ted\",\r\n            \"categoryId\": \"d466e4fa-9175-49b9-ad0a-1e178bbcdf2f\",\r\n            \"isActivated\": true\r\n        },\r\n        {\r\n            \"id\": \"630be222-15e9-456d-8af2-fd788e111ae0\",\r\n            \"name\": \"Es Jeruk\",\r\n            \"urlImage\": \"https://img.freepik.com/free-photo/tasty-burger-isolated-white-background-fresh-hamburger-fastfood-with-beef-cheese_90220-1063.jpg\",\r\n            \"price\": 7000,\r\n            \"description\": \"Minuman es jeruk segar\",\r\n            \"category\": \"ted\",\r\n            \"categoryId\": \"40a0ecda-4b38-4b1e-92d6-74dcbdae6932\",\r\n            \"isActivated\": true\r\n        },\r\n        {\r\n            \"id\": \"306ffb2d-2b65-4709-9c72-549ff190273c\",\r\n            \"name\": \"Mie Goreng\",\r\n            \"urlImage\": \"https://img.freepik.com/free-photo/tasty-burger-isolated-white-background-fresh-hamburger-fastfood-with-beef-cheese_90220-1063.jpg\",\r\n            \"price\": 12000,\r\n            \"description\": \"Mie yang digoreng dengan sayuran dan telur\",\r\n            \"category\": \"ted\",\r\n            \"categoryId\": \"d466e4fa-9175-49b9-ad0a-1e178bbcdf2f\",\r\n            \"isActivated\": true\r\n        },\r\n        {\r\n            \"id\": \"fd070979-f826-40b7-b78c-a6e17e1803fd\",\r\n            \"name\": \"Kopi Hitam\",\r\n            \"urlImage\": \"https://img.freepik.com/free-photo/tasty-burger-isolated-white-background-fresh-hamburger-fastfood-with-beef-cheese_90220-1063.jpg\",\r\n            \"price\": 10000,\r\n            \"description\": \"Kopi hitam yang disajikan panas\",\r\n            \"category\": \"ted\",\r\n            \"categoryId\": \"40a0ecda-4b38-4b1e-92d6-74dcbdae6932\",\r\n            \"isActivated\": true\r\n        },\r\n        {\r\n            \"id\": \"db93122c-2534-4951-9440-f162fe5e549d\",\r\n            \"name\": \"air kelapa LAGI\",\r\n            \"urlImage\": null,\r\n            \"price\": 23000,\r\n            \"description\": \"ini cuma air kelapa biasa\",\r\n            \"category\": \"ted\",\r\n            \"categoryId\": \"40a0ecda-4b38-4b1e-92d6-74dcbdae6932\",\r\n            \"isActivated\": false\r\n        },\r\n        {\r\n            \"id\": \"f0da14da-8c3c-45b2-a82a-1c5ff1de890c\",\r\n            \"name\": \"air kelapa LAGI\",\r\n            \"urlImage\": null,\r\n            \"price\": 23000,\r\n            \"description\": \"ini cuma air kelapa biasa\",\r\n            \"category\": \"ted\",\r\n            \"categoryId\": \"40a0ecda-4b38-4b1e-92d6-74dcbdae6932\",\r\n            \"isActivated\": false\r\n        },\r\n        {\r\n            \"id\": \"43a7ab53-8113-4ff8-881d-05c96ecb789c\",\r\n            \"name\": \"air kelapa LAGI\",\r\n            \"urlImage\": null,\r\n            \"price\": 23000,\r\n            \"description\": \"ini cuma air kelapa biasa\",\r\n            \"category\": \"ted\",\r\n            \"categoryId\": \"40a0ecda-4b38-4b1e-92d6-74dcbdae6932\",\r\n            \"isActivated\": false\r\n        },\r\n        {\r\n            \"id\": \"a09234c6-86ad-4fc5-8fc6-8aca73a463fc\",\r\n            \"name\": \"air kelapa LAGI\",\r\n            \"urlImage\": null,\r\n            \"price\": 23000,\r\n            \"description\": \"ini cuma air kelapa biasa\",\r\n            \"category\": \"ted\",\r\n            \"categoryId\": \"40a0ecda-4b38-4b1e-92d6-74dcbdae6932\",\r\n            \"isActivated\": false\r\n        },\r\n        {\r\n            \"id\": \"4be1440b-d9b0-4124-b11b-525fc56ff355\",\r\n            \"name\": \"air kelapa LAGI\",\r\n            \"urlImage\": null,\r\n            \"price\": 23000,\r\n            \"description\": \"ini cuma air kelapa biasa\",\r\n            \"category\": \"ted\",\r\n            \"categoryId\": \"40a0ecda-4b38-4b1e-92d6-74dcbdae6932\",\r\n            \"isActivated\": false\r\n        },\r\n        {\r\n            \"id\": \"5d721b4e-2532-4a51-bb54-3f858f1c451e\",\r\n            \"name\": \"air kelapa update True\",\r\n            \"urlImage\": null,\r\n            \"price\": 23000999,\r\n            \"description\": \"ini cuma air kelapa biasa999\",\r\n            \"category\": \"ted\",\r\n            \"categoryId\": \"40a0ecda-4b38-4b1e-92d6-74dcbdae6932\",\r\n            \"isActivated\": true\r\n        }\r\n    ],\r\n    \"timestamp\": \"2024-11-16T11:26:01.007+00:00\",\r\n    \"errors\": null\r\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "308e25f0-7a95-4b21-98a3-e354c3ef3bd1",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "api/v1/category",
+      "responses": [
+        {
+          "uuid": "49f9d207-3bad-4ffe-8a97-2d73c01f75ac",
+          "body": "{\r\n    \"isSuccess\": true,\r\n    \"data\": [\r\n        {\r\n            \"name\": \"Minuman\",\r\n            \"quantity\": 4,\r\n            \"activated\": true,\r\n            \"id\": \"40a0ecda-4b38-4b1e-92d6-74dcbdae6932\"\r\n        },\r\n        {\r\n            \"name\": \"Makanan\",\r\n            \"quantity\": 2,\r\n            \"activated\": true,\r\n            \"id\": \"d466e4fa-9175-49b9-ad0a-1e178bbcdf2f\"\r\n        },\r\n        {\r\n            \"name\": \"Snack\",\r\n            \"quantity\": 0,\r\n            \"activated\": false,\r\n            \"id\": \"03146675-76d5-43b8-8ab7-60ed492eaa7e\"\r\n        }\r\n    ],\r\n    \"timestamp\": \"2025-01-24T01:06:57.918+00:00\",\r\n    \"errors\": null\r\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "871cacd8-7541-491f-b4c2-75ce26d94054",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "api/v1/table/e9fd26e7-11c7-4a8d-ae41-b477b6bd1ac8",
+      "responses": [
+        {
+          "uuid": "4423ecf1-8814-45cf-a439-c623ffe23db5",
+          "body": "{\r\n    \"isSuccess\": true,\r\n    \"data\": {\r\n        \"id\": \"e9fd26e7-11c7-4a8d-ae41-b477b6bd1ac8\",\r\n        \"name\": \"meja 1\",\r\n        \"qrImageUrl\": null,\r\n        \"activated\": true\r\n    },      \r\n    \"timestamp\": \"2024-11-26T15:56:26.541+00:00\",\r\n    \"errors\": null\r\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "21188c20-53db-4b51-80a7-a6839882ae56",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "api/v1/table/12",
+      "responses": [
+        {
+          "uuid": "eb67751b-57ae-4616-9b5c-b95af746757c",
+          "body": "{\n  \"isSuccess\": true,\n  \"data\": null,\n  \"timestamp\": \"2024-11-26T15:56:26.541+00:00\",\n  \"errors\": {\n    \"order id\": [\n      \"NOT FOUND\"\n    ]\n  }\n}",
+          "latency": 0,
+          "statusCode": 404,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    }
+  ],
+  "rootChildren": [
+    {
+      "type": "route",
+      "uuid": "b95afc7b-803e-4001-aff9-81b99156e7eb"
+    },
+    {
+      "type": "route",
+      "uuid": "308e25f0-7a95-4b21-98a3-e354c3ef3bd1"
+    },
+    {
+      "type": "route",
+      "uuid": "871cacd8-7541-491f-b4c2-75ce26d94054"
+    },
+    {
+      "type": "route",
+      "uuid": "21188c20-53db-4b51-80a7-a6839882ae56"
+    }
+  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": true,
+  "headers": [
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "Access-Control-Allow-Origin",
+      "value": "*"
+    },
+    {
+      "key": "Access-Control-Allow-Methods",
+      "value": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+    },
+    {
+      "key": "Access-Control-Allow-Headers",
+      "value": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+    }
+  ],
+  "proxyReqHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "proxyResHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "data": [],
+  "callbacks": []
+}

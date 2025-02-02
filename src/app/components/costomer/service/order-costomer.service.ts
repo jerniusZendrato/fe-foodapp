@@ -1,39 +1,58 @@
 import { Injectable } from '@angular/core';
-import { Order } from '../models/order.model';
+import { Order } from '../../../models/order.model';
 import { catchError, Observable, of, tap } from 'rxjs';
-import { environment } from '../environment/environment';
+import { environment } from '../../../environment/environment';
 import { HttpClient } from '@angular/common/http';
-import { Product } from '../models/product.model';
+import { Product } from '../../../models/product.model';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OrderService {
   private apiUrl = `${environment.API_URL}/order`;
-  private storageKey = 'costumerOrder'; // Key for localStorage
+  private storageKey = 'costumerOrder';
 
   order: Order = {
-    userId: '19282bbd-b7a6-48f8-9ef4-b62aace832aa',
+    userName: '19282bbd-b7a6-48f8-9ef4-b62aace832aa',
     productOrders: [],
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   getOrder(): Order | undefined {
-    const storedOrder = localStorage.getItem(this.storageKey); // Retrieve the order from local storage
+    const storedOrder = localStorage.getItem(this.storageKey);
     if (storedOrder) {
-      this.order = JSON.parse(storedOrder); // Parse the JSON string back to an Order object
-      return this.order; // Return the current order
+      this.order = JSON.parse(storedOrder);
+      return this.order;
     }
-    return undefined; // Return undefined if no order is found
+    return undefined;
   }
 
   clearOrder() {
-    localStorage.removeItem(this.storageKey); // Clear the order from localStorage
+   
+    const userName = this.order.userName ? this.order.userName : '-';
+    const noTable = this.order.noTable;
+
+    localStorage.removeItem(this.storageKey);
+
+ 
+
+    // Memperbarui nama dan nomor meja
+    
+    this.router.navigate(['/menu']);
+    console.log('userName :>> ', userName);
+    console.log('noTable :>> ', noTable);
+    
+    this.updateNameAndNoTabelOrder(userName, noTable) 
   }
 
   private updateLocalStorage() {
-    localStorage.setItem(this.storageKey, JSON.stringify(this.order)); // Update localStorage with the current order
+    localStorage.setItem(this.storageKey, JSON.stringify(this.order));
   }
 
   decreaseQuantity(product: Product) {
@@ -48,7 +67,7 @@ export class OrderService {
           (item) => item.id !== product.id
         );
       }
-      this.updateLocalStorage(); // Update localStorage after changing quantity
+      this.updateLocalStorage();
     }
 
     console.log('this.order :>> ', this.order);
@@ -77,7 +96,7 @@ export class OrderService {
     // Retrieve the order from local storage
     const storedOrder = localStorage.getItem(this.storageKey);
     if (storedOrder) {
-      this.order = JSON.parse(storedOrder); // Parse the JSON string back to an Order object
+      this.order = JSON.parse(storedOrder);
     }
 
     // Find the product in the order
@@ -126,7 +145,7 @@ export class OrderService {
     // Retrieve the order from local storage
     const storedOrder = localStorage.getItem(this.storageKey);
     if (storedOrder) {
-      this.order = JSON.parse(storedOrder); // Parse the JSON string back to an Order object
+      this.order = JSON.parse(storedOrder);
     }
 
     // Calculate the total quantity of items in the order
@@ -137,16 +156,50 @@ export class OrderService {
       ) || 0
     );
   }
+
   getTotalPrice(): number {
-    // Retrieve the order from local storage
     const storedOrder = localStorage.getItem(this.storageKey);
     if (storedOrder) {
-      this.order = JSON.parse(storedOrder); // Parse the JSON string back to an Order object
+      this.order = JSON.parse(storedOrder);
     }
     return (
-      this.order.productOrders.reduce((total: number, item: { price: number; quantity: number; }) => total + (item.price * item.quantity),
+      this.order.productOrders.reduce(
+        (total: number, item: { price: number; quantity: number }) =>
+          total + item.price * item.quantity,
         0
       ) || 0
     );
+  }
+
+  getTableNo(): number | undefined {
+    const storedOrder = localStorage.getItem(this.storageKey);
+    if (storedOrder) {
+      this.order = JSON.parse(storedOrder);
+      return this.order.noTable;
+    }
+    return undefined;
+  }
+
+  getCustomerName(): string | undefined {
+    const storedOrder = localStorage.getItem(this.storageKey);
+    if (storedOrder) {
+      this.order = JSON.parse(storedOrder);
+      return this.order.userName;
+    }
+    return undefined;
+  }
+
+  getTax(): number {
+    return this.getTotalPrice() * 0.1;
+  }
+
+  updateNameAndNoTabelOrder(customerName: string, NoTableOrder?: number) {
+    this.order.userName = customerName;
+    this.order.noTable = NoTableOrder;
+    this.updateLocalStorage();
+  }
+
+  getTotalTotalPrice(): number {
+    return this.getTotalPrice() + this.getTax();
   }
 }

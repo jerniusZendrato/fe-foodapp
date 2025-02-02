@@ -1,10 +1,3 @@
-// export interface Table {
-//     id:string;
-//     name: string;
-//     qrImageUrl:string;
-//     activated: boolean;
-// }
-
 export interface Table {
     id:string;
     name: string;
@@ -12,5 +5,3 @@ export interface Table {
     qrImage?: string;
     activated: boolean;
 }
-
-

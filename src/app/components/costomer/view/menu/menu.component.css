@@ -1,0 +1,54 @@
+@import url(../costumer.component.css);
+
+.border-red--focus:focus {
+  border: 1px solid #E0E0E0  !;
+  box-shadow: none; 
+}
+
+.border-bottom-red {
+  border-bottom: 5px solid #ff0000 !important; /* Ganti 'black' dengan warna yang diinginkan */
+}
+
+.btn-red {
+  background-color: #ff0000;
+  color: white;
+}
+
+.btn-red:hover {
+  background-color: #ff0000;
+  /* transform: scale(1.05); */
+}
+
+.btn-red:active {
+  background-color: #ff0000;
+  /* transform: scale(0.95); */
+}
+
+/* Kategori */
+.category-bar {
+  overflow-x: auto;
+  white-space: nowrap;
+  background-color: white;
+  padding: 10px 0;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.category-bar button {
+  flex-shrink: 0;
+  margin-right: 10px;
+}
+.category-bar button.active {
+  background-color: black;
+  color: white;
+  border: none;
+}
+.category-bar::-webkit-scrollbar {
+  display: none;
+}
+/* Card */
+.card {
+  border: none;
+}
+.card img {
+  border-radius: 5px;
+}

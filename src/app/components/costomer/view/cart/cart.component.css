@@ -1,0 +1,36 @@
+@import url(../costumer.component.css);
+
+
+.order-list {
+  max-height: 370px;
+  min-height: 370px; 
+  overflow-y: scroll;
+  scrollbar-width: none; /* Untuk Firefox */
+  -ms-overflow-style: none; /* Untuk Internet Explorer dan Edge */
+}
+
+.order-list::-webkit-scrollbar {
+  display: none; /* Untuk Chrome, Safari, dan Opera */
+}
+
+.form-check-input {
+    background-color: #ff0000;
+    border-color: #ff0000;
+    margin-left: 14px
+}
+
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.25);
+}
+
+.circle {
+    width: 24px;
+    height: 24px;
+    background-color: black;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}

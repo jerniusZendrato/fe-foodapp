@@ -16,11 +16,16 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MasterCategoryComponent } from './components/dashboard/master-category/master-category.component';
 import { LoaderComponent } from './loader/loader.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
-import { CostumerComponent } from './components/costumer/costumer.component';
-import { MenuComponent } from './components/costumer/menu/menu.component';
-import { FilterByCategoryPipe } from './components/costumer/menu/filter-by-category.pipe';
 import { MasterTableComponent } from './components/dashboard/master-table/master-table.component';
 import { TransaksiCassierAdminComponent } from './components/dashboard/transaksi-cassier-admin/transaksi-cassier-admin.component';
+import { MenuComponent } from './components/costomer/view/menu/menu.component';
+import { CostumerComponent } from './components/costomer/view/costumer.component';
+import { FilterByCategoryPipe } from './components/costomer/view/menu/filter-by-category.pipe';
+import { CartComponent } from './components/costomer/view/cart/cart.component';
+import { WelcomeComponent } from './components/costomer/view/welcome/welcome.component';
+import { ProductCardComponent } from './components/costomer/components/product-card/product-card.component';
+import { StatusComponent } from './components/costomer/view/status/status.component';
+import { PageNotFoundComponent } from './components/costomer/view/page-not-found/page-not-found.component'
 
 @NgModule({
   declarations: [
@@ -38,7 +43,12 @@ import { TransaksiCassierAdminComponent } from './components/dashboard/transaksi
     CostumerComponent,
     FilterByCategoryPipe,
     MasterTableComponent,
-    TransaksiCassierAdminComponent
+    TransaksiCassierAdminComponent,
+    CartComponent,
+    WelcomeComponent,
+    ProductCardComponent,
+    StatusComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
