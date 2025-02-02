@@ -143,15 +143,23 @@ export class MasterCategoryComponent implements OnInit {
     );
   }
 
-  // fungsi change category
+  // fungsi select category
 
   selectedCategory: string | null = null;
+  statuschagecategory: string | null = null;
+
   selectCategory(categoryName: string): void {
     this.selectedCategory = categoryName;
+    this.statuschagecategory = '1';
     console.log('Selected Category:', this.selectedCategory);
   }
   clearselectedCategory(): void{
-    this.selectedCategory = null;
+    this.statuschagecategory = null;
+  }
+
+  // funggsi change category
+  selectchangeCategory(): void{
+    this.statuschagecategory = '2';
   }
 
 

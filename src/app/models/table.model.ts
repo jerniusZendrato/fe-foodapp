@@ -1,7 +1,15 @@
+// export interface Table {
+//     id:string;
+//     name: string;
+//     qrImageUrl:string;
+//     activated: boolean;
+// }
+
 export interface Table {
     id:string;
     name: string;
-    qrImageUrl:string;
+    qrUrl:string;
+    qrImage?: string;
     activated: boolean;
 }
 

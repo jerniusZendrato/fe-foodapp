@@ -230,20 +230,23 @@
               style="
                 display: flex;
                 flex-direction: row;
-                justify-content: space-between;
+                justify-content: space-evenly;
                 align-items: center;
                 margin: 0 20px;
               "
             >
-              <div class="form-check form-switch" style="margin: 0">
+            <div style=" background-color: rgba(0, 0, 255, 0.77); padding: 1px 0 1px 10px; border-radius: 5px;">
+
+              <div class="form-check form-switch" style="margin: 0;  font-size: 16px;" >
                 <input
-                  class="form-check-input"
-                  type="checkbox"
-                  role="switch"
-                  [(ngModel)]="products.isActivated"
-                  [disabled]="isSecondCheckboxDisabled"
+                class="form-check-input"
+                type="checkbox"
+                role="switch"
+                [(ngModel)]="products.isActivated"
+                [disabled]="isSecondCheckboxDisabled"
                 />
               </div>
+            </div>
 
               <div
                 (click)="onEditProduct(products)"
@@ -251,13 +254,19 @@
                 data-bs-target="#exampleModal"
                 style="margin: 0; padding: 0"
               >
+                <!-- <i
+                  style=" font-size: 20px; color: green; cursor: pointer"
+                  class="fa-solid fa-pen-to-square"
+                ></i> -->
                 <i
-                  style="font-size: 20px; color: green; cursor: pointer"
+                  style="background-color: green; padding: 5px 10px; border-radius: 5px; font-size: 16px; color: rgb(255, 255, 255); cursor: pointer"
                   class="fa-solid fa-pen-to-square"
                 ></i>
               </div>
-              <div style="color: #f80000; font-size: 20px; margin: 0">
-                <i class="fa-solid fa-trash"></i>
+              <div style="color: #f80000; ; margin: 0">
+                <i style="background-color: #f80000; padding: 5px 10px; border-radius: 5px; font-size: 16px; color: rgb(255, 255, 255); cursor: pointer"
+                class="fa-solid fa-trash"></i>
+                <!-- <i class="fa-solid fa-trash"></i> -->
               </div>
             </div>
           </td>

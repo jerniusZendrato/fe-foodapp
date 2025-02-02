@@ -10,14 +10,17 @@ import { SidebarComponent } from '../components/dashboard/sidebar/sidebar.compon
 import { CartComponent } from '../components/costumer/cart/cart.component';
 import { DashboardComponent } from '../components/dashboard/dashboard.component';
 import {MasterTableComponent} from '../components/dashboard/master-table/master-table.component';
+import { TransaksiCassierAdminComponent } from '../components/dashboard/transaksi-cassier-admin/transaksi-cassier-admin.component';
 
 const routes: Routes = [
   { path: 'admin', component: DashboardComponent,
     children: [
-      { path: 'home', component: DashboardMenuComponent },
+      { path: '', component: DashboardMenuComponent },
+      // { path: 'home', component: DashboardMenuComponent },
       { path: 'product', component: MasterComponent },
       { path: 'category', component:MasterCategoryComponent},
       { path: 'table', component:MasterTableComponent},
+      { path: 'cassier-admin', component:TransaksiCassierAdminComponent},
     ]
   },
   { path: '', component: CostumerComponent, 

@@ -20,6 +20,7 @@ import { CostumerComponent } from './components/costumer/costumer.component';
 import { MenuComponent } from './components/costumer/menu/menu.component';
 import { FilterByCategoryPipe } from './components/costumer/menu/filter-by-category.pipe';
 import { MasterTableComponent } from './components/dashboard/master-table/master-table.component';
+import { TransaksiCassierAdminComponent } from './components/dashboard/transaksi-cassier-admin/transaksi-cassier-admin.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { MasterTableComponent } from './components/dashboard/master-table/master
     LoaderComponent,
     CostumerComponent,
     FilterByCategoryPipe,
-    MasterTableComponent
+    MasterTableComponent,
+    TransaksiCassierAdminComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,151 @@
+<div style="width: 100%; box-sizing: border-box">
+  <div
+    style="
+      display: flex;
+      flex-direction: column;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      background-color: #fff9f9;
+    "
+  >
+    <div id="header-menu">
+      <h3>Cassier Admin</h3>
+    </div>
+
+    <div id="isi-menu02">
+      <div
+        id="fileter_kategory"
+        tabindex="0"
+        data-bs-toggle="popover"
+        data-bs-trigger="hover focus"
+        data-bs-content="Disabled popover"
+      >
+        <div style="display: flex; flex-direction: row; align-items: center">
+          <form class="d-flex" role="search" style="margin-left: 30px">
+            <input
+              class="form-control me-2"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+            />
+          </form>
+        </div>
+
+        <div style="display: flex; flex-direction: row">
+          <button type="button" class="btn btn-primary">Add New Order</button>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: row; gap: 5px"></div>
+    </div>
+  </div>
+
+  <div id="isi-menu-body">
+    <div id="isi-menu">
+      <table id="isitabel_product" class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">ORDER ID</th>
+            <th scope="col">TABLE</th>
+            <th scope="col">ORDERAN TYPE</th>
+            <th scope="col">DATE</th>
+            <th scope="col">PAYMENT</th>
+            <th scope="col">DETAIL</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <!-- <h6 style="margin-left: 10px;">{{ category.key }}</h6> -->
+          <tr>
+            <td id="category-name">
+              <p>a</p>
+            </td>
+
+            <td>
+              <p>a</p>
+            </td>
+            <td>
+              <p>a</p>
+            </td>
+            <td>
+              <p>a</p>
+            </td>
+            <td >
+              <p style="margin: 2px 6px; border-radius: 5px; background-color: #A2FF99;">a</p>
+            </td>
+            <td>
+              <div
+                style="
+                  display: flex;
+                  flex-direction: row;
+                  justify-content: center;
+                  gap: 30px;
+                  align-items: center;
+                  margin: 0 20px;
+                "
+              >
+            
+
+                <div style="color: green; font-size: 20px; margin: 0">
+                  <i class="fa-solid fa-print"></i>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div id="isi-menu-0304">
+      <div id="isi-menu03">
+        <div
+          id="judul-tabel-delivery"
+          style="display: flex; align-items: center; margin-bottom: 2px"
+        >
+          <h6 style="margin: 0; margin: 6px 0 3px 0"><B>DELIVERY STATUS</B></h6>
+          <!-- <i class="fa-solid fa-pen-to-square" style="color: #f80000"></i> -->
+        </div>
+        <table id="isitabel_product" class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">ORDER ID</th>
+              <th scope="col">TABLE</th>
+              <th scope="col">TIME</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>A</td>
+              <td>A</td>
+              <td>A</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div id="isi-menu04">
+        <div
+          id="judul-tabel-delivery"
+          style="display: flex; align-items: center; margin-bottom: 2px"
+        >
+          <h6 style="margin: 0; margin: 6px 0 3px 0"><B>KITCHEN QUEUE</B></h6>
+        </div>
+        <table id="isitabel_product" class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">ORDER ID</th>
+              <th scope="col">TABLE</th>
+              <!-- <th scope="col">TIME</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>A</td>
+              <td>A</td>
+              <td>A</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

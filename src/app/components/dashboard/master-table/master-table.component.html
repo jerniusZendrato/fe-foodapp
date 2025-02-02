@@ -74,15 +74,14 @@
         <tbody>
           <!-- <h6 style="margin-left: 10px;">{{ category.key }}</h6> -->
           <tr *ngFor="let table of table">
-            <td id="category-name" (click)="selecttable(table.qrImageUrl)">
+            <td id="category-name" (click)="selecttable(table.qrImage)">
               {{ table.name }}
             </td>
 
             <td>
               <img
                 style="object-fit: cover; object-position: center"
-                src="{{ table.qrImageUrl }}"
-                alt="QR Code for {{ table.name }}"
+                src="{{ table.qrImage }}"
                 width="50"
                 height="50"
               />
@@ -129,28 +128,34 @@
         </thead>
       </table>
       <!-- input yang keluar jika nama category belum di click atau sudah diclick cancel-->
+      
       <div *ngIf="!selectedtable" style="display: flex; flex-direction: column;width: 100%; height: 50%;justify-content: center; align-items: center;">
         <h6 style="opacity: 40%;">Select a table name to view details.</h6>
       </div>
       <!-- akan keluar jika nama category di click -->
-      <div *ngIf="selectedtable"  style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+      <div *ngIf="selectedtable" style="width: 55%;">
+      <div   style="border: 2px solid black; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3); display: flex;  flex-direction: column; align-items: center;">
         <img
           style="object-fit: cover; object-position: center; align-items: center;"
           src="{{ selectedtable }}"
           alt="QR Code for {{ selectedtable }}"
-          width="60%"
+          width="100%"
         />
+        <h3 style="margin:0 0 10px 0; height: 100%;">Tabel 1</h3>
+        
 
-        <div>
-          <button
-            type="button"
-            style="position: absolute; right: 5%; bottom: 10%;"
-            class="btn btn-primary btn-sm"
-          >
-            Download
-          </button>
-        </div>
+        
       </div>
+      <p style="font-size: 12px; margin-top: 10px;"><i>Size QR Code 5 x 7 cm</i></p>
+      <div style="float: right; margin-top: 5px;">
+        <button
+          type="button"
+          class="btn btn-primary btn-sm"
+        >
+          Download
+        </button>
+      </div>
+    </div>
     </div>
   </div>
 

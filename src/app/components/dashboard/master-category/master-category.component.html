@@ -124,7 +124,7 @@
         </thead>
       </table>
       <!-- input yang keluar jika nama category belum di click atau sudah diclick cancel-->
-      <div *ngIf="!selectedCategory">
+      <div *ngIf="!statuschagecategory">
         <input
           class="form-control"
           type="text"
@@ -134,8 +134,41 @@
           readonly
         />
       </div>
+
+
+      <div *ngIf="statuschagecategory=='1'">
+        <input
+        style="cursor: pointer; background-color: #d3d3d3;"
+          class="form-control"
+          type="text"
+          value="{{ selectedCategory }}"
+          aria-label="Disabled input example"
+          
+          readonly
+          (click)="selectchangeCategory()"
+        />
+        
+        <p style="font-size: 11px; right: 13%; position: absolute;"><i>*Click to change name</i></p>
+        <div style="position: absolute; bottom: 15%; right: 15%">
+          <button
+            type="button"
+            class="btn btn-secondary btn-sm"
+            data-bs-dismiss="modal"
+            (click)="clearselectedCategory()"
+          >
+            Cancel
+          </button>
+          <!-- <button
+            type="button"
+            style="margin-left: 5px"
+            class="btn btn-primary btn-sm"
+          >
+            Save changes
+          </button> -->
+        </div>
+      </div>
       <!-- akan keluar jika nama category di click -->
-      <div *ngIf="selectedCategory">
+      <div *ngIf="statuschagecategory=='2'">
         <input
           class="form-control"
           type="text"

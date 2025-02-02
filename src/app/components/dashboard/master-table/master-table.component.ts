@@ -51,7 +51,9 @@ export class MasterTableComponent implements OnInit{
     for (const item of this.table) {
       try {
         // Generate QR Code untuk setiap item berdasarkan ID
-        item.qrImageUrl = await QRCode.toDataURL(item.name);
+        if(item.qrUrl){
+          item.qrImage = await QRCode.toDataURL(item.qrUrl);
+        }
       } catch (error) {
         console.error('Error generating QR Code', error);
       }
@@ -159,13 +161,13 @@ export class MasterTableComponent implements OnInit{
 
   // fungsi detail QR
 
-  selectedtable: string | null = null;
-  selecttable(QRtable: string): void {
+  selectedtable: string | undefined = undefined;
+  selecttable(QRtable: string | undefined): void {
     this.selectedtable = QRtable;
     console.log('Selected Category:', this.selectedtable);
   }
   clearselectedtabel(): void{
-    this.selectedtable = null;
+    this.selectedtable = undefined;
   }
 
 
