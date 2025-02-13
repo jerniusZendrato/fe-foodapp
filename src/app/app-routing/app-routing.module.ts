@@ -14,18 +14,19 @@ import { TransaksiCassierAdminComponent } from '../components/dashboard/transaks
 import { WelcomeComponent } from '../components/costomer/view/welcome/welcome.component';
 import { StatusComponent } from '../components/costomer/view/status/status.component';
 import { PageNotFoundComponent } from '../components/costomer/view/page-not-found/page-not-found.component';
+import { UnsavedChangesVerifikasiService } from '../guards/unsaved-changes-verifikasi.service';
 
 const routes: Routes = [
   {
     path: 'admin',
     component: DashboardComponent,
     children: [
-      { path: '', component: DashboardMenuComponent },
+      { path: '', component: DashboardMenuComponent,  canDeactivate: [UnsavedChangesVerifikasiService] },
       // { path: 'home', component: DashboardMenuComponent },
-      { path: 'product', component: MasterComponent },
-      { path: 'category', component:MasterCategoryComponent},
-      { path: 'table', component:MasterTableComponent},
-      { path: 'cassier-admin', component:TransaksiCassierAdminComponent},
+      { path: 'product', component: MasterComponent,  canDeactivate: [UnsavedChangesVerifikasiService]},
+      { path: 'category', component:MasterCategoryComponent, canDeactivate: [UnsavedChangesVerifikasiService]},
+      { path: 'table', component:MasterTableComponent, canDeactivate: [UnsavedChangesVerifikasiService]},
+      { path: 'cassier-admin', component:TransaksiCassierAdminComponent, canDeactivate: [UnsavedChangesVerifikasiService]},
     ]
   },
   {

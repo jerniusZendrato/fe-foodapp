@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Table } from 'src/app/models/table.model';
 import { LoaderService } from 'src/app/service/loader.service';
 import { TableService } from 'src/app/service/table.service';
@@ -51,8 +51,8 @@ export class MasterTableComponent implements OnInit{
     for (const item of this.table) {
       try {
         // Generate QR Code untuk setiap item berdasarkan ID
-        if(item.qrUrl){
-          item.qrImage = await QRCode.toDataURL(item.qrUrl);
+        if(item.urlWelcomePage){
+          item.qrImage = await QRCode.toDataURL(item.urlWelcomePage);
         }
       } catch (error) {
         console.error('Error generating QR Code', error);
@@ -65,15 +65,15 @@ export class MasterTableComponent implements OnInit{
 
 
 
-  isSecondCheckboxDisabled = true;
-  editstatusproduct(event:Event):void{
-    const isChecked = (event.target as HTMLInputElement).checked;
-    this.isSecondCheckboxDisabled = !isChecked;
-    if (!isChecked) {
-      this.cekstatus();  // Menjalankan fungsi cekstatus jika checkbox unchecked
-      console.log("cek kalau sudah uncheck")
-    }
-  }
+  // isSecondCheckboxDisabled = true;
+  // editstatusproduct(event:Event):void{
+  //   const isChecked = (event.target as HTMLInputElement).checked;
+  //   this.isSecondCheckboxDisabled = !isChecked;
+  //   if (!isChecked) {
+  //     this.cekstatus();  // Menjalankan fungsi cekstatus jika checkbox unchecked
+  //     console.log("cek kalau sudah uncheck")
+  //   }
+  // }
 
   originalTable: Table[] = [];
   datatableawal(){
@@ -83,7 +83,7 @@ export class MasterTableComponent implements OnInit{
 
 
   private tableToSave: Table[] = []
-  buttonsavecategory() :void{
+  buttonsavetable() :void{
     this.tableToSave = JSON.parse(JSON.stringify(this.allTable));
     
 
@@ -94,13 +94,14 @@ export class MasterTableComponent implements OnInit{
           console.log('All products saved successfully',response);
           this.closeModal();
           this.showsuccessToast()
+          this.datatableawal()
         } else {
           console.error('Failed to save products');
           this.refreshTable()
           this.closeModal();
           this.showErrorToast()
         }
-        this.datatableawal()
+        // this.datatableawal()
         this.loaderService.hideWithDelay(2000);
       },
       (error) => {
@@ -108,7 +109,7 @@ export class MasterTableComponent implements OnInit{
         this.refreshTable()
         this.closeModal();
         this.showErrorToast()
-        this.datatableawal()
+        // this.datatableawal()
         this.loaderService.hideWithDelay(2000);
       }
     );
@@ -118,6 +119,7 @@ export class MasterTableComponent implements OnInit{
 
   public allTable: Table[] = []
   changedTable: any[] = [];
+  isFormDirty: boolean = false;
   cekstatus(): void{
     this.allTable = JSON.parse(JSON.stringify(this.table));
     if (this.allTable.length !== this.originalTable.length) {
@@ -129,13 +131,52 @@ export class MasterTableComponent implements OnInit{
   
     });
 
+    if(this.changedTable.length > 0){
+      console.log("data ada perubahan", this.changedTable)
+      this.isFormDirty = true;
+    }
+    else{
+      console.log("data tidak ada perubahan")
+      this.isFormDirty = false;
+    }
+  }
+
+
+
+
+
+  cekperubahan(): void{
+    this.cekstatus()
     if (this.changedTable.length > 0) {
       const modalElement = document.getElementById('changeModal');
+      // jika ada perubahan,  ubah unutk notif
+      // this.isFormDirty = true;
       // Jika ada perubahan, buka modal
       const changeModal = new (window as any).bootstrap.Modal(modalElement);
       changeModal.show();
     } else {
       console.log("Tidak ada perubahan.");
+    }
+  }
+
+
+
+
+  // mencegah kehalaman lain
+  canDeactivate(): boolean {
+    this.cekstatus()
+    if (this.isFormDirty) {
+      return confirm('Changes you made may not be saved. Are you sure you want to leave?');
+    }
+    return true;
+  }
+
+  //mencegah reload atau menutup halaman
+  @HostListener('window:beforeunload', ['$event'])
+  unloadNotification($event: any): void {
+    this.cekstatus();
+    if (this.isFormDirty) {
+      $event.returnValue = 'Changes you made may not be saved';
     }
   }
 

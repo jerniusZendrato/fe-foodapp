@@ -35,7 +35,7 @@ export class WelcomeComponent implements OnInit {
         this.tableService.getTable(tableId).subscribe(
           (table) => {
             this.table = table; 
-            this.tableNum = this.table.name.split(' ')[1];
+            // this.tableNum = this.table.name.split(' ')[1];
             console.log('this.table :>> ', this.table);
           },
           (error) => {

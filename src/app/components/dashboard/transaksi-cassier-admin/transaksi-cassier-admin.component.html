@@ -22,7 +22,7 @@
         data-bs-content="Disabled popover"
       >
         <div style="display: flex; flex-direction: row; align-items: center">
-          <form class="d-flex" role="search" style="margin-left: 30px">
+          <form *ngIf="!addneworder" class="d-flex" role="search" style="margin-left: 30px">
             <input
               class="form-control me-2"
               type="search"
@@ -33,7 +33,8 @@
         </div>
 
         <div style="display: flex; flex-direction: row">
-          <button type="button" class="btn btn-primary">Add New Order</button>
+          <button type="button" class="btn btn-primary" (click)="moveaddorder()">{{ addneworder ? 'Cassier admin' : 'Add New Order' }}</button>
+          
         </div>
       </div>
 
@@ -41,12 +42,13 @@
     </div>
   </div>
 
-  <div id="isi-menu-body">
+  <div *ngIf="!addneworder" id="isi-menu-body" class="fade">
     <div id="isi-menu">
       <table id="isitabel_product" class="table table-striped">
         <thead>
           <tr>
             <th scope="col">ORDER ID</th>
+            <th scope="col">NAME</th>
             <th scope="col">TABLE</th>
             <th scope="col">ORDERAN TYPE</th>
             <th scope="col">DATE</th>
@@ -57,22 +59,26 @@
 
         <tbody>
           <!-- <h6 style="margin-left: 10px;">{{ category.key }}</h6> -->
-          <tr>
+          <tr *ngFor="let dataorder of orderview">
             <td id="category-name">
-              <p>a</p>
-            </td>
-
-            <td>
-              <p>a</p>
+              {{dataorder.code}}
             </td>
             <td>
-              <p>a</p>
+              {{dataorder.customerName}}
             </td>
             <td>
-              <p>a</p>
+              {{dataorder.tableName}}
             </td>
-            <td >
-              <p style="margin: 2px 6px; border-radius: 5px; background-color: #A2FF99;">a</p>
+            <td>
+              {{dataorder.type}}
+            </td>
+            <td>
+              {{dataorder.createdAt}}
+            </td>
+            <td>
+              <p *ngIf="dataorder.paymentStatus?.toLowerCase() == 'paid'" style="margin: 2px 6px; border-radius: 5px; background-color: #A2FF99;">{{dataorder.paymentStatus}}</p>
+              <p *ngIf="dataorder.paymentStatus?.toLowerCase() == 'unpaid'" style="margin: 2px 6px; border-radius: 5px; background-color: #FBC924;">{{dataorder.paymentStatus}}</p>
+              
             </td>
             <td>
               <div
@@ -105,7 +111,72 @@
           <h6 style="margin: 0; margin: 6px 0 3px 0"><B>DELIVERY STATUS</B></h6>
           <!-- <i class="fa-solid fa-pen-to-square" style="color: #f80000"></i> -->
         </div>
-        <table id="isitabel_product" class="table table-striped">
+        <table id="isitabel_product" class="table table-striped table-sm">
+          <thead>
+            <tr>
+              <th scope="col">ORDER ID</th>
+              <th scope="col">TABLE</th>
+              <th scope="col">TIME</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let orderdeliverd of orderdeliverd">
+              <td>{{orderdeliverd.code}}</td>
+              <td>{{orderdeliverd.tableName}}</td>
+              <td>{{orderdeliverd.deliverdAt}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div id="isi-menu04">
+        <div
+          id="judul-tabel-delivery"
+          style="display: flex; align-items: center; margin-bottom: 2px"
+        >
+          <h6 style="margin: 0; margin: 6px 0 3px 0"><B>KITCHEN QUEUE</B></h6>
+        </div>
+        <table id="isitabel_product" class="table table-striped table-sm">
+          <thead>
+            <tr>
+              <th class="colom_pertama" scope="col">ORDER ID</th>
+              <th scope="col">TABLE</th>
+              <!-- <th scope="col">TIME</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let orderprocess of orderprocess">
+              <td>{{orderprocess.code}}</td>
+              <td>{{orderprocess.tableName}}</td>
+              <td><p style="margin: 2px 0px;  border-radius: 5px; background-color: #FBC924;">{{orderprocess.status}}</p></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="addneworder " id="isi-menu-body" class="fade">
+    <div id="isi-menu">
+      <table id="isitabel_product" class="table table-striped">
+        <thead style="overflow-x: auto; font-size: large;" id="isi product">
+          <tr>
+            <td style="cursor: pointer;" *ngFor="let datacategory of datacategory">
+              {{ datacategory.name }}
+            </td>
+          </tr>
+        </thead>
+      </table>
+    </div>
+    <div id="isi-menu-0304addorder">
+      <!-- <div id="isi-menu03"> -->
+        <div
+          id="judul-tabel-delivery"
+          style="display: flex; align-items: center; margin-bottom: 2px"
+        >
+          <h6 style="margin: 0; margin: 6px 0 3px 0"><B>DELIVERY STATUS</B></h6>
+          <!-- <i class="fa-solid fa-pen-to-square" style="color: #f80000"></i> -->
+        </div>
+        <table id="isitabel_product" class="table table-striped table-sm">
           <thead>
             <tr>
               <th scope="col">ORDER ID</th>
@@ -121,31 +192,8 @@
             </tr>
           </tbody>
         </table>
-      </div>
-      <div id="isi-menu04">
-        <div
-          id="judul-tabel-delivery"
-          style="display: flex; align-items: center; margin-bottom: 2px"
-        >
-          <h6 style="margin: 0; margin: 6px 0 3px 0"><B>KITCHEN QUEUE</B></h6>
-        </div>
-        <table id="isitabel_product" class="table table-striped">
-          <thead>
-            <tr>
-              <th scope="col">ORDER ID</th>
-              <th scope="col">TABLE</th>
-              <!-- <th scope="col">TIME</th> -->
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>A</td>
-              <td>A</td>
-              <td>A</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <!-- </div> -->
+      
     </div>
   </div>
 </div>

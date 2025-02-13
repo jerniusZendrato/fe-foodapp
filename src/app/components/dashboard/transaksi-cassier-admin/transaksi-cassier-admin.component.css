@@ -99,6 +99,21 @@ h3{
 
 }
 
+#isi-menu-0304addorder{
+    padding: 2px 50px ;
+    position: relative;
+    margin: 6px 10px;
+    
+    background-color: white;
+    box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.4);
+    border-radius: 0 0 20px 0;
+    align-items: center;
+    width: 40%; 
+    overflow-y: auto;
+    height: 65vh;
+
+}
+
 #isi-menu03::-webkit-scrollbar {
     display: none;
 }
@@ -109,7 +124,8 @@ h3{
     align-items: center;
 }
 
-#isi-menu03 #isitabel_product thead tr{
+
+#isi-menu04 #isitabel_product thead tr{
     text-align: center;
     vertical-align: middle;
     align-items: center;
@@ -131,5 +147,23 @@ h3{
     vertical-align: middle;
     align-items: center;
 }
+.fade {
+    opacity: 0;
+    /* transform: translateY(-10px); */
+    transform: translateY( -50px);
+    animation: fadeIn 0.2s ease-out forwards;
+  }
+  
+  @keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px); /* Mulai dari kanan atas */
+      }
+      to {
+        opacity: 1;
+        transform: translate(0, 0); /* Berada di posisi normal */
+      }
+    }
+  
 
 

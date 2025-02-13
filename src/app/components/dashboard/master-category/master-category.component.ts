@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Category } from 'src/app/models/category.model';
 import { CategoryService } from 'src/app/service/category.service';
 import { LoaderService } from 'src/app/service/loader.service';
@@ -70,6 +70,7 @@ export class MasterCategoryComponent implements OnInit {
 
   public allCategory: Category[] = []
   changedProducts: any[] = [];
+  isFormDirty: boolean = false;
   cekstatus(): void{
     this.allCategory = JSON.parse(JSON.stringify(this.category));
     if (this.allCategory.length !== this.originalCategory.length) {
@@ -81,16 +82,52 @@ export class MasterCategoryComponent implements OnInit {
   
     });
 
+    if(this.changedProducts.length > 0){
+      console.log("data ada perubahan", this.changedProducts)
+      this.isFormDirty = true;
+    }
+    else{
+      console.log("data tidak ada perubahan")
+      this.isFormDirty = false;
+    }
+
+  }
+
+  cekperubahan(): void{
+    this.cekstatus()
     if (this.changedProducts.length > 0) {
       const modalElement = document.getElementById('changeModal');
+      // jika ada perubahan,  ubah unutk notif
+      // this.isFormDirty = true;
       // Jika ada perubahan, buka modal
       const changeModal = new (window as any).bootstrap.Modal(modalElement);
       changeModal.show();
     } else {
       console.log("Tidak ada perubahan.");
     }
-
   }
+
+    // mencegah kehalaman lain
+    canDeactivate(): boolean {
+      this.cekstatus()
+      if (this.isFormDirty) {
+        return confirm('Changes you made may not be saved. Are you sure you want to leave?');
+      }
+      return true;
+    }
+  
+    //mencegah reload atau menutup halaman
+    @HostListener('window:beforeunload', ['$event'])
+    unloadNotification($event: any): void {
+      this.cekstatus();
+      if (this.isFormDirty) {
+        $event.returnValue = 'Changes you made may not be saved';
+      }
+    }
+  
+
+
+
 
   closeModal() {
     const modalElement = document.getElementById('changeModal');
@@ -120,6 +157,7 @@ export class MasterCategoryComponent implements OnInit {
           console.log('All products saved successfully',response);
           this.closeModal();
           this.showsuccessToast()
+          this.dataproductawal()
         } else {
           console.error('Failed to save products');
           this.refreshTable()
@@ -127,7 +165,7 @@ export class MasterCategoryComponent implements OnInit {
           this.showErrorToast()
         }
         // supaya menyimpan data awal yang sudah di update
-        this.dataproductawal()
+        // this.dataproductawal()
         this.loaderService.hideWithDelay(2000);
       },
       (error) => {
@@ -136,7 +174,7 @@ export class MasterCategoryComponent implements OnInit {
         this.closeModal();
         this.showErrorToast()
         // supaya menyimpan data awal yang sudah di update
-        this.dataproductawal()
+        // this.dataproductawal()
 
         this.loaderService.hideWithDelay(2000);
       }
@@ -164,14 +202,14 @@ export class MasterCategoryComponent implements OnInit {
 
 
 
-  isSecondCheckboxDisabled = true;
-  editstatusproduct(event:Event):void{
-    const isChecked = (event.target as HTMLInputElement).checked;
-    this.isSecondCheckboxDisabled = !isChecked;
-    if (!isChecked) {
-      this.cekstatus();  // Menjalankan fungsi cekstatus jika checkbox unchecked
-      console.log("cek kalau sudah uncheck")
-    }
-  }
+  // isSecondCheckboxDisabled = true;
+  // editstatusproduct(event:Event):void{
+  //   const isChecked = (event.target as HTMLInputElement).checked;
+  //   this.isSecondCheckboxDisabled = !isChecked;
+  //   if (!isChecked) {
+  //     this.cekstatus();  // Menjalankan fungsi cekstatus jika checkbox unchecked
+  //     console.log("cek kalau sudah uncheck")
+  //   }
+  // }
 
 }

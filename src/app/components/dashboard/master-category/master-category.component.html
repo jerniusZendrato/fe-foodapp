@@ -12,18 +12,10 @@
     <div id="header-menu">
       <h3>Master Category</h3>
 
-      <div id="edit-status" class="form-check form-switch">
-        <label class="form-check-label" for="flexSwitchCheckDefault"
-          >Edit</label
-        >
-        <input
-          style="font-size: 20px"
-          (change)="editstatusproduct($event)"
-          class="form-check-input"
-          type="checkbox"
-          role="switch"
-          id="flexSwitchCheckDefault"
-        />
+      <div id="edit-status" class="form-check form-switch" style="position: relative;">
+        
+        <button type="button" class="btn btn-success" (click)="cekperubahan()">Save</button>
+        
       </div>
     </div>
 
@@ -99,7 +91,6 @@
                     type="checkbox"
                     role="switch"
                     [(ngModel)]="category.isActivated"
-                    [disabled]="isSecondCheckboxDisabled"
                   />
                 </div>
 
@@ -240,7 +231,6 @@
             type="button"
             class="btn btn-secondary"
             data-bs-dismiss="modal"
-            (click)="refreshTable()"
           >
             Close
           </button>

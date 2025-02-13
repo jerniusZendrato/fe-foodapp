@@ -13,18 +13,8 @@
       <h3>Master Product</h3>
 
       <div id="edit-status" class="form-check form-switch" style="position: relative;">
-        <label class="form-check-label" for="flexSwitchCheckDefault"
-          >Edit</label
-        >
-        <input
-          style="font-size: 20px;position: relative;"
-          (change)="editstatusproduct($event)"
-          class="form-check-input edit"
-          type="checkbox"
-          role="switch"
-          id="flexSwitchCheckDefault"
-        />
-
+        <button
+         type="button" class="btn btn-success" (click)="cekperubahan()">Save Changes</button>
         
       </div>
       <!-- <button style="margin: 0 10px;" type="button" class="btn btn-secondary"  (click)="cekstatus()" [disabled]="isSecondCheckboxDisabled">Save</button> -->
@@ -208,7 +198,7 @@
           <td>
             <img
               style="object-fit: cover; object-position: center"
-              src="{{ products.urlImage }}"
+              src="{{products.urlImage}}"
               alt=""
               (click)="openImageModal(products.urlImage!)"
               width="50"
@@ -243,7 +233,6 @@
                 type="checkbox"
                 role="switch"
                 [(ngModel)]="products.isActivated"
-                [disabled]="isSecondCheckboxDisabled"
                 />
               </div>
             </div>
@@ -312,6 +301,27 @@
                       required
                     />
                   </div>
+                  
+                  <div class="mb-3">
+                    <label for="productCategory" class="form-label">Product Category</label>
+                    
+                    <select class="form-control"
+                            id="productCategory"
+                            name="category"
+                            [(ngModel)]="selectedCategory"
+                            required>
+                            <option *ngIf="productToEdit" [ngValue]="productToEdit.category" disabled style="background-color: rgb(216, 216, 216);" selected>
+                              {{ productToEdit.category }}
+                            </option>
+                      <option *ngFor="let category of categories"
+                              [ngValue]="category">
+                        {{ category.name }}
+                      </option>
+                    </select>
+                  </div>
+                  
+                  
+                  
                   <div class="mb-3">
                     <label for="productPrice" class="form-label">Price</label>
                     <input
@@ -349,12 +359,6 @@
                   >Default file input example</label
                 >
                 <input class="form-control" type="file" id="formFile" />
-                <a
-                  style="text-decoration: none; color: blue; font-size: 14px"
-                  href="#"
-                >
-                  Lihat Foto</a
-                >
               </div>
             </form>
           </div>
@@ -434,7 +438,9 @@
                       <option
                         *ngFor="let category of categories"
                         [ngValue]="category"
+                        [disabled]="!category.isActivated"
                       >
+                      
                         {{ category.name }}
                       </option>
                     </select>
@@ -586,21 +592,20 @@
         ></button>
       </div>
       <div class="modal-body">
-        <p>Data berikut telah mengalami perubahan:</p>
+        <p>The following data has undergone changes:</p>
         <ul>
           <li *ngFor="let product of changedProducts">
-            <strong>{{ product.name }}</strong> - Status:
-            {{ product.isActivated ? "Aktif" : "Tidak Aktif" }}
+            <strong>{{ product.name }}</strong> - 
+            {{ product.isActivated ? "Active" : "Inactive" }}
           </li>
         </ul>
-        <p>apakah Anda yakin?</p>
+        <p>Are you sure?</p>
       </div>
       <div class="modal-footer">
         <button
           type="button"
           class="btn btn-secondary"
           data-bs-dismiss="modal"
-          (click)="refreshTable()"
         >
           Close
         </button>

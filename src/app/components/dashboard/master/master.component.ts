@@ -1,6 +1,7 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, OnInit } from '@angular/core';
 import { FormBuilder,FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
+import { CanComponentDeactivate } from 'src/app/guards/unsaved-changes-verifikasi.service';
 import { Category } from 'src/app/models/category.model';
 import { Product } from 'src/app/models/product.model';
 import { ProductsByCategory } from 'src/app/models/products-by-category.model';
@@ -14,9 +15,10 @@ import { ProductService } from 'src/app/service/product.service';
   templateUrl: './master.component.html',
   styleUrls: ['./master.component.css']
 })
-export class MasterComponent implements OnInit {
+export class MasterComponent implements OnInit, CanComponentDeactivate {
+
   modalService: any;
-  isSecondCheckboxDisabled = true;
+  // isSecondCheckboxDisabled = true;
 
 
 
@@ -78,9 +80,9 @@ export class MasterComponent implements OnInit {
     await this.loadcategory(); // Tunggu hingga loadCategory selesai
 
     await this.loadproducts();
-   
+    this.dataproductawal()
     this.groupProductsByCategory()   
-    this.cekstatus()
+    this.cekperubahan()
     
     console.log("originalProducts",this.originalProducts)
 
@@ -99,16 +101,16 @@ export class MasterComponent implements OnInit {
   }
   
 
-  editstatusproduct(event:Event):void{
-    const isChecked = (event.target as HTMLInputElement).checked;
+  // editstatusproduct(event:Event):void{
+  //   const isChecked = (event.target as HTMLInputElement).checked;
 
    
-    this.isSecondCheckboxDisabled = !isChecked;
-    if (!isChecked) {
-      this.cekstatus();  // Menjalankan fungsi cekstatus jika checkbox unchecked
-    }
+  //   this.isSecondCheckboxDisabled = !isChecked;
+  //   if (!isChecked) {
+  //     this.cekstatus();  // Menjalankan fungsi cekstatus jika checkbox unchecked
+  //   }
 
-  }
+  // }
 
   onEditProduct(product:Product) :void{
     this.productToEdit = product;
@@ -126,10 +128,7 @@ export class MasterComponent implements OnInit {
   // edi status product.....................................................
 
   refreshTable() {
-
     this.groupedProducts = JSON.parse(JSON.stringify(this.originalGroupedProducts));
-
-
   }
 
   changedProducts: any[] = [];
@@ -137,6 +136,9 @@ export class MasterComponent implements OnInit {
 
 
   // Mengambil semua data dari groupedProducts
+
+  isFormDirty: boolean = false;
+  // changestatusdisable: boolean = true;
   cekstatus(): void{
   this.allProducts = Object.values(this.groupedProducts).flat(); // Data saat ini
   if (this.allProducts.length !== this.originalProducts.length) {
@@ -144,20 +146,66 @@ export class MasterComponent implements OnInit {
     return;
   }
   this.changedProducts = this.allProducts.filter((product, index) => {
+    
     return product.isActivated !== this.originalProducts[index].isActivated; // Bandingkan status
-
+    
   });
+  if(this.changedProducts.length > 0){
+    console.log("data ada perubahan", this.changedProducts)
+    // this.changestatusdisable= false
+    this.isFormDirty = true;
+  }
+  else{
+    console.log("data tidak ada perubahan")
+    this.isFormDirty = false;
+    // this.changestatusdisable= false
+  }
+  
+}
 
-  if (this.changedProducts.length > 0) {
-    const modalElement = document.getElementById('changeModal');
-    // Jika ada perubahan, buka modal
-    const changeModal = new (window as any).bootstrap.Modal(modalElement);
-    changeModal.show();
-  } else {
-    console.log("Tidak ada perubahan.");
+// verifikasichanges(): void{
+//   this.cekstatus()
+//   if(this.changedProducts.length > 0){
+//     console.log("data ada perubahan", this.changedProducts)
+//     this.isFormDirty = true;
+//   }
+//   else{
+//     console.log("data tidak ada perubahan")
+//     this.isFormDirty = false;
+//   }
+// }
+
+
+  cekperubahan(): void{
+    this.cekstatus()
+    if (this.changedProducts.length > 0) {
+      const modalElement = document.getElementById('changeModal');
+      // jika ada perubahan,  ubah unutk notif
+      // this.isFormDirty = true;
+      // Jika ada perubahan, buka modal
+      const changeModal = new (window as any).bootstrap.Modal(modalElement);
+      changeModal.show();
+    } else {
+      console.log("Tidak ada perubahan.");
+    }
   }
 
+  // mencegah kehalaman lain
+  canDeactivate(): boolean {
+    this.cekstatus()
+    if (this.isFormDirty) {
+      return confirm('Changes you made may not be saved. Are you sure you want to leave?');
+    }
+    return true;
+  }
 
+  //mencegah reload atau menutup halaman
+  @HostListener('window:beforeunload', ['$event'])
+  unloadNotification($event: any): void {
+    this.cekstatus();
+    if (this.isFormDirty) {
+      $event.returnValue = 'Changes you made may not be saved';
+    }
   }
 
 
@@ -176,6 +224,9 @@ export class MasterComponent implements OnInit {
     const toast = new (window as any).bootstrap.Toast(toastElement);
     toast.show();
   }
+
+  
+  
   
 
   buttonsaveproduct() :void{
@@ -190,13 +241,14 @@ export class MasterComponent implements OnInit {
           console.log('All products saved successfully',response);
           this.closeModal();
           this.showsuccessToast()
+          this.dataproductawal()
         } else {
           console.error('Failed to save products');
           this.refreshTable()
           this.closeModal();
           this.showErrorToast()
         }
-        this.dataproductawal()
+        // this.dataproductawal()
         this.loaderService.hideWithDelay(2000);
       },
       (error) => {
@@ -204,7 +256,7 @@ export class MasterComponent implements OnInit {
         this.refreshTable()
         this.closeModal();
         this.showErrorToast()
-        this.dataproductawal()
+        // this.dataproductawal()
         this.loaderService.hideWithDelay(2000);
       }
     );
