@@ -4,7 +4,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
-import { Category } from '../models/category.model';
+import { Category, patchCategory } from '../models/category.model';
 import { environment } from '../environment/environment';
 
 @Injectable({
@@ -32,10 +32,10 @@ export class CategoryService {
     return this.http.get<Category[]>(`${environment.API_URL}/category`);
   }
 
-  saveCategory(category: Category[]): Observable<any> {
-    if (category && category.length > 0) {
-      const dataToSend = category;  // Data produk yang akan dikirimkan langsung
-      return this.http.put< {isSuccess: boolean} >(`${environment.API_URL}/category`, dataToSend);
+  savestatusCategory(categorystatus: patchCategory[]): Observable<any> {
+    if (categorystatus && categorystatus.length > 0) {
+      const dataToSend = categorystatus;  // Data produk yang akan dikirimkan langsung
+      return this.http.patch< {isSuccess: boolean} >(`${environment.API_URL}/category`, dataToSend);
     } else {
       return new Observable((observer) => {
         observer.error('No valid category to save');

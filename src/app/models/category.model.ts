@@ -1,8 +1,14 @@
 export interface Category {
-    categoryId: any;
+    // categoryId: any;
     id:string;
     quantity:string;
     name: string;
+    isActivated: boolean;
+
+}
+
+export interface patchCategory {
+    id:string;
     isActivated: boolean;
 
 }

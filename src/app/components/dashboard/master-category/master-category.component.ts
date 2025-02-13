@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { Category } from 'src/app/models/category.model';
+import { Category, patchCategory } from 'src/app/models/category.model';
 import { CategoryService } from 'src/app/service/category.service';
 import { LoaderService } from 'src/app/service/loader.service';
 
@@ -19,7 +19,7 @@ export class MasterCategoryComponent implements OnInit {
 
   constructor(
     private categoryservice: CategoryService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
     
   ){}
 
@@ -145,13 +145,16 @@ export class MasterCategoryComponent implements OnInit {
     toast.show();
   }
 
-  private categoryToSave: Category[] = []
-  buttonsavecategory() :void{
-    this.categoryToSave = JSON.parse(JSON.stringify(this.allCategory));
+  private categoryToSavestatus: patchCategory[] = []
+  buttonsavestatuscategory() :void{
+    //ambil data id dan isActivated dari data yang berubah
+    this.categoryToSavestatus = this.categoryToSavestatus = this.changedProducts.map(({ id, isActivated }) => ({
+      id,
+      isActivated
+    }));
     
-
     this.loaderService.show(); 
-    this.categoryservice.saveCategory(this.categoryToSave).subscribe(
+    this.categoryservice.savestatusCategory(this.categoryToSavestatus).subscribe(
       (response) => {
         if (response['isSuccess']==true) {
           console.log('All products saved successfully',response);
