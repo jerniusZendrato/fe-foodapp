@@ -19,7 +19,7 @@ export class MasterCategoryComponent implements OnInit {
 
   constructor(
     private categoryservice: CategoryService,
-    private loaderService: LoaderService,
+    private loaderService: LoaderService
     
   ){}
 
@@ -44,7 +44,6 @@ export class MasterCategoryComponent implements OnInit {
             this.loaderService.hideWithDelay(1000);
           reject()
         }
-
       )
     })
   }
@@ -55,10 +54,7 @@ export class MasterCategoryComponent implements OnInit {
   }
 
   refreshTable() {
-
     this.category = JSON.parse(JSON.stringify(this.originalCategory));
-
-
   }
 
   // Properti untuk menyimpan data awal
@@ -78,7 +74,7 @@ export class MasterCategoryComponent implements OnInit {
       return;
     }
     this.changedProducts = this.allCategory.filter((category, index) => {
-      return category.isActivated !== this.originalCategory[index].isActivated; // Bandingkan status
+      return category.activated !== this.originalCategory[index].activated; // Bandingkan status
   
     });
 
@@ -97,9 +93,6 @@ export class MasterCategoryComponent implements OnInit {
     this.cekstatus()
     if (this.changedProducts.length > 0) {
       const modalElement = document.getElementById('changeModal');
-      // jika ada perubahan,  ubah unutk notif
-      // this.isFormDirty = true;
-      // Jika ada perubahan, buka modal
       const changeModal = new (window as any).bootstrap.Modal(modalElement);
       changeModal.show();
     } else {
@@ -107,7 +100,7 @@ export class MasterCategoryComponent implements OnInit {
     }
   }
 
-    // mencegah kehalaman lain
+    // mencegah kehalaman lain sebelum di save
     canDeactivate(): boolean {
       this.cekstatus()
       if (this.isFormDirty) {
@@ -116,7 +109,7 @@ export class MasterCategoryComponent implements OnInit {
       return true;
     }
   
-    //mencegah reload atau menutup halaman
+    //mencegah reload atau menutup halaman sebelum di save
     @HostListener('window:beforeunload', ['$event'])
     unloadNotification($event: any): void {
       this.cekstatus();
@@ -124,7 +117,80 @@ export class MasterCategoryComponent implements OnInit {
         $event.returnValue = 'Changes you made may not be saved';
       }
     }
+
+// --------------menu delete-------------------
   
+  selectedCategoryIdDelete: string | null = null; // Menyimpan ID kategori yang akan dihapus
+  deletecategory(id : string) : void{
+    this.selectedCategoryIdDelete = id
+    const modalElement = document.getElementById('konfimasi_hapus_category');
+    const changeModal = new (window as any).bootstrap.Modal(modalElement);
+    changeModal.show();
+
+  }
+  confimdeletecategory(): void{
+    this.loaderService.show(); 
+    if(this.selectedCategoryIdDelete){
+      this.categoryservice.deleteCategory(this.selectedCategoryIdDelete).subscribe(
+        (response)=>{
+          if (response['isSuccess']==true) { 
+            this.refreshTable()
+            this.showErrorToast()
+          }
+          else {
+            console.error('Failed to save products');
+            this.refreshTable()
+            this.showErrorToast()
+          }
+          this.loaderService.hideWithDelay(2000);
+        },
+        (error) => {
+          console.error('Error delete category:', error);
+          this.refreshTable()
+          this.closeModal();
+          this.showErrorToast()
+          this.loaderService.hideWithDelay(2000);
+        }
+        
+      )
+
+    }
+  }
+
+//----------------------menu add------------------
+  modaladdcategory():void{
+    const modalElement = document.getElementById('add_kategory_baru');
+    const changeModal = new (window as any).bootstrap.Modal(modalElement);
+    changeModal.show();
+  }
+  newCategoryName: string = ''; // Variabel untuk menyimpan input
+
+  addcategory():void{
+    this.loaderService.show(); 
+    const categoryToSave = { name: this.newCategoryName };
+    console.log('categoryToSave',categoryToSave)
+    this.categoryservice.saveCategory(categoryToSave).subscribe(
+      (responce) =>{
+        if(responce['isSuccess']==true){
+          this.showsuccessToast()
+          this.refreshTable()
+        }else{
+          console.error('Failed to save category');
+          this.refreshTable()
+          this.showErrorToast()
+        }
+        this.newCategoryName = ''; // Kosongkan input setelah disimpan
+        this.loaderService.hideWithDelay(2000);
+      },
+      (error) => {
+        console.error('Error saving category:', error);
+        this.refreshTable()
+        this.showErrorToast()
+        this.newCategoryName = ''; // Kosongkan input setelah disimpan
+        this.loaderService.hideWithDelay(2000);
+      }
+    )
+  }
 
 
 
@@ -152,7 +218,7 @@ export class MasterCategoryComponent implements OnInit {
       id,
       isActivated
     }));
-    
+
     this.loaderService.show(); 
     this.categoryservice.savestatusCategory(this.categoryToSavestatus).subscribe(
       (response) => {
@@ -160,6 +226,7 @@ export class MasterCategoryComponent implements OnInit {
           console.log('All products saved successfully',response);
           this.closeModal();
           this.showsuccessToast()
+          // supaya menyimpan data awal yang sudah di update
           this.dataproductawal()
         } else {
           console.error('Failed to save products');
@@ -167,8 +234,6 @@ export class MasterCategoryComponent implements OnInit {
           this.closeModal();
           this.showErrorToast()
         }
-        // supaya menyimpan data awal yang sudah di update
-        // this.dataproductawal()
         this.loaderService.hideWithDelay(2000);
       },
       (error) => {
@@ -176,16 +241,12 @@ export class MasterCategoryComponent implements OnInit {
         this.refreshTable()
         this.closeModal();
         this.showErrorToast()
-        // supaya menyimpan data awal yang sudah di update
-        // this.dataproductawal()
-
         this.loaderService.hideWithDelay(2000);
       }
     );
   }
 
   // fungsi select category
-
   selectedCategory: string | null = null;
   statuschagecategory: string | null = null;
 
@@ -205,14 +266,5 @@ export class MasterCategoryComponent implements OnInit {
 
 
 
-  // isSecondCheckboxDisabled = true;
-  // editstatusproduct(event:Event):void{
-  //   const isChecked = (event.target as HTMLInputElement).checked;
-  //   this.isSecondCheckboxDisabled = !isChecked;
-  //   if (!isChecked) {
-  //     this.cekstatus();  // Menjalankan fungsi cekstatus jika checkbox unchecked
-  //     console.log("cek kalau sudah uncheck")
-  //   }
-  // }
 
 }

@@ -438,7 +438,7 @@
                       <option
                         *ngFor="let category of categories"
                         [ngValue]="category"
-                        [disabled]="!category.isActivated"
+                        [disabled]="!category.activated"
                       >
                       
                         {{ category.name }}

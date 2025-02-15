@@ -249,7 +249,8 @@ export class MasterComponent implements OnInit, CanComponentDeactivate {
           this.showErrorToast()
         }
         // this.dataproductawal()
-        this.loaderService.hideWithDelay(2000);
+        console.log("masuk ke sini jka gagal atau berhasil save")
+        this.loaderService.hideWithDelay(200);
       },
       (error) => {
         console.error('Error saving products:', error);
@@ -406,49 +407,23 @@ groupProductsByCategory(): void {
         isActivated: this.productForm.get('isActivated')?.value,
         categoryId: this.productForm.get('category')?.value?.id,
       };
-
-      console.log('Saving product:', product);
-      // this.messageService.add({
-      //   severity: 'success',
-      //   summary: 'Product Saved',
-      //   detail: 'The product has been saved successfully.',
-      // });
-
-      // this.loaderService.show();
       if (this.image) {
         this.productservice.addProduct(product, this.image).subscribe(
           (savedProduct) => {
             // window.location.reload();
             this.showsuccessToast()
-            
-
           },
           (error) => {
             console.log('error :>> ', error);
-            // this.messageService.add({
-            //   severity: 'error',
-            //   summary: 'Error Saving Product',
-            //   detail: 'There was an error saving the product.',
-            // });
             this.showErrorToast()
-            this.loaderService.hideWithDelay(2000);
           }
         );
+        this.loaderService.hideWithDelay(2000);
       } else {
-        // this.messageService.add({
-        //   severity: 'error',
-        //   summary: 'Image Required',
-        //   detail: 'Please upload an image before saving the product.',
-        // });
         this.showErrorToast()
         this.loaderService.hideWithDelay(2000);
       }
     } else {
-      // this.messageService.add({
-      //   severity: 'error',
-      //   summary: 'Form Invalid',
-      //   detail: 'Please fill in all the required fields.',
-      // });
       this.showErrorToast()
       this.loaderService.hideWithDelay(2000);
     }
