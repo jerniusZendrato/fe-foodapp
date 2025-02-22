@@ -1,0 +1,186 @@
+
+<div class="containerr">
+    <!-- Sidebar -->
+    <div
+      class="sidebar"
+      [class.hidden]="isSidebarVisible"
+    >
+      <div id="menu-sidebar">
+        <a id="judul-sidebar">
+          <span class="fs-4">Sidebar</span>
+        </a>
+        <hr />
+        <ul class="nav nav-pills flex-column mb-auto">
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              data-bs-toggle="collapse"
+              href="#collapseExample"
+              role="button"
+              aria-expanded="false"
+              aria-controls="collapseExample"
+            >
+              <i class="fa-solid fa-database"></i>
+              Master
+            </a>
+            <div class="collapse" id="collapseExample">
+              <div>
+                <a routerLink="/admin/product" class="nav-link"> Product </a>
+                <a routerLink="/admin/category" class="nav-link"> Category </a>
+                <a routerLink="/admin/table"class="nav-link"> Table </a>
+              </div>
+            </div>
+          </li>
+          <li>
+            <a
+              class="nav-link"
+              data-bs-toggle="collapse"
+              href="#collapseExample2"
+              role="button"
+              aria-expanded="false"
+              aria-controls="collapseExample"
+            >
+              <i class="fa-solid fa-chart-line"></i>
+              Transaksi
+            </a>
+            <div class="collapse" id="collapseExample2">
+              <div>
+                <a routerLink="/admin/cassier-admin" class="nav-link"> Cassier Admin </a>
+                <a href="#" class="nav-link"> Kitchen Admin </a>
+                <a href="#" class="nav-link"> History</a>
+              </div>
+            </div>
+          </li>
+          <li>
+            <a href="#" class="nav-link">
+              <i class="fa-solid fa-bars-progress"></i>
+              Finansial
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link">
+              <i class="fa-solid fa-users"></i>
+              Manajemen User
+            </a>
+          </li>
+        </ul>
+      </div>
+      
+    </div>
+  
+    <div
+      class="sidebar2"
+      
+      [class.hidden]="!isSidebarVisible"
+    >
+      <br />
+      <hr />
+      <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
+        <div class="btn-group dropend">
+          <!-- <li class="nav-item"> -->
+          <a
+            href="#"
+            id="dropdownMenuButton"
+            class="nav-link py-2 dropdown-toggle"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            title="Home"
+          >
+            <i class="fa-solid fa-database"></i>
+          </a>
+          <ul
+            class="dropdown-menu dropdown-menu-end"
+            aria-labelledby="dropdownMenuButton"
+          >
+            <li><a class="dropdown-item" routerLink="/admin/product">Product</a></li>
+            <li><a class="dropdown-item" routerLink="/admin/category">Category</a></li>
+            <li><a class="dropdown-item" routerLink="/admin/table">Table</a></li>
+          </ul>
+          <!-- </li> -->
+        </div>
+        <div class="btn-group dropend">
+          <!-- <li class="nav-item"> -->
+          <a
+            href="#"
+            id="dropdownMenuButton"
+            class="nav-link py-2 dropdown-toggle"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            title="Home"
+          >
+            <i class="fa-solid fa-chart-line"></i>
+          </a>
+          <ul
+            class="dropdown-menu dropdown-menu-end"
+            aria-labelledby="dropdownMenuButton"
+          >
+            <li><a class="dropdown-item" routerLink="/admin/cassier-admin">Cassier Admin</a></li>
+            <li><a class="dropdown-item" href="#">Kitchen Admin</a></li>
+            <li><a class="dropdown-item" href="#">History</a></li>
+          </ul>
+          <!-- </li> -->
+        </div>
+  
+        <div class="btn-group dropend">
+          <!-- <li class="nav-item"> -->
+          <a
+            href="#"
+            id="dropdownMenuButton"
+            class="nav-link py-2 dropdown-toggle"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            title="Home"
+          >
+            <i class="fa-solid fa-bars-progress"></i>
+          </a>
+          <ul
+            class="dropdown-menu dropdown-menu-end"
+            aria-labelledby="dropdownMenuButton"
+          >
+            <li><a class="dropdown-item" href="#">Keuangan</a></li>
+          </ul>
+          <!-- </li> -->
+        </div>
+  
+        <div class="btn-group dropend">
+          <!-- <li class="nav-item"> -->
+          <a
+            href="#"
+            id="dropdownMenuButton"
+            class="nav-link py-2 dropdown-toggle"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            title="Home"
+          >
+            <i class="fa-solid fa-users"></i>
+          </a>
+          <ul
+            class="dropdown-menu dropdown-menu-end"
+            aria-labelledby="dropdownMenuButton"
+          >
+            <li><a class="dropdown-item" href="#">Manajemen User</a></li>
+          </ul>
+          <!-- </li> -->
+        </div>
+      </ul>
+    </div>
+  
+    <!-- Main Content -->
+    <!-- <div style="border-radius:0 20px  0 0;" class="main-content">
+          <div id="bagian1-login" class="col-xl-3 col-md-6  text-center">
+          </div> -->
+  
+    <!-- <app-dashboard-menu></app-dashboard-menu> -->
+    <!-- <app-master></app-master> -->
+    <!-- <app-master-category></app-master-category> -->
+    <!-- <app-loader></app-loader> -->
+    <!-- <router-outlet></router-outlet> -->
+  
+    <!-- </div> -->
+  </div>
+  
+  

@@ -1,46 +1,26 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { DashboardMenuComponent } from '../components/dashboard/dashboard-menu/dashboard-menu.component';
-import { MasterComponent } from '../components/dashboard/master/master.component';
 import { RouterModule, Routes } from '@angular/router';
-import { MasterCategoryComponent } from '../components/dashboard/master-category/master-category.component';
-import { MenuComponent } from '../components/costomer/view/menu/menu.component';
-import { CostumerComponent } from '../components/costomer/view/costumer.component';
-import { SidebarComponent } from '../components/dashboard/sidebar/sidebar.component';
-import { CartComponent } from '../components/costomer/view/cart/cart.component';
-import { DashboardComponent } from '../components/dashboard/dashboard.component';
-import {MasterTableComponent} from '../components/dashboard/master-table/master-table.component';
-import { TransaksiCassierAdminComponent } from '../components/dashboard/transaksi-cassier-admin/transaksi-cassier-admin.component';
-import { WelcomeComponent } from '../components/costomer/view/welcome/welcome.component';
-import { StatusComponent } from '../components/costomer/view/status/status.component';
-import { PageNotFoundComponent } from '../components/costomer/view/page-not-found/page-not-found.component';
 import { UnsavedChangesVerifikasiService } from '../guards/unsaved-changes-verifikasi.service';
+import { MasterCategoryComponent } from '../components/admin/components/master-category/master-category.component';
+import { MasterTableComponent } from '../components/admin/components/master-table/master-table.component';
+import { ParentAdminComponent } from '../components/admin/parent-admin/parent-admin.component';
+import { MasterHomeComponent } from '../components/admin/components/master-home/master-home.component';
+import { MasterProductComponent } from '../components/admin/components/master-product/master-product.component';
+import { TransactionCassierAdminComponent } from '../components/admin/components/transaction-cassier-admin/transaction-cassier-admin.component';
 
 const routes: Routes = [
   {
-    path: 'admin',
-    component: DashboardComponent,
+    path: '',
+    component: ParentAdminComponent,
     children: [
-      { path: '', component: DashboardMenuComponent,  canDeactivate: [UnsavedChangesVerifikasiService] },
+      { path: '', component: MasterHomeComponent,  canDeactivate: [UnsavedChangesVerifikasiService] },
       // { path: 'home', component: DashboardMenuComponent },
-      { path: 'product', component: MasterComponent,  canDeactivate: [UnsavedChangesVerifikasiService]},
+      { path: 'product', component: MasterProductComponent,  canDeactivate: [UnsavedChangesVerifikasiService]},
       { path: 'category', component:MasterCategoryComponent, canDeactivate: [UnsavedChangesVerifikasiService]},
       { path: 'table', component:MasterTableComponent, canDeactivate: [UnsavedChangesVerifikasiService]},
-      { path: 'cassier-admin', component:TransaksiCassierAdminComponent, canDeactivate: [UnsavedChangesVerifikasiService]},
+      { path: 'cassier-admin', component:TransactionCassierAdminComponent, canDeactivate: [UnsavedChangesVerifikasiService]},
     ]
-  },
-  {
-    path: '',
-    component: CostumerComponent,
-    children: [
-      { path: 'welcome', component: WelcomeComponent },
-      { path: 'menu', component: MenuComponent },
-      { path: 'cart', component: CartComponent },
-      { path: 'status', component: StatusComponent },
-      { path: '', redirectTo: 'welcome', pathMatch: 'full' },
-      { path: '404', component:  PageNotFoundComponent},
-    ],
-  },
+  }
 ];
 
 @NgModule({

@@ -1,0 +1,72 @@
+
+    <div id="bg-sub-home">
+      <div id="image-home" style="display: flex; flex-direction: row">
+        <div
+          routerLink="/admin"
+          id="img"
+          style="
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 24px;
+            color: white;
+            margin: 0 40px 0 20px;
+            cursor: pointer;
+          "
+        >
+          <i style="margin: 0 10px" class="fa-solid fa-house"></i>
+          <h6 style="margin: 0">Home</h6>
+        </div>
+        <div (click)="calltoggleSidebar()" id="list-line-home">
+          <span id="ilne1" class="ilne-home" [class.rotated]="isRotated"></span>
+          <span id="ilne2" class="ilne-home" [class.rotated]="isRotated"></span>
+          <span id="ilne2" class="ilne-home" [class.rotated]="isRotated"></span>
+        </div>
+      </div>
+      <div id="bg-sub-home02">
+        <img
+          src="https://image-storage-order-app.s3.eu-north-1.amazonaws.com/product_image/Group+1.png"
+          alt="Image"
+          alt=""
+          width="260"
+        />
+      </div>
+      <div
+        id="bg-sub-home03"
+        style="
+          display: flex;
+          flex-direction: row;
+          margin: 0 30px;
+          align-items: center;
+          color: white;
+        "
+      >
+        <a
+        style="color: white;"
+          href="#"
+          class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
+          id="dropdownUser2"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <!-- <h6 style="margin: 0; margin-left: 5px">Username</h6> -->
+          <i style="color: white; font-size: 20px;" class="fa-regular fa-user"></i>
+        </a>
+        <ul
+          class="dropdown-menu text-small shadow"
+          aria-labelledby="dropdownUser2"
+        >
+        <li><a class="dropdown-item" href="#">Profile</a></li>
+        <li><a class="dropdown-item" href="#">Settings</a></li>
+        <li><a class="dropdown-item" href="#">New project...</a></li>
+          <li>
+            <hr class="dropdown-divider" />
+          </li>
+          <li><a class="dropdown-item" href="#">Sign out</a></li>
+        </ul>
+      </div>
+    </div>
+  
+  
+  
