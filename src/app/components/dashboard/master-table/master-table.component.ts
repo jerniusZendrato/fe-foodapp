@@ -51,8 +51,8 @@ export class MasterTableComponent implements OnInit{
     for (const item of this.table) {
       try {
         // Generate QR Code untuk setiap item berdasarkan ID
-        if(item.urlWelcomePage){
-          item.qrImage = await QRCode.toDataURL(item.urlWelcomePage);
+        if(item.qrimageurl){
+          item.qrImage = await QRCode.toDataURL(item.qrimageurl);
         }
       } catch (error) {
         console.error('Error generating QR Code', error);

@@ -1,7 +1,7 @@
 export interface Table {
     id:string;
     name: number;
-    urlWelcomePage:string;
+    qrimageurl:string;
     qrImage?: string;
     activated: boolean;
 }

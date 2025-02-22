@@ -1,6 +1,12 @@
-h3{
-    margin: 20px ;
+.breadcrumb{
+    margin: 12px;
 }
+
+.breadcrumb .breadcrumb-item a{
+    /* font-size: 18px; */
+    text-decoration: none;
+}
+
 #header-menu{
     display: flex;
     flex-direction: row;

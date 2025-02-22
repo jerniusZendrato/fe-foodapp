@@ -7,9 +7,15 @@
     border-radius: 20px 20px 0 0;
     align-items: center;
 }
-h3{
-    margin: 20px ;
+.breadcrumb{
+    margin: 12px;
 }
+
+.breadcrumb .breadcrumb-item a{
+    /* font-size: 18px; */
+    text-decoration: none;
+}
+
 #fileter_kategory{
     display: flex;
     flex-direction: row;
@@ -37,7 +43,7 @@ h3{
     align-items: center;
     width: 55%; 
     overflow-y: auto; 
-    height: 65vh;
+    height: 70vh;
 
 }
 #category-name{
@@ -58,7 +64,7 @@ h3{
     align-items: center;
     width: 45%; 
     overflow-y: auto;
-    height: 65vh;
+    height: 70vh;
 
 }
 
