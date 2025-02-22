@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { LoaderService } from '../services/loader.service';
 
 @Component({
   selector: 'app-parent-cassier-order',
@@ -6,5 +7,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./parent-cassier-order.component.css']
 })
 export class ParentCassierOrderComponent {
+
+  isLoading = false;
+
+  constructor(private loaderService: LoaderService) {}
+
+  ngOnInit() {
+    this.loaderService.isLoading.subscribe((loading) => {
+      this.isLoading = loading;
+    });
+  }
 
 }

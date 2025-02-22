@@ -163,9 +163,10 @@
 
 @media (max-width: 768px) {
     #isi-menu {
-        width: 95%;
+        width: 98%;
         overflow-x: auto;
-        white-space: nowrap;
+        margin:12px 1% ;
+        /* white-space: nowrap; */
     }
     #header-menu{
         flex-direction: row;

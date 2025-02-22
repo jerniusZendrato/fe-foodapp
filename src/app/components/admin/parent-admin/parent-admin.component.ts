@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { LoaderService } from '../services/loader.service';
 
 @Component({
   selector: 'app-parent-admin',
@@ -6,5 +7,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./parent-admin.component.css']
 })
 export class ParentAdminComponent {
+  isLoading = false;
 
+  constructor(private loaderService: LoaderService) {}
+
+  ngOnInit() {
+    this.loaderService.isLoading.subscribe((loading) => {
+      this.isLoading = loading;
+    });
+  }
 }

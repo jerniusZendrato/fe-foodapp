@@ -7,10 +7,12 @@ import { ParentAdminComponent } from '../components/admin/parent-admin/parent-ad
 import { MasterHomeComponent } from '../components/admin/components/master-home/master-home.component';
 import { MasterProductComponent } from '../components/admin/components/master-product/master-product.component';
 import { TransactionCassierAdminComponent } from '../components/admin/components/transaction-cassier-admin/transaction-cassier-admin.component';
+import { ParentCassierOrderComponent } from '../components/admin/parent-cassier-order/parent-cassier-order.component';
+import { CassierOrderComponent } from '../components/admin/components/cassier-order/cassier-order.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'admin',
     component: ParentAdminComponent,
     children: [
       { path: '', component: MasterHomeComponent,  canDeactivate: [UnsavedChangesVerifikasiService] },
@@ -20,7 +22,15 @@ const routes: Routes = [
       { path: 'table', component:MasterTableComponent, canDeactivate: [UnsavedChangesVerifikasiService]},
       { path: 'cassier-admin', component:TransactionCassierAdminComponent, canDeactivate: [UnsavedChangesVerifikasiService]},
     ]
+  },
+  {
+    path: 'post',
+    component:ParentCassierOrderComponent,
+    children:[
+      {path:'', component: CassierOrderComponent, canDeactivate: [UnsavedChangesVerifikasiService]}
+    ]
   }
+  
 ];
 
 @NgModule({

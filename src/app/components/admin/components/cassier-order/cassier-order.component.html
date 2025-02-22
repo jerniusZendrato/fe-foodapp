@@ -1,0 +1,74 @@
+<div
+  style="
+    border: 2px solid orange;
+    width: 100%;
+    background-color: #f9f9f9;
+    height: 90vh;
+    display: flex;
+    flex-direction: row;
+  "
+>
+  <div style="height: 100%; width: 65%;">
+    <div style="background-color: white;border: 1px solid #ff000040; width: 100%; height: 10%; border-radius: 20px 20px 0 0;">
+        <div style="width: 100%; overflow-x: auto; white-space: nowrap;">
+            <div style="display: flex; gap: 10px;">
+              <div *ngFor="let category of groupedProducts | keyvalue"
+                style="
+                font-size: 20px;
+                  padding: 10px 20px;
+                  min-width: 150px;
+                  text-align: center;
+                "
+              >
+              <b (click)="scrollTo(category.key)" style="cursor: pointer;">
+                  {{ category.key }}
+              </b>
+              </div>
+            </div>
+          </div>   
+    </div>
+    <div
+      style="
+        width: 100%;
+        background-color: rgb(255, 255, 255);
+        border: 1px solid #ff000040;
+        border-radius: 0 0 20px 20px;
+        height: 90%;
+        overflow-y: scroll;
+      "
+    >
+    <div *ngFor="let category of groupedProducts | keyvalue">
+        <h6 style="margin-left: 10px;">
+          <div id="{{ category.key }}">
+            {{ category.key }}
+          </div>
+          </h6>
+            <div class="row" style="margin: 20px;">
+              <div class="col-md-3 mb-3" *ngFor="let product of category.value">
+                <div class="card h-100 shadow" style="width: 100%; ">
+                  <img class="card-img-top" [src]="product.urlImage || 'assets/default-image.png'" style="width: 100%; height: 100px; object-fit:cover">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p>{{ product.price }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+      </div>
+    
+</div>
+    
+  </div>
+
+  <div style="margin: 20px; width: 35%;">
+    <div style="display: flex; justify-content: space-between;">
+        <p style="font-size: 26px; margin: 0;">Order Details</p>
+
+        <div routerLink="/admin/cassier-admin" style="border: 2px solid rgba(0, 0, 0, 0.324);border-radius: 8px; display: flex; align-items: center; padding: 0 10px; cursor: pointer;">
+            <i class="fa-solid fa-arrow-left"></i>
+            <a style="font-size: 18px; padding: 4px 8px;" >Back</a>
+        </div>
+    </div>
+    <hr>
+  </div>
+</div>

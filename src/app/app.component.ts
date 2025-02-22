@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { LoaderService } from './components/admin/services/loader.service';
+// import { LoaderService } from './components/admin/services/loader.service';
 
 @Component({
   selector: 'app-root',
@@ -7,16 +7,6 @@ import { LoaderService } from './components/admin/services/loader.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-
-  isLoading = false;
-
-  constructor(private loaderService: LoaderService) {}
-
-  ngOnInit() {
-    this.loaderService.isLoading.subscribe((loading) => {
-      this.isLoading = loading;
-    });
-  }
   title = 'fe-foodapp';
 }
 

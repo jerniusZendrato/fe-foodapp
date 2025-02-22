@@ -19,6 +19,7 @@ import { SidebarComponent } from './components/admin/shared/sidebar/sidebar.comp
 import { MasterHomeComponent } from './components/admin/components/master-home/master-home.component';
 import { DashboardComponent } from './components/admin/shared/dashboard/dashboard.component';
 import { LoaderComponent } from './components/admin/shared/loader/loader.component';
+import { CassierOrderComponent } from './components/admin/components/cassier-order/cassier-order.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { LoaderComponent } from './components/admin/shared/loader/loader.compone
     SidebarComponent,
     MasterHomeComponent,
     DashboardComponent,
-    LoaderComponent
+    LoaderComponent,
+    CassierOrderComponent
   ],
   imports: [
     BrowserModule,
