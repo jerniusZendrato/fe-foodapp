@@ -29,6 +29,7 @@ export class WelcomeComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
       const tableId = params['table-id'];
+      console.log('tableId :>> ', tableId);
       if (tableId) {
         console.log('tableId :>> ', tableId);
   
@@ -36,6 +37,7 @@ export class WelcomeComponent implements OnInit {
           (table) => {
             this.table = table; 
             this.tableNum = this.table.name.split(' ')[1];
+            // this.tableNum = this.table.name;
             console.log('this.table :>> ', this.table);
           },
           (error) => {
@@ -46,6 +48,8 @@ export class WelcomeComponent implements OnInit {
         );
       } else {
         this.table = null; 
+        this.router.navigate(['/404']);
+
       }
     });
   }

@@ -1,7 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { Category } from 'src/app/models/category.model';
 import { Product } from 'src/app/models/product.model';
-import { Order } from 'src/app/models/order.model';
 import { CategoryService } from 'src/app/service/category.service';
 import { ProductService } from 'src/app/service/product.service';
 import { OrderService } from 'src/app/components/costomer/service/order-costomer.service';
