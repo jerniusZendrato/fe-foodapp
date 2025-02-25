@@ -44,17 +44,19 @@
           </div>
           </h6>
             <div class="row" style="margin: 20px;">
-              <div class="col-md-3 mb-3" *ngFor="let product of category.value">
+              <div class="col-auto" *ngFor="let product of category.value">
                 <div class="card h-100 shadow" style="width: 100%; ">
                   <img class="card-img-top" [src]="product.urlImage || 'assets/default-image.png'" style="width: 100%; height: 100px; object-fit:cover">
                   <div class="card-body">
                     <h5 class="card-title">{{ product.name }}</h5>
-                    <p>{{ product.price }}</p>
+                    <p style="margin: 0;">{{ product.price }}</p>
                   </div>
                 </div>
               </div>
             </div>
-      </div>
+      </div>  
+       
+
     
 </div>
     
@@ -70,5 +72,51 @@
         </div>
     </div>
     <hr>
+    
+
+    <div style="margin: 0  0 10px 0;">
+    <div class="row g-3 align-items-center">
+      <div class="col-auto">
+        <label for="inputtableorder" class="col-form-label">Table</label>
+      </div>
+      <div class="col-auto">
+        <select class="form-select form-select-sm" aria-label="Small select example">
+          <option selected [disabled]>Select number</option>
+          <option *ngFor="let table of table" [value]="table.name">{{ table.name }}</option>
+          <option *ngIf="!table" >Table is not available</option>
+        </select>
+        <!-- <p *ngIf="!table"> -->
+
+        <!-- </p> -->
+      </div>
+    </div>
+    <div class="row g-3 align-items-center">
+      <div class="col-auto">
+        <label for="inputnameorder" class="col-form-label">Name</label>
+      </div>
+      <div class="col-auto" style="padding: 0;">
+        <!-- <input type="password" id="inputPassword6" class="form-control-sm"> -->
+        <input type="text" class="form-control-sm" id="inputname" placeholder="Insert name" style="border: 1px solid rgba(0, 0, 0, 0.235);">
+      </div>
+    </div>
+    </div>
+    <div>
+      <table id="table-input-orderan" class="table table-striped">
+        <thead>
+          <tr>
+          <th>Item Order</th>
+          <th>Quantity</th>
+          <th>Prices</th>
+        </tr>
+        </thead>
+        <tbody>
+          
+        </tbody>
+      </table>
+      <div style="width: 100%; height: 100px; display: flex;flex-direction: column;justify-content: center;align-items: center;">
+        <h3 style="opacity: 50%;">No order selected yet.</h3>
+      </div>
+    </div>
+    
   </div>
 </div>

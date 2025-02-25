@@ -4,6 +4,8 @@ import { AdminCategory } from '../../models/admin-category.model';
 import { LoaderService } from '../../services/loader.service';
 import { CategoryService } from '../../services/category.service';
 import { ProductService } from '../../services/product.service';
+import { AdminTable } from '../../models/admin-table.model';
+import { TableService } from '../../services/table.service';
 
 @Component({
   selector: 'app-cassier-order',
@@ -16,15 +18,19 @@ export class CassierOrderComponent implements OnInit{
     this.loadcategory()
     this.groupProductsByCategory()
     this.loadproducts()
+    this.loadtable()
+    this.selectedDiv = localStorage.getItem('selectedDiv');
   }
 
   constructor(
     private loaderService: LoaderService,
+    private tableService: TableService,
     private productservice: ProductService,
     private categoryservice: CategoryService
   ){}
 
   public datacategory: AdminCategory[] = []
+  selectedDiv: string | null = null;
 
   scrollTo(sectionId: string) {
     const element = document.getElementById(sectionId);
@@ -99,5 +105,35 @@ export class CassierOrderComponent implements OnInit{
     console.log (" this.groupedProducts", this.groupedProducts)
     
     ;}
+
+    public table: AdminTable[] = []
+    loadtable(): Promise<void>{
+      return new Promise((resolve, reject) => {
+        this.loaderService.show();
+        this.tableService.gettable().subscribe(
+          (Response: AdminTable[]) => {
+            if (Response) {
+              this.table = Response
+              console.log("ini table", this.table)
+              this.loaderService.hideWithDelay(1000);
+              resolve();
+            }
+            else
+              console.log("data tidak isSuccess=true")
+              this.loaderService.hideWithDelay(1000);
+            reject()
+          }
+  
+        )
+      })
+    }
+
+    saveToLocalStorage(value: string) {
+      localStorage.setItem('selectedDiv', value); // Simpan data ke localStorage
+      this.selectedDiv = value; // Perbarui variabel untuk ditampilkan di UI
+    }
+
+
+    
 
 }
