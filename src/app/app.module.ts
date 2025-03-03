@@ -20,6 +20,8 @@ import { MasterHomeComponent } from './components/admin/components/master-home/m
 import { DashboardComponent } from './components/admin/shared/dashboard/dashboard.component';
 import { LoaderComponent } from './components/admin/shared/loader/loader.component';
 import { CassierOrderComponent } from './components/admin/components/cassier-order/cassier-order.component';
+import { WelcomeComponent } from './fe-costomer/pages/welcome/welcome.component';
+import { FeCostomerComponent } from './fe-costomer/fe-costomer.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import { CassierOrderComponent } from './components/admin/components/cassier-ord
     MasterHomeComponent,
     DashboardComponent,
     LoaderComponent,
-    CassierOrderComponent
+    CassierOrderComponent,
+    WelcomeComponent,
+    FeCostomerComponent
   ],
   imports: [
     BrowserModule,

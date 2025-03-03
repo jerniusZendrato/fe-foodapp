@@ -9,33 +9,40 @@ import { MasterProductComponent } from '../components/admin/components/master-pr
 import { TransactionCassierAdminComponent } from '../components/admin/components/transaction-cassier-admin/transaction-cassier-admin.component';
 import { ParentCassierOrderComponent } from '../components/admin/parent-cassier-order/parent-cassier-order.component';
 import { CassierOrderComponent } from '../components/admin/components/cassier-order/cassier-order.component';
+import { WelcomeComponent } from '../fe-costomer/pages/welcome/welcome.component';
+import { FeCostomerComponent } from '../fe-costomer/fe-costomer.component';
 
 const routes: Routes = [
   {
     path: 'admin',
     component: ParentAdminComponent,
     children: [
-      { path: '', component: MasterHomeComponent,  canDeactivate: [UnsavedChangesVerifikasiService] },
+      { path: '', component: MasterHomeComponent, canDeactivate: [UnsavedChangesVerifikasiService] },
       // { path: 'home', component: DashboardMenuComponent },
-      { path: 'product', component: MasterProductComponent,  canDeactivate: [UnsavedChangesVerifikasiService]},
-      { path: 'category', component:MasterCategoryComponent, canDeactivate: [UnsavedChangesVerifikasiService]},
-      { path: 'table', component:MasterTableComponent, canDeactivate: [UnsavedChangesVerifikasiService]},
-      { path: 'cassier-admin', component:TransactionCassierAdminComponent, canDeactivate: [UnsavedChangesVerifikasiService]},
+      { path: 'product', component: MasterProductComponent, canDeactivate: [UnsavedChangesVerifikasiService] },
+      { path: 'category', component: MasterCategoryComponent, canDeactivate: [UnsavedChangesVerifikasiService] },
+      { path: 'table', component: MasterTableComponent, canDeactivate: [UnsavedChangesVerifikasiService] },
+      { path: 'cassier-admin', component: TransactionCassierAdminComponent, canDeactivate: [UnsavedChangesVerifikasiService] },
     ]
   },
   {
     path: 'post',
-    component:ParentCassierOrderComponent,
-    children:[
-      {path:'', component: CassierOrderComponent, canDeactivate: [UnsavedChangesVerifikasiService]}
+    component: ParentCassierOrderComponent,
+    children: [
+      { path: '', component: CassierOrderComponent, canDeactivate: [UnsavedChangesVerifikasiService] }
+    ]
+  },
+  {
+    path: '', component: FeCostomerComponent, children: [
+      { path: '', component: WelcomeComponent }
+
     ]
   }
-  
-];
+]
 
 @NgModule({
   declarations: [],
   imports: [RouterModule.forRoot(routes, { useHash: false })],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
