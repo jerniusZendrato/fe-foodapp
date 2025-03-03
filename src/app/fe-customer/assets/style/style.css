@@ -1,0 +1,44 @@
+.btn-main-color {
+  background-color: #ff0000; /* Warna merah */
+  color: #ffffff; /* Warna teks putih untuk kontras */
+  border: none;
+}
+
+.btn-main-color:hover {
+  background-color: #e60000; /* Warna merah sedikit lebih gelap saat hover */
+  color: #ffffff;
+}
+
+.btn-main-color:active {
+  background-color: #cc0000; /* Warna merah lebih gelap saat ditekan */
+  color: #ffffff;
+}
+
+.btn-main-color:focus {
+  box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.5); /* Efek focus dengan warna merah */
+}
+
+.bg-white {
+  background-color: white; /* Warna latar belakang putih */
+}
+
+.btn-outline-main-color {
+  color: #ff0000; /* Warna teks merah */
+  background-color: transparent; /* Latar belakang transparan */
+  border: 2px solid #ff0000; /* Border merah */
+}
+
+.btn-outline-main-color:hover {
+  color: #ffffff; /* Warna teks putih saat hover */
+  background-color: #ff0000; /* Latar belakang merah saat hover */
+}
+
+.btn-outline-main-color:active {
+  color: #ffffff; /* Warna teks putih saat ditekan */
+  background-color: #cc0000; /* Latar belakang merah lebih gelap saat ditekan */
+  border-color: #cc0000; /* Warna border merah lebih gelap saat ditekan */
+}
+
+.btn-outline-main-color:focus {
+  box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.5); /* Efek focus dengan warna merah */
+}

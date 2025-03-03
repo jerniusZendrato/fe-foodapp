@@ -4,8 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { AppComponent } from './app.component';
 
-import { FormsModule } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms'; 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { MasterProductComponent } from './components/admin/components/master-product/master-product.component';
 import { ParentAdminComponent } from './components/admin/parent-admin/parent-admin.component';
@@ -20,8 +19,10 @@ import { MasterHomeComponent } from './components/admin/components/master-home/m
 import { DashboardComponent } from './components/admin/shared/dashboard/dashboard.component';
 import { LoaderComponent } from './components/admin/shared/loader/loader.component';
 import { CassierOrderComponent } from './components/admin/components/cassier-order/cassier-order.component';
-import { WelcomeComponent } from './fe-costomer/pages/welcome/welcome.component';
-import { FeCostomerComponent } from './fe-costomer/fe-costomer.component';
+import { WelcomeComponent } from './fe-customer/pages/welcome/welcome.component';
+import { FeCustomerComponent } from './fe-customer/fe-customer.component';
+import { MenuComponent } from './fe-customer/pages/menu/menu.component';
+import { ProductCardComponent } from './fe-customer/shared/components/product-card/product-card.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,9 @@ import { FeCostomerComponent } from './fe-costomer/fe-costomer.component';
     LoaderComponent,
     CassierOrderComponent,
     WelcomeComponent,
-    FeCostomerComponent
+    FeCustomerComponent,
+    MenuComponent,
+    ProductCardComponent
   ],
   imports: [
     BrowserModule,

@@ -9,40 +9,70 @@ import { MasterProductComponent } from '../components/admin/components/master-pr
 import { TransactionCassierAdminComponent } from '../components/admin/components/transaction-cassier-admin/transaction-cassier-admin.component';
 import { ParentCassierOrderComponent } from '../components/admin/parent-cassier-order/parent-cassier-order.component';
 import { CassierOrderComponent } from '../components/admin/components/cassier-order/cassier-order.component';
-import { WelcomeComponent } from '../fe-costomer/pages/welcome/welcome.component';
-import { FeCostomerComponent } from '../fe-costomer/fe-costomer.component';
+import { WelcomeComponent } from '../fe-customer/pages/welcome/welcome.component';
+import { FeCustomerComponent } from '../fe-customer/fe-customer.component';
+import { MenuComponent } from '../fe-customer/pages/menu/menu.component';
+
+const feCustomerChildren: Routes = [
+  { path: 'welcome', component: WelcomeComponent },
+  { path: '', component: MenuComponent },
+  { path: '404', component: WelcomeComponent },
+];
 
 const routes: Routes = [
   {
     path: 'admin',
     component: ParentAdminComponent,
     children: [
-      { path: '', component: MasterHomeComponent, canDeactivate: [UnsavedChangesVerifikasiService] },
+      {
+        path: '',
+        component: MasterHomeComponent,
+        canDeactivate: [UnsavedChangesVerifikasiService],
+      },
       // { path: 'home', component: DashboardMenuComponent },
-      { path: 'product', component: MasterProductComponent, canDeactivate: [UnsavedChangesVerifikasiService] },
-      { path: 'category', component: MasterCategoryComponent, canDeactivate: [UnsavedChangesVerifikasiService] },
-      { path: 'table', component: MasterTableComponent, canDeactivate: [UnsavedChangesVerifikasiService] },
-      { path: 'cassier-admin', component: TransactionCassierAdminComponent, canDeactivate: [UnsavedChangesVerifikasiService] },
-    ]
+      {
+        path: 'product',
+        component: MasterProductComponent,
+        canDeactivate: [UnsavedChangesVerifikasiService],
+      },
+      {
+        path: 'category',
+        component: MasterCategoryComponent,
+        canDeactivate: [UnsavedChangesVerifikasiService],
+      },
+      {
+        path: 'table',
+        component: MasterTableComponent,
+        canDeactivate: [UnsavedChangesVerifikasiService],
+      },
+      {
+        path: 'cassier-admin',
+        component: TransactionCassierAdminComponent,
+        canDeactivate: [UnsavedChangesVerifikasiService],
+      },
+    ],
   },
   {
     path: 'post',
     component: ParentCassierOrderComponent,
     children: [
-      { path: '', component: CassierOrderComponent, canDeactivate: [UnsavedChangesVerifikasiService] }
-    ]
+      {
+        path: '',
+        component: CassierOrderComponent,
+        canDeactivate: [UnsavedChangesVerifikasiService],
+      },
+    ],
   },
   {
-    path: '', component: FeCostomerComponent, children: [
-      { path: '', component: WelcomeComponent }
-
-    ]
-  }
-]
+    path: '',
+    component: FeCustomerComponent,
+    children: feCustomerChildren,
+  },
+];
 
 @NgModule({
   declarations: [],
   imports: [RouterModule.forRoot(routes, { useHash: false })],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

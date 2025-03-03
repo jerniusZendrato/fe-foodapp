@@ -6,7 +6,70 @@
   "latency": 0,
   "port": 3002,
   "hostname": "",
-  "folders": [],
+  "folders": [
+    {
+      "uuid": "373e7626-e64d-431b-a2c4-bf450ec4c957",
+      "name": "user",
+      "children": [
+        {
+          "type": "route",
+          "uuid": "c37fff4d-6f47-415c-a7ed-47c4f3ef80c1"
+        }
+      ]
+    },
+    {
+      "uuid": "59666a10-0952-41f7-b42c-7c03e50e1645",
+      "name": "product",
+      "children": [
+        {
+          "type": "route",
+          "uuid": "b95afc7b-803e-4001-aff9-81b99156e7eb"
+        }
+      ]
+    },
+    {
+      "uuid": "f36b6622-8fee-4eb5-acd6-1304f9c67c4f",
+      "name": "table",
+      "children": [
+        {
+          "type": "route",
+          "uuid": "21188c20-53db-4b51-80a7-a6839882ae56"
+        },
+        {
+          "type": "route",
+          "uuid": "871cacd8-7541-491f-b4c2-75ce26d94054"
+        }
+      ]
+    },
+    {
+      "uuid": "e386e2ce-211a-4d50-9bba-9164da8ed9bd",
+      "name": "category",
+      "children": [
+        {
+          "type": "route",
+          "uuid": "308e25f0-7a95-4b21-98a3-e354c3ef3bd1"
+        }
+      ]
+    },
+    {
+      "uuid": "515328e7-5548-4198-af53-825db2aeeb19",
+      "name": "order",
+      "children": [
+        {
+          "type": "route",
+          "uuid": "df9c9342-003e-4c82-b7cb-2ef3016db52d"
+        },
+        {
+          "type": "route",
+          "uuid": "5301279a-54a7-4d6c-921b-843c79392f11"
+        },
+        {
+          "type": "route",
+          "uuid": "9a7cf4e2-826b-46b1-a228-bf6ea1390f44"
+        }
+      ]
+    }
+  ],
   "routes": [
     {
       "uuid": "b95afc7b-803e-4001-aff9-81b99156e7eb",
@@ -79,7 +142,7 @@
       "responses": [
         {
           "uuid": "4423ecf1-8814-45cf-a439-c623ffe23db5",
-          "body": "{\r\n    \"isSuccess\": true,\r\n    \"data\": {\r\n        \"id\": \"e9fd26e7-11c7-4a8d-ae41-b477b6bd1ac8\",\r\n        \"name\": \"meja 1\",\r\n        \"qrImageUrl\": null,\r\n        \"activated\": true\r\n    },      \r\n    \"timestamp\": \"2024-11-26T15:56:26.541+00:00\",\r\n    \"errors\": null\r\n}",
+          "body": "{\r\n    \"isSuccess\": true,\r\n    \"data\": {\r\n        \"id\": \"e9fd26e7-11c7-4a8d-ae41-b477b6bd1ac8\",\r\n        \"name\": \"1\",\r\n        \"qrImageUrl\": null,\r\n        \"activated\": true\r\n    },      \r\n    \"timestamp\": \"2024-11-26T15:56:26.541+00:00\",\r\n    \"errors\": null\r\n}",
           "latency": 0,
           "statusCode": 200,
           "label": "",
@@ -131,24 +194,152 @@
       "responseMode": null,
       "streamingMode": null,
       "streamingInterval": 0
+    },
+    {
+      "uuid": "c37fff4d-6f47-415c-a7ed-47c4f3ef80c1",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "api/v1/user",
+      "responses": [
+        {
+          "uuid": "9fb08f42-f616-4e6f-ac28-ffdbf05fced0",
+          "body": "{\r\n    \"isSuccess\": true,\r\n    \"data\": {\r\n        \"name\": \"jhon dae\",\r\n        \"email\": \"example@gmail.com\"\r\n    },      \r\n    \"timestamp\": \"2024-11-26T15:56:26.541+00:00\",\r\n    \"errors\": null\r\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "df9c9342-003e-4c82-b7cb-2ef3016db52d",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "api/v1/order",
+      "responses": [
+        {
+          "uuid": "42d2d241-9950-4420-8225-c728badc88ab",
+          "body": "{\n  \"isSuccess\": true,\n  \"data\": [\n    {\n      \"id\": \"c3cd3157-9951-4ed2-b5a0-c39943365936\",\n      \"code\": \"0001\",\n      \"totalPrice\": 480000,\n      \"createdAt\": \"2024-10-08\",\n      \"productOrders\": [\n        {\n          \"name\": \"Teh Manis\",\n          \"quantity\": 10,\n          \"subTotalPrice\": 50000\n        },\n        {\n          \"name\": \"Sate Ayam\",\n          \"quantity\": 12,\n          \"subTotalPrice\": 240000\n        },\n        {\n          \"name\": \"Kopi Hitam\",\n          \"quantity\": 19,\n          \"subTotalPrice\": 190000\n        }\n      ]\n    },\n    {\n      \"id\": \"c3cd3157-9951-4ed2-b5a0-c39943365937\",\n      \"code\": \"0002\",\n      \"totalPrice\": 480000,\n      \"createdAt\": \"2024-10-08\",\n      \"productOrders\": [\n        {\n          \"name\": \"Teh Manis\",\n          \"quantity\": 10,\n          \"subTotalPrice\": 50000\n        },\n        {\n          \"name\": \"Sate Ayam\",\n          \"quantity\": 12,\n          \"subTotalPrice\": 240000\n        },\n        {\n          \"name\": \"Kopi Hitam\",\n          \"quantity\": 19,\n          \"subTotalPrice\": 190000\n        }\n      ]\n    }\n  ],\n  \"timestamp\": \"2024-11-16T18:32:59.615+00:00\",\n  \"errors\": null\n}",
+          "latency": 400,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "5301279a-54a7-4d6c-921b-843c79392f11",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "api/v1/order/:id",
+      "responses": [
+        {
+          "uuid": "b1c37147-bccd-48cc-950b-dff299e314cc",
+          "body": "{\n  \"isSuccess\": true,\n  \"data\": \n    {\n      \"id\": {{id}},\n      \"code\": \"0001\",\n      \"totalPrice\": 480000,\n      \"createdAt\": \"2024-10-08\",\n      \"productOrders\": [\n        {\n          \"name\": \"Teh Manis\",\n          \"quantity\": 10,\n          \"subTotalPrice\": 50000\n        },\n        {\n          \"name\": \"Sate Ayam\",\n          \"quantity\": 12,\n          \"subTotalPrice\": 240000\n        },\n        {\n          \"name\": \"Kopi Hitam\",\n          \"quantity\": 19,\n          \"subTotalPrice\": 190000\n        }\n    },\n  \"timestamp\": \"2024-11-16T18:32:59.615+00:00\",\n  \"errors\": null\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "9a7cf4e2-826b-46b1-a228-bf6ea1390f44",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "api/v1/test",
+      "responses": [
+        {
+          "uuid": "c1726e01-a83a-42e8-aa27-8110fd311f81",
+          "body": "[\r\n  {{#repeat 1}}\r\n    {\r\n      \"id\": \"{{faker 'string.uuid'}}\",\r\n      \"name\": \"{{faker 'person.firstName'}} {{faker 'person.lastName'}}\",\r\n      \"email\": \"{{faker 'internet.email'}}\",\r\n      \"phone\": \"{{faker 'phone.number'}}\",\r\n      \"address\": \"{{faker 'location.streetAddress'}}, {{faker 'location.city'}}, {{faker 'location.state' abbreviated=true}} {{faker 'location.zipCode'}}\",\r\n      \"birthdate\": \"{{faker 'date.past'}}\",\r\n      \"isActive\": \"{{faker 'datatype.boolean'}}\"\r\n    }\r\n  {{/repeat}}\r\n]",
+          "latency": 90000,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
     }
   ],
   "rootChildren": [
     {
-      "type": "route",
-      "uuid": "b95afc7b-803e-4001-aff9-81b99156e7eb"
+      "type": "folder",
+      "uuid": "373e7626-e64d-431b-a2c4-bf450ec4c957"
     },
     {
-      "type": "route",
-      "uuid": "308e25f0-7a95-4b21-98a3-e354c3ef3bd1"
+      "type": "folder",
+      "uuid": "59666a10-0952-41f7-b42c-7c03e50e1645"
     },
     {
-      "type": "route",
-      "uuid": "871cacd8-7541-491f-b4c2-75ce26d94054"
+      "type": "folder",
+      "uuid": "f36b6622-8fee-4eb5-acd6-1304f9c67c4f"
     },
     {
-      "type": "route",
-      "uuid": "21188c20-53db-4b51-80a7-a6839882ae56"
+      "type": "folder",
+      "uuid": "e386e2ce-211a-4d50-9bba-9164da8ed9bd"
+    },
+    {
+      "type": "folder",
+      "uuid": "515328e7-5548-4198-af53-825db2aeeb19"
     }
   ],
   "proxyMode": false,
