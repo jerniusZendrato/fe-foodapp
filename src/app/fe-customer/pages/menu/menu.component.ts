@@ -43,12 +43,20 @@ export class MenuComponent implements OnInit {
   }
 
   filterProductsBySearch(): Product[] {
+    this.isLoading = true;
+  
+    let filteredProducts: Product[];
+  
     if (!this.searchQuery) {
-      return this.products; 
+      filteredProducts = this.products;
+    } else {
+      filteredProducts = this.products.filter((product) =>
+        product.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
     }
-    return this.products.filter((product) =>
-      product.name.toLowerCase().includes(this.searchQuery.toLowerCase())
-    );
+  
+    this.isLoading = false;
+    return filteredProducts;
   }
 
 
