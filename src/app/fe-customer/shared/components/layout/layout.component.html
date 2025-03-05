@@ -1,0 +1,62 @@
+<div
+  style="
+    background-color: #f00;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow-x: hidden;
+  "
+>
+  <div
+    style="min-height: 15vh; width: 100%; position: relative"
+    class="d-flex flex-column justify-content-center align-items-center"
+  >
+    <div *ngIf="showLogoAndNavBarIconComponent">
+      <div style="position: absolute; top: 10px; right: 10px">
+        <button
+          style="
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: px;
+            color: white;
+          "
+          aria-label="Menu"
+        >
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+
+      <div>
+        <img
+          style="
+            width: 202px;
+            height: 41px;
+            opacity: 1;
+            margin-top: 0;
+            margin-bottom: 1%;
+          "
+          alt="icon"
+          src="https://image-storage-order-app.s3.eu-north-1.amazonaws.com/product_image/logo-white.png"
+        />
+      </div>
+    </div>
+
+    <ng-content select="[header]" style="min-height: 30%"> </ng-content>
+  </div>
+  <div
+    class="p-2"
+    style="
+      border-radius: 24px 24px 0px 0px;
+      background-color: white;
+      height: 85vh;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    "
+  >
+    <ng-content select="[main]"></ng-content>
+  </div>
+</div>

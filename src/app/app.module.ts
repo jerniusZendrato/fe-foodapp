@@ -23,6 +23,9 @@ import { WelcomeComponent } from './fe-customer/pages/welcome/welcome.component'
 import { FeCustomerComponent } from './fe-customer/fe-customer.component';
 import { MenuComponent } from './fe-customer/pages/menu/menu.component';
 import { ProductCardComponent } from './fe-customer/shared/components/product-card/product-card.component';
+import { CheckOutButtonComponent } from './fe-customer/shared/components/check-out-button/check-out-button.component';
+import { CartComponent } from './fe-customer/pages/cart/cart.component';
+import { LayoutComponent } from './fe-customer/shared/components/layout/layout.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +47,10 @@ import { ProductCardComponent } from './fe-customer/shared/components/product-ca
     WelcomeComponent,
     FeCustomerComponent,
     MenuComponent,
-    ProductCardComponent
+    ProductCardComponent,
+    CheckOutButtonComponent,
+    CartComponent,
+    LayoutComponent
   ],
   imports: [
     BrowserModule,

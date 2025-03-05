@@ -8,7 +8,72 @@
     overflow-x: hidden;
   "
 >
-  <div style="min-height: 15vh; width: 100%"></div>
+  <div
+    style="min-height: 15vh; width: 100%; position: relative"
+    class="d-flex flex-column justify-content-center align-items-center"
+  >
+    <!-- Tombol Ikon Burger -->
+    <div style="position: absolute; top: 10px; right: 10px">
+      <button
+        style="
+          background: none;
+          border: none;
+          cursor: pointer; 
+          font-size: px; 
+          color: white; 
+        "
+        aria-label="Menu"
+      >
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+
+    <div>
+      <img
+        style="
+          width: 202px;
+          height: 41px;
+          opacity: 1; 
+          margin-top: 0; 
+          margin-bottom: 1%;
+        "
+        alt="icon"
+        src="https://image-storage-order-app.s3.eu-north-1.amazonaws.com/product_image/logo-white.png"
+      />
+    </div>
+
+    <div
+      style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        max-height: 30px;
+        margin-top: 10px; 
+      "
+    >
+      <div class="input-group mb-2" style="width: 246px">
+        <span
+          class="input-group-text"
+          style="
+            background-color: white !important;
+            border-right: none;
+            height: 25px !important;
+          "
+          ><i class="fa-solid fa-magnifying-glass"></i
+        ></span>
+        <input
+          style="border-left: none; height: 25px !important"
+          type="text"
+          class="form-control border-black--focus"
+          placeholder="search ......"
+          aria-label="product_name_search"
+          [(ngModel)]="searchQuery"
+
+        />
+      </div>
+    </div>
+  </div>
 
   <div
     class="p-2"
@@ -55,7 +120,7 @@
             {{ category.name }}
           </span>
           <div class="products-list">
-            <ng-container *ngFor="let product of products">
+            <ng-container *ngFor="let product of filterProductsBySearch()">
               <div
                 *ngIf="category.isActivated && category.name != 'un-category'"
               >
@@ -68,16 +133,18 @@
         </div>
       </ng-container>
     </div>
+
+    <app-check-out-button></app-check-out-button>
   </div>
 </div>
 
 <style>
-  /* Hide scrollbar for Chrome, Safari and Opera */
+  
   div::-webkit-scrollbar {
     display: none;
   }
 
-  /* Tambahkan ini untuk memastikan app-product-card tidak melebihi lebar parent */
+  
   app-product-card {
     max-width: 100%;
     overflow-x: hidden;

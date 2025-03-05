@@ -99,4 +99,26 @@ export class OrderLocalStorageCustService {
     const productOrder = this.order?.productOrders?.find((po) => po.id === id);
     return productOrder ? productOrder.quantity ?? 0 : 0;
   }
+
+  getProductTotalQuantity(): number {
+    let totalQuantity = 0;
+
+    if (this.order.productOrders) {
+      for (const productOrder of this.order.productOrders) {
+        totalQuantity += productOrder.quantity ?? 0;
+      }
+    }
+    return totalQuantity;
+  }
+
+  getTotalPrice(): number {
+    let totalPrice = 0;
+
+    if (this.order.productOrders) {
+      for (const productOrder of this.order.productOrders) {
+        totalPrice += (productOrder.quantity ?? 0) * (productOrder.price || 0);
+      }
+    }
+    return totalPrice;
+  }
 }

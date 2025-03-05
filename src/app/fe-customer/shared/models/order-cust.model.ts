@@ -1,6 +1,7 @@
 export interface CustomerOrderItem {
   id: string;
   quantity: number;
+  price: number;
 }
 
 export interface OrderCust {

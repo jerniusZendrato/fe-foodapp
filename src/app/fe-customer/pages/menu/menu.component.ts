@@ -13,13 +13,14 @@ export class MenuComponent implements OnInit {
   constructor(
     private readonly productService: ProductCustService,
     private readonly categoryService: CategoryCustService,
-    private readonly elementRef: ElementRef
   ) {}
 
   @ViewChildren('categoryContainer') categoryContainers!: QueryList<ElementRef>;
 
   products!: Product[];
   categories!: Category[];
+
+  searchQuery!: string;
 
   ngOnInit(): void {
     this.getProducts();
@@ -37,6 +38,15 @@ export class MenuComponent implements OnInit {
         element.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     });
+  }
+
+  filterProductsBySearch(): Product[] {
+    if (!this.searchQuery) {
+      return this.products; 
+    }
+    return this.products.filter((product) =>
+      product.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+    );
   }
 
 

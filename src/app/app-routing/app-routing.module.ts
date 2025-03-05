@@ -12,9 +12,13 @@ import { CassierOrderComponent } from '../components/admin/components/cassier-or
 import { WelcomeComponent } from '../fe-customer/pages/welcome/welcome.component';
 import { FeCustomerComponent } from '../fe-customer/fe-customer.component';
 import { MenuComponent } from '../fe-customer/pages/menu/menu.component';
+import { CartComponent } from '../fe-customer/pages/cart/cart.component';
+import { LayoutComponent } from '../fe-customer/shared/components/layout/layout.component';
 
 const feCustomerChildren: Routes = [
   { path: 'welcome', component: WelcomeComponent },
+  { path: 'layout', component: LayoutComponent },
+  { path: 'cart', component: CartComponent },
   { path: '', component: MenuComponent },
   { path: '404', component: WelcomeComponent },
 ];

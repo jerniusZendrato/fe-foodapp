@@ -12,8 +12,12 @@ export class DerectService {
   }
 
   toMenuPage() {
-    console.log('to menu page');
     this.router.navigate(['/']);
+  }
+
+  toCartPage() {
+    console.log('object :>> ');
+    this.router.navigate(['/cart']);
   }
 
   toOrderSuccesPage() {
