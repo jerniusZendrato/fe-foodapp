@@ -5,6 +5,7 @@ import {
 } from '../models/order-cust.model';
 
 import { ProductCust as Product } from '../models/product-cust.model';
+import { DerectService } from './derect.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,13 +16,14 @@ export class OrderLocalStorageCustService {
 
   private readonly STORAGE_KEY_ORDER = 'order';
 
-  constructor() {
+  constructor(private readonly derect: DerectService) {
     this.initializeOrder();
     const storedOrder = this.getOrder();
     if (storedOrder) {
       this.order = storedOrder;
     }
   }
+
   getOrder(): Order | null {
     const storedOrder = localStorage.getItem(this.STORAGE_KEY_ORDER);
     return storedOrder ? JSON.parse(storedOrder) : null;
@@ -31,6 +33,7 @@ export class OrderLocalStorageCustService {
     this.order = {
       customerName: '',
       tableId: '',
+      tableName: '',
       type: 'Dinning Table',
       adminId: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
       productOrders: this.orderItem,
@@ -42,9 +45,14 @@ export class OrderLocalStorageCustService {
     localStorage.setItem(this.STORAGE_KEY_ORDER, JSON.stringify(order));
   }
 
-  insertNameAndTable(customerName: string, tableId: string) {
+  insertNameAndTableNamaAndTableId(
+    customerName: string,
+    tableId: string,
+    tableName: string | number
+  ) {
     this.order.customerName = customerName;
     this.order.tableId = tableId;
+    this.order.tableName = tableName;
     this.saveOrder(this.order);
   }
 
@@ -95,6 +103,13 @@ export class OrderLocalStorageCustService {
     this.saveOrder(this.order);
   }
 
+  removeOrder() {
+    localStorage.removeItem(this.STORAGE_KEY_ORDER);
+    this.order.productOrders = [];
+    this.saveOrder(this.order);
+    this.derect.toMenuPage();
+  }
+
   getProductQuantity(id: string): number {
     const productOrder = this.order?.productOrders?.find((po) => po.id === id);
     return productOrder ? productOrder.quantity ?? 0 : 0;
@@ -120,5 +135,17 @@ export class OrderLocalStorageCustService {
       }
     }
     return totalPrice;
+  }
+
+  getCostumerName(): string {
+    return this.order.customerName;
+  }
+
+  getOrderType(): string {
+    return this.order.type;
+  }
+
+  getTable(): string | number {
+    return this.order.tableName;
   }
 }

@@ -1,4 +1,202 @@
 <app-layout>
+  <div main class="main-container">
+    <div class="d-flex justify-content-between mt-2">
+      <span class="fw-bold" (click)="this.derect.toMenuPage()">My Order</span>
+      <span class="fw-bold" (click)="this.orderService.removeOrder()" style="color: #f00">Cancel </span>
+    </div>
+    <hr class="fw-bold" />
+    <!-- order information -->
+    <div
+      *ngFor="let item of orderInformation"
+      class="d-flex justify-content-between border-bottom"
+    >
+      <span>{{ item.label }}</span>
+      <span class="fw-bold">{{ item.value }}</span>
+    </div>
 
-    
+    <!-- payment method -->
+
+    <div
+      class="card shadow"
+      style="
+        margin-top: 12px;
+        padding: 10px;
+        border: none;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      "
+    >
+      <span style="font-weight: bold; font-size: 12px">Payment Method</span>
+
+      <div style="display: flex; align-items: center; margin-top: 3px">
+        <div
+          style="
+            width: 135px;
+            height: 29px;
+            border-radius: 4px;
+            border: 1px solid #ff0000;
+            display: flex;
+            align-items: center;
+            padding: 0 5px;
+            background-color: transparent;
+          "
+        >
+          <i
+            class="fa-solid fa-cash-register"
+            style="width: 16px; height: 16px; margin-right: 5px; color: #ff0000"
+          ></i>
+          <span style="font-size: 9px; color: #ff0000">
+            <strong> Pay at the cashier</strong></span
+          >
+
+          <div
+            style="
+              width: 12px;
+              height: 12px;
+              border: 1px solid #ff0000;
+              border-radius: 50%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              margin-left: 4px;
+            "
+          >
+            <div
+              style="
+                width: 8px;
+                height: 8px;
+                background-color: #ff0000;
+                border-radius: 50%;
+              "
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- my order -->
+
+    <div class="order-section">
+      <span class="fw-bold" style="font-size: 12px">My order</span>
+      <div class="order-list">
+        <div *ngFor="let productOrder of order?.productOrders">
+          <app-product-card [product]="productOrder"></app-product-card>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="order-info">
+        <div
+          *ngFor="let item of orderPriceInfo"
+          class="d-flex justify-content-between border-bottom"
+        >
+          <span>{{ item.label }}</span>
+          <span class="fw-bold">{{ item.value }}</span>
+        </div>
+      </div>
+
+      <!-- Total Payment -->
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 10px 0;
+          margin-top: 5px;
+          border-top: 1px solid #ddd;
+          font-weight: bold;
+          font-size: 13px;
+        "
+      >
+        <span>Total Payment</span>
+        <span
+          >{{
+            this.orderService.getTotalPrice()
+              | currency : "Rp" : "symbol" : "1.0-0"
+          }}
+        </span>
+      </div>
+
+      <!-- Buttons -->
+      <div
+        style="
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+        "
+      >
+        <button
+          style="
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+          "
+          routerLink="/menu"
+        >
+          Add Order
+        </button>
+        <button
+          style="
+            background-color: gold;
+            color: black;
+            border: none;
+            padding: 10px 20px;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+          "
+          routerLink="/status"
+        >
+          Process
+        </button>
+      </div>
+    </div>
+  </div>
 </app-layout>
+
+<style>
+  .main-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .order-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 0 20px;
+  }
+
+  .order-list {
+    flex: 1;
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    max-height: calc(100% - 10px); /* 50% dari parent minus ruang untuk judul */
+  }
+
+  .order-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .content-wrapper {
+    padding: 20px 20px;
+  }
+
+  .section-spacer {
+    height: 20px; /* Anda bisa menyesuaikan tinggi ini sesuai kebutuhan */
+  }
+
+
+</style>

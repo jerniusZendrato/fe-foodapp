@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, ElementRef, OnInit, Query, QueryList, ViewChildren } from '@angular/core';
 import { ProductCustService } from '../../shared/services/product-cust.service';
 import { ProductCust as Product } from '../../shared/models/product-cust.model';
 import { CategoryCustService } from '../../shared/services/category-cust.service';
@@ -13,14 +13,16 @@ export class MenuComponent implements OnInit {
   constructor(
     private readonly productService: ProductCustService,
     private readonly categoryService: CategoryCustService,
+    private readonly elementRef: ElementRef
   ) {}
 
   @ViewChildren('categoryContainer') categoryContainers!: QueryList<ElementRef>;
 
   products!: Product[];
   categories!: Category[];
+  searchQuery! : string;
 
-  searchQuery!: string;
+  isLoading: boolean = true;
 
   ngOnInit(): void {
     this.getProducts();

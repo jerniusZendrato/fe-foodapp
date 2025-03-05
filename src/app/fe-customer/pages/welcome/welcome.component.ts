@@ -26,7 +26,7 @@ export class WelcomeComponent implements OnInit {
 
   table!: Table | null;
 
-  tableNo: number | string | null = null;
+  tableNo!: number | string;
   tableId!: string;
 
   
@@ -71,7 +71,7 @@ export class WelcomeComponent implements OnInit {
       console.log('name :>> ', name);
       console.log('this.tableId :>> ', this.tableId);
       if (name) {
-        this.OrderLocalStorageService.insertNameAndTable(name, this.tableId);
+        this.OrderLocalStorageService.insertNameAndTableNamaAndTableId(name, this.tableId, this.tableNo);
         this.derect.toMenuPage()  
       }
     }
