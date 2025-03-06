@@ -20,9 +20,9 @@ export class DerectService {
     this.router.navigate(['/cart']);
   }
 
-  toOrderSuccesPage() {
-    console.log('to menu page');
-    this.router.navigate(['/order/succes']);
+  toOrderSummary(idOrder : string | undefined) {
+    console.log('idOrder :>> ', idOrder);
+    this.router.navigate([`/order/summary/${idOrder}`]);
   }
 
   refreshPage() {

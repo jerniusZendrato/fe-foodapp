@@ -14,6 +14,7 @@ import { FeCustomerComponent } from '../fe-customer/fe-customer.component';
 import { MenuComponent } from '../fe-customer/pages/menu/menu.component';
 import { CartComponent } from '../fe-customer/pages/cart/cart.component';
 import { LayoutComponent } from '../fe-customer/shared/components/layout/layout.component';
+import { OrderSummaryComponent } from '../fe-component/pages/order-summary/order-summary.component';
 
 const feCustomerChildren: Routes = [
   { path: 'welcome', component: WelcomeComponent },
@@ -21,6 +22,7 @@ const feCustomerChildren: Routes = [
   { path: 'cart', component: CartComponent },
   { path: '', component: MenuComponent },
   { path: '404', component: WelcomeComponent },
+  { path: 'order/summary/:id', component: OrderSummaryComponent },
 ];
 
 const routes: Routes = [

@@ -5,6 +5,7 @@ export interface CustomerOrderItem {
 }
 
 export interface OrderCust {
+  id?:string
   customerName: string;
   type: string;
   tableId: string;

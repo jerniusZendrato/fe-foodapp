@@ -27,6 +27,7 @@ import { CheckOutButtonComponent } from './fe-customer/shared/components/check-o
 import { CartComponent } from './fe-customer/pages/cart/cart.component';
 import { LayoutComponent } from './fe-customer/shared/components/layout/layout.component';
 import { ModalComponent } from './fe-customer/shared/components/modal/modal.component';
+import { OrderSummaryComponent } from './fe-component/pages/order-summary/order-summary.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { ModalComponent } from './fe-customer/shared/components/modal/modal.comp
     CartComponent,
     LayoutComponent,
     ModalComponent,
+    OrderSummaryComponent,
   ],
   imports: [
     BrowserModule,

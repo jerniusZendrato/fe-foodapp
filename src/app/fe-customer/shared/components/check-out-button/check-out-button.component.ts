@@ -12,7 +12,8 @@ import { DerectService } from '../../services/derect.service';
     left: 50%;
     transform: translateX(-50%);
     z-index: 1000;
-    min-width: 85%;
+    width: 85%;
+    max-width: 450px;
     background-color: #ff0000
   "
       *ngIf="orderService.getProductTotalQuantity() > 0"

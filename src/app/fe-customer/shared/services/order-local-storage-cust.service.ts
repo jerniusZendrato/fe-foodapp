@@ -6,6 +6,7 @@ import {
 
 import { ProductCust as Product } from '../models/product-cust.model';
 import { DerectService } from './derect.service';
+import { OrderCustService } from './order-cust.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,8 +16,12 @@ export class OrderLocalStorageCustService {
   orderItem: CustomerOrderItem[] = [];
 
   private readonly STORAGE_KEY_ORDER = 'order';
+  private readonly STORAGE_KEY_ORDER_HISTORY = 'order-history';
 
-  constructor(private readonly derect: DerectService) {
+  constructor(
+    private readonly derect: DerectService,
+    private readonly orderService: OrderCustService
+  ) {
     this.initializeOrder();
     const storedOrder = this.getOrder();
     if (storedOrder) {
@@ -29,24 +34,92 @@ export class OrderLocalStorageCustService {
     return storedOrder ? JSON.parse(storedOrder) : null;
   }
 
+  getHistoryOrder(): Order[] | null {
+    const storedHistoyOrder = localStorage.getItem(
+      this.STORAGE_KEY_ORDER_HISTORY
+    );
+    return storedHistoyOrder ? JSON.parse(storedHistoyOrder) : null;
+  }
+
+  addOrderToHistory(newOrder: Order): void {
+    // Retrieve existing order history
+    const storedHistoryOrder = localStorage.getItem(
+      this.STORAGE_KEY_ORDER_HISTORY
+    );
+    const orderHistory: Order[] = storedHistoryOrder
+      ? JSON.parse(storedHistoryOrder)
+      : [];
+
+    // Add the new order to the history
+    orderHistory.unshift(newOrder);
+
+    // Save the updated order history back to local storage
+    localStorage.setItem(
+      this.STORAGE_KEY_ORDER_HISTORY,
+      JSON.stringify(orderHistory)
+    );
+  }
+
   private initializeOrder() {
     this.order = {
       customerName: '',
       tableId: '',
       tableName: '',
       type: 'Dinning Table',
-      adminId: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
+      adminId: 'beb5b621-d9bb-42b0-b14c-8b719d093756',
       productOrders: this.orderItem,
     };
   }
 
-  saveOrder(order: Order): void {
-    console.log('order :>> ', order);
-    localStorage.setItem(this.STORAGE_KEY_ORDER, JSON.stringify(order));
+  // insertOrder(): void {
+  //   this.orderService.insertOrder(this.order).subscribe({
+  //     next: (order) => {
+  //       this.order = order
+  //       this.derect.toOrderSummary(order.id); // Perbaiki kesalahan pengetikan
+  //       localStorage.removeItem(this.STORAGE_KEY_ORDER);
+  
+  //       this.addOrderToHistory(this.order);
+  
+  //       this.order.productOrders = [];
+  //       this.saveOrder(this.order);
+  //     },
+  //     error: (error) => {
+  //       console.error('Error inserting product:', error);
+  //     },
+  //     complete: () => {
+  //       console.log('Insert product observable completed');
+  //     },
+  //   });
+  // }
+
+  insertOrder(): void {
+    this.orderService.insertOrder(this.order).subscribe({
+      next: (response) => {
+        console.log('response :>> ', response);
+        if (response.isSuccess) {
+          this.order = response.data; // Ambil data dari response
+          const orderId = this.order.id
+          localStorage.removeItem(this.STORAGE_KEY_ORDER);
+          this.order.productOrders = [];
+          this.saveOrder(this.order);
+          this.addOrderToHistory(this.order)
+          this.derect.toOrderSummary(orderId);
+
+        } else {
+          console.error('Failed to insert order:', response.errors);
+        }
+      },
+      error: (error) => {
+        console.error('Error inserting order:', error);
+      },
+      complete: () => {
+        console.log('Insert order observable completed');
+      },
+    });
   }
 
-  doOrder(order){
-    
+  saveOrder(order: Order): void {
+    localStorage.setItem(this.STORAGE_KEY_ORDER, JSON.stringify(order));
   }
 
   insertNameAndTableNamaAndTableId(

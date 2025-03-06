@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, ChangeDetectorRef, QueryList, ViewChildr
 import { ProductCustService } from '../../shared/services/product-cust.service';
 import { ProductCust as Product } from '../../shared/models/product-cust.model';
 import { CategoryCustService } from '../../shared/services/category-cust.service';
-import { CategoryCust as Category } from '../../shared/models/category-cust';
+import { CategoryCust as Category } from '../../shared/models/category-cust.model';
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
