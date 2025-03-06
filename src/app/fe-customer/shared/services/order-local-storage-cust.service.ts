@@ -71,26 +71,6 @@ export class OrderLocalStorageCustService {
     };
   }
 
-  // insertOrder(): void {
-  //   this.orderService.insertOrder(this.order).subscribe({
-  //     next: (order) => {
-  //       this.order = order
-  //       this.derect.toOrderSummary(order.id); // Perbaiki kesalahan pengetikan
-  //       localStorage.removeItem(this.STORAGE_KEY_ORDER);
-  
-  //       this.addOrderToHistory(this.order);
-  
-  //       this.order.productOrders = [];
-  //       this.saveOrder(this.order);
-  //     },
-  //     error: (error) => {
-  //       console.error('Error inserting product:', error);
-  //     },
-  //     complete: () => {
-  //       console.log('Insert product observable completed');
-  //     },
-  //   });
-  // }
 
   insertOrder(): void {
     this.orderService.insertOrder(this.order).subscribe({
