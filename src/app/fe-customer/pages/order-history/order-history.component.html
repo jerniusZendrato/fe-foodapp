@@ -1,1 +1,21 @@
-<p>order-history works!</p>
+<app-layout>
+  <div main>
+    <div class="mt-3">
+      <div *ngIf="orderHistories && orderHistories.length > 0; else noOrders">
+        <div *ngFor="let orderHistory of orderHistories">
+          <app-order-history-card
+            [order]="orderHistory"
+          ></app-order-history-card>
+        </div>
+      </div>
+      <ng-template #noOrders>
+        <div
+          class="d-flex justify-content-center align-items-center"
+          style="min-height: 40vh"
+        >
+          <p>No order history found.</p>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</app-layout>

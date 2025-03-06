@@ -30,6 +30,7 @@ import { ModalComponent } from './fe-customer/shared/components/modal/modal.comp
 import { OrderSummaryComponent } from './fe-customer/pages/order-summary/order-summary.component';
 import { OrderHistoryComponent } from './fe-customer/pages/order-history/order-history.component';
 import { NavbarComponent } from './fe-customer/shared/components/navbar/navbar.component';
+import { OrderHistoryCardComponent } from './fe-customer/shared/components/order-history-card/order-history-card.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { NavbarComponent } from './fe-customer/shared/components/navbar/navbar.c
     OrderSummaryComponent,
     OrderHistoryComponent,
     NavbarComponent,
+    OrderHistoryCardComponent,
   ],
   imports: [
     BrowserModule,

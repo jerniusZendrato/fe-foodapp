@@ -24,7 +24,6 @@ export class DerectService {
     console.log('idOrder :>> ', idOrder);
     this.router.navigate([`/order/summary/${idOrder}`]);
   }
-
   refreshPage() {
     this.router.navigate([this.router.url]).then(() => {
       window.location.reload();

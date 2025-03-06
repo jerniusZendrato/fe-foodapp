@@ -7,6 +7,7 @@ import {
 import { ProductCust as Product } from '../models/product-cust.model';
 import { DerectService } from './derect.service';
 import { OrderCustService } from './order-cust.service';
+import { OrderHistoryCust } from '../models/order-history.model';
 
 @Injectable({
   providedIn: 'root',
@@ -34,19 +35,19 @@ export class OrderLocalStorageCustService {
     return storedOrder ? JSON.parse(storedOrder) : null;
   }
 
-  getHistoryOrder(): Order[] | null {
+  getHistoryOrder(): OrderHistoryCust[] | null {
     const storedHistoyOrder = localStorage.getItem(
       this.STORAGE_KEY_ORDER_HISTORY
     );
     return storedHistoyOrder ? JSON.parse(storedHistoyOrder) : null;
   }
 
-  addOrderToHistory(newOrder: Order): void {
+  addOrderToHistory(newOrder: OrderHistoryCust): void {
     // Retrieve existing order history
     const storedHistoryOrder = localStorage.getItem(
       this.STORAGE_KEY_ORDER_HISTORY
     );
-    const orderHistory: Order[] = storedHistoryOrder
+    const orderHistory: OrderHistoryCust[] = storedHistoryOrder
       ? JSON.parse(storedHistoryOrder)
       : [];
 
@@ -71,20 +72,22 @@ export class OrderLocalStorageCustService {
     };
   }
 
-
   insertOrder(): void {
     this.orderService.insertOrder(this.order).subscribe({
       next: (response) => {
         console.log('response :>> ', response);
         if (response.isSuccess) {
-          this.order = response.data; // Ambil data dari response
-          const orderId = this.order.id
+          let order : OrderHistoryCust = response.data;
+          console.log('order :>> ', order);
+          const orderId = this.order.id;
+
           localStorage.removeItem(this.STORAGE_KEY_ORDER);
+          // this.mappingOrderHistory(order)
           this.order.productOrders = [];
           this.saveOrder(this.order);
-          this.addOrderToHistory(this.order)
+          
+          this.addOrderToHistory(order);
           this.derect.toOrderSummary(orderId);
-
         } else {
           console.error('Failed to insert order:', response.errors);
         }

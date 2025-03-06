@@ -15,11 +15,13 @@ import { MenuComponent } from '../fe-customer/pages/menu/menu.component';
 import { CartComponent } from '../fe-customer/pages/cart/cart.component';
 import { LayoutComponent } from '../fe-customer/shared/components/layout/layout.component';
 import { OrderSummaryComponent } from '../fe-customer/pages/order-summary/order-summary.component';
+import { OrderHistoryComponent } from '../fe-customer/pages/order-history/order-history.component';
 
 const feCustomerChildren: Routes = [
   { path: 'welcome', component: WelcomeComponent },
   { path: 'layout', component: LayoutComponent },
   { path: 'cart', component: CartComponent },
+  { path: 'history', component: OrderHistoryComponent },
   { path: '', component: MenuComponent },
   { path: '404', component: WelcomeComponent },
   { path: 'order/summary/:id', component: OrderSummaryComponent },

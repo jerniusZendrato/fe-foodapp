@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { OrderCust as Order } from '../models/order-cust.model';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { environment } from 'src/app/environment/environment';
+import { OrderHistoryCust } from '../models/order-history.model';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,7 @@ export class OrderCustService {
 
   insertOrder(order: Order): Observable<{
     isSuccess: boolean;
-    data: Order;
+    data: OrderHistoryCust;
     errors: any
   }> {
     return this.http
