@@ -45,6 +45,10 @@ export class OrderLocalStorageCustService {
     localStorage.setItem(this.STORAGE_KEY_ORDER, JSON.stringify(order));
   }
 
+  doOrder(order){
+    
+  }
+
   insertNameAndTableNamaAndTableId(
     customerName: string,
     tableId: string,

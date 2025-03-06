@@ -2,7 +2,13 @@
   <div main class="main-container">
     <div class="d-flex justify-content-between mt-2">
       <span class="fw-bold" (click)="this.derect.toMenuPage()">My Order</span>
-      <span class="fw-bold" (click)="this.orderService.removeOrder()" style="color: #f00">Cancel </span>
+      <span
+        class="fw-bold"
+        style="color: #f00"
+        data-bs-toggle="modal"
+        data-bs-target="#cancelModal"
+        >Cancel
+      </span>
     </div>
     <hr class="fw-bold" />
     <!-- order information -->
@@ -139,7 +145,7 @@
             border-radius: 5px;
             cursor: pointer;
           "
-          routerLink="/menu"
+          (click)="this.derect.toMenuPage()"
         >
           Add Order
         </button>
@@ -153,7 +159,8 @@
             border-radius: 5px;
             cursor: pointer;
           "
-          routerLink="/status"
+          data-bs-toggle="modal"
+          data-bs-target="#processModal"
         >
           Process
         </button>
@@ -162,6 +169,105 @@
   </div>
 </app-layout>
 
+<!-- Button trigger modal -->
+
+<!-- Modal cancel -->
+<div
+  class="modal fade"
+  id="cancelModal"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="cancelModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div
+        class="modal-header d-flex justify-content-between align-items-center"
+      >
+        <h1
+          class="modal-title fs-5 main-color mx-auto fw-bold"
+          id="cancelModalLabel"
+        >
+          Warning
+        </h1>
+      </div>
+      <div class="modal-body fw-bold">
+        Are you sure you want to <span class="main-color">cancel </span> your
+        order?
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn"
+          style="background-color: #f00; color: white"
+          data-bs-dismiss="modal"
+        >
+          Not Sure
+        </button>
+        <button
+          type="button"
+          class="btn"
+          style="background-color: #1fac12; color: white"
+          data-bs-dismiss="modal"
+          (click)="this.orderService.removeOrder()"
+        >
+          Yes, sure
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal process -->
+<div
+  class="modal fade"
+  id="processModal"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="processModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div
+        class="modal-header d-flex justify-content-between align-items-center"
+      >
+        <h1
+          class="modal-title fs-5 main-color mx-auto fw-bold"
+          id="processModalLabel"
+        >
+          Warning
+        </h1>
+      </div>
+      <div class="modal-body fw-bold">
+        Are you sure you want to <span class="main-color">cancel </span> your
+        order?
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn"
+          style="background-color: #f00; color: white"
+          data-bs-dismiss="modal"
+        >
+          Not Sure
+        </button>
+        <button
+          type="button"
+          class="btn"
+          style="background-color: #1fac12; color: white"
+          data-bs-dismiss="modal"
+          (click)="this.orderService.removeOrder()"
+        >
+          Yes, sure
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 <style>
   .main-container {
     display: flex;
@@ -197,6 +303,4 @@
   .section-spacer {
     height: 20px; /* Anda bisa menyesuaikan tinggi ini sesuai kebutuhan */
   }
-
-
 </style>

@@ -42,3 +42,7 @@
 .btn-outline-main-color:focus {
   box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.5); /* Efek focus dengan warna merah */
 }
+
+.main-color {
+  color: #f00;
+}

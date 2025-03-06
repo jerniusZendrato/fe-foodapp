@@ -8,7 +8,7 @@ import { DerectService } from '../../shared/services/derect.service';
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css'],
 })
-export class CartComponent implements OnInit {
+export class CartComponent implements OnInit  {
   orderInformation: Array<{ label: string; value: string | number }> = [];
   orderPriceInfo: Array<{ label: string; value: string | number }> = [];
 
@@ -18,6 +18,8 @@ export class CartComponent implements OnInit {
     public orderService: OrderLocalStorageCustService,
     public derect: DerectService
   ) {}
+
+  modal: any;
 
   ngOnInit(): void {
     this.orderInformation = [

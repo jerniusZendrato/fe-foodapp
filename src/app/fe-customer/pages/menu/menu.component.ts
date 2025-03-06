@@ -1,9 +1,8 @@
-import { Component, ElementRef, OnInit, Query, QueryList, ViewChildren } from '@angular/core';
+import { Component, ElementRef, OnInit, ChangeDetectorRef, QueryList, ViewChildren } from '@angular/core';
 import { ProductCustService } from '../../shared/services/product-cust.service';
 import { ProductCust as Product } from '../../shared/models/product-cust.model';
 import { CategoryCustService } from '../../shared/services/category-cust.service';
 import { CategoryCust as Category } from '../../shared/models/category-cust';
-
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -13,7 +12,7 @@ export class MenuComponent implements OnInit {
   constructor(
     private readonly productService: ProductCustService,
     private readonly categoryService: CategoryCustService,
-    private readonly elementRef: ElementRef
+    private readonly cdr: ChangeDetectorRef
   ) {}
 
   @ViewChildren('categoryContainer') categoryContainers!: QueryList<ElementRef>;
@@ -25,8 +24,15 @@ export class MenuComponent implements OnInit {
   isLoading: boolean = true;
 
   ngOnInit(): void {
-    this.getProducts();
-    this.getCategories();
+    this.isLoading = true;
+    Promise.all([
+      this.getProducts(),
+      this.getCategories()
+    ]).then(() => {
+      this.isLoading = false;
+      this.cdr.detectChanges();
+    });
+
   }
 
   activeCategoryId: string | null = null;
@@ -62,12 +68,17 @@ export class MenuComponent implements OnInit {
 
   // ----------------------------------------  crud to service
   getProducts() {
+    this.isLoading = true; // Mulai loading
     this.productService.getProducts().subscribe({
       next: (products) => {
         this.products = products;
+        this.isLoading = false; // Selesai loading
+        this.cdr.detectChanges(); // Memicu deteksi perubahan
       },
       error: (error) => {
-        console.error('Error fetching table:', error);
+        console.error('Error fetching products:', error);
+        this.isLoading = false; // Pastikan loading dimatikan jika terjadi error
+        this.cdr.detectChanges(); // Memicu deteksi perubahan
       },
       complete: () => {
         console.log('Observable completed');
@@ -76,12 +87,17 @@ export class MenuComponent implements OnInit {
   }
 
   getCategories() {
+    this.isLoading = true; // Mulai loading
     this.categoryService.getCategories().subscribe({
       next: (category) => {
         this.categories = category;
+        this.isLoading = false; // Selesai loading
+        this.cdr.detectChanges(); // Memicu deteksi perubahan
       },
       error: (error) => {
-        console.error('Error fetching table:', error);
+        console.error('Error fetching categories:', error);
+        this.isLoading = false; // Pastikan loading dimatikan jika terjadi error
+        this.cdr.detectChanges(); // Memicu deteksi perubahan
       },
       complete: () => {
         console.log('Observable completed');
