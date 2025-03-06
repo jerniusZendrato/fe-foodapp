@@ -74,7 +74,7 @@ export class MasterCategoryComponent implements OnInit {
       return;
     }
     this.changedProducts = this.allCategory.filter((category, index) => {
-      return category.activated !== this.originalCategory[index].activated; // Bandingkan status
+      return category.isActivated !== this.originalCategory[index].isActivated; // Bandingkan status
   
     });
 
@@ -212,14 +212,16 @@ export class MasterCategoryComponent implements OnInit {
     toast.show();
   }
 
-  private categoryToSavestatus: patchCategory[] = []
-  buttonsavestatuscategory() :void{
-    //ambil data id dan isActivated dari data yang berubah
-    this.categoryToSavestatus = this.categoryToSavestatus = this.changedProducts.map(({ id, isActivated }) => ({
-      id,
-      isActivated
-    }));
-
+  
+  private categoryToSavestatus: patchCategory = { category: [] }
+  buttonsavestatuscategory(): void {
+    this.categoryToSavestatus = {
+        category: this.changedProducts.map(({ id, isActivated }) => ({
+            id,
+            isActivated
+        }))
+    };
+  
     this.loaderService.show(); 
     this.categoryservice.savestatusCategory(this.categoryToSavestatus).subscribe(
       (response) => {

@@ -22,8 +22,13 @@ export interface AdminOrderCassier {
   }
 
   export interface ProductOrder {
-    id: string;
-    productName: string;
-    quantity: number;
-    subTotalPrice: number;
+    id?: string;
+    name: string;
+    urlImage?: string| null;
+    price: number;
+    description: string;
+    category?: string;
+    categoryId: string;
+    isActivated: Boolean;
+    quantity?: number;
   }

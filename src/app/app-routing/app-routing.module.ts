@@ -9,6 +9,7 @@ import { MasterProductComponent } from '../components/admin/components/master-pr
 import { TransactionCassierAdminComponent } from '../components/admin/components/transaction-cassier-admin/transaction-cassier-admin.component';
 import { ParentCassierOrderComponent } from '../components/admin/parent-cassier-order/parent-cassier-order.component';
 import { CassierOrderComponent } from '../components/admin/components/cassier-order/cassier-order.component';
+<<<<<<< Updated upstream
 import { WelcomeComponent } from '../fe-customer/pages/welcome/welcome.component';
 import { FeCustomerComponent } from '../fe-customer/fe-customer.component';
 import { MenuComponent } from '../fe-customer/pages/menu/menu.component';
@@ -24,6 +25,10 @@ const feCustomerChildren: Routes = [
   { path: '404', component: WelcomeComponent },
   { path: 'order/summary/:id', component: OrderSummaryComponent },
 ];
+=======
+import { TransactionKitchenAdminComponent } from '../components/admin/components/transaction-kitchen-admin/transaction-kitchen-admin.component';
+import { TransactionHistoryComponent } from '../components/admin/components/transaction-history/transaction-history.component';
+>>>>>>> Stashed changes
 
 const routes: Routes = [
   {
@@ -36,6 +41,7 @@ const routes: Routes = [
         canDeactivate: [UnsavedChangesVerifikasiService],
       },
       // { path: 'home', component: DashboardMenuComponent },
+<<<<<<< Updated upstream
       {
         path: 'product',
         component: MasterProductComponent,
@@ -57,6 +63,15 @@ const routes: Routes = [
         canDeactivate: [UnsavedChangesVerifikasiService],
       },
     ],
+=======
+      { path: 'product', component: MasterProductComponent,  canDeactivate: [UnsavedChangesVerifikasiService]},
+      { path: 'category', component:MasterCategoryComponent, canDeactivate: [UnsavedChangesVerifikasiService]},
+      { path: 'table', component:MasterTableComponent, canDeactivate: [UnsavedChangesVerifikasiService]},
+      { path: 'cassier-admin', component:TransactionCassierAdminComponent, canDeactivate: [UnsavedChangesVerifikasiService]},
+      {path: 'kitchen-admin', component:TransactionKitchenAdminComponent,canDeactivate: [UnsavedChangesVerifikasiService]},
+      {path: 'history',component: TransactionHistoryComponent,canDeactivate: [UnsavedChangesVerifikasiService]},
+    ]
+>>>>>>> Stashed changes
   },
   {
     path: 'post',

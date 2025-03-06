@@ -1,0 +1,34 @@
+.breadcrumb{
+    margin: 12px;
+}
+.breadcrumb .breadcrumb-item a{
+    /* font-size: 18px; */
+    text-decoration: none;
+}
+
+ /* Mengatur teks dalam tbody ke tengah */
+ .table tbody td {
+    text-align: center;
+    vertical-align: middle;
+  }
+
+#header-menu{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+}
+
+
+#isi-menu{
+    padding: 20px 0;
+    margin: 6px 10px;
+    background-color: #f9f9f9;
+    box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.2);
+    /* border-radius: 0 0 30px 30px; */
+    border-radius:  20px;
+    align-items: center;
+    height: 80vh;
+
+}

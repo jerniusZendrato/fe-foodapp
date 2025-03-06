@@ -3,12 +3,15 @@ export interface AdminCategory {
     id:string;
     quantity:string;
     name: string;
-    // isActivated: boolean;
-    activated: boolean;
+    isActivated: boolean;
+    // activated: boolean;
 
 }
+export interface patchCategory{
+    category: menu[];
+}
 
-export interface patchCategory {
+export interface menu {
     id:string;
     isActivated: boolean;
 

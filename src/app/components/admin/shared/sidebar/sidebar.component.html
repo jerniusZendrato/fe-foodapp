@@ -45,9 +45,10 @@
             </a>
             <div class="collapse" id="collapseExample2">
               <div>
+                <a routerLink="/post" class="nav-link"> Point of Sales </a>
                 <a routerLink="/admin/cassier-admin" class="nav-link"> Cassier Admin </a>
-                <a href="#" class="nav-link"> Kitchen Admin </a>
-                <a href="#" class="nav-link"> History</a>
+                <a routerLink="/admin/kitchen-admin"  class="nav-link"> Kitchen Admin </a>
+                <a routerLink="/admin/history" class="nav-link"> History</a>
               </div>
             </div>
           </li>
@@ -93,6 +94,7 @@
             class="dropdown-menu dropdown-menu-end"
             aria-labelledby="dropdownMenuButton"
           >
+            
             <li><a class="dropdown-item" routerLink="/admin/product">Product</a></li>
             <li><a class="dropdown-item" routerLink="/admin/category">Category</a></li>
             <li><a class="dropdown-item" routerLink="/admin/table">Table</a></li>
@@ -116,9 +118,10 @@
             class="dropdown-menu dropdown-menu-end"
             aria-labelledby="dropdownMenuButton"
           >
+            <li><a class="dropdown-item" routerLink="/post">Point of Sales</a></li>
             <li><a class="dropdown-item" routerLink="/admin/cassier-admin">Cassier Admin</a></li>
-            <li><a class="dropdown-item" href="#">Kitchen Admin</a></li>
-            <li><a class="dropdown-item" href="#">History</a></li>
+            <li><a class="dropdown-item" routerLink="/admin/kitchen-admin">Kitchen Admin</a></li>
+            <li><a class="dropdown-item" routerLink="/admin/history">History</a></li>
           </ul>
           <!-- </li> -->
         </div>

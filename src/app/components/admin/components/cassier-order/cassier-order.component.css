@@ -1,0 +1,8 @@
+/* Mengatur teks dalam thead ke tengah */
+.table thead th {
+    text-align: center;
+    vertical-align: middle;
+  }
+  
+ 
+  

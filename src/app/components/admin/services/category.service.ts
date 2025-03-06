@@ -38,8 +38,8 @@ export class CategoryService {
     }
   }
 
-  savestatusCategory(categorystatus: patchCategory[]): Observable<any> {
-    if (categorystatus && categorystatus.length > 0) {
+  savestatusCategory(categorystatus: patchCategory): Observable<any> {
+    if (categorystatus && categorystatus.category.length > 0) {
       const dataToSend = categorystatus;  // Data produk yang akan dikirimkan langsung
       return this.http.patch< {isSuccess: boolean} >(`${environment.API_URL}/category/status`, dataToSend);
     } else {
