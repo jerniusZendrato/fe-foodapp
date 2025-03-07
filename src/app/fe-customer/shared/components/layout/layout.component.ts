@@ -8,6 +8,7 @@ import { DerectService } from '../../services/derect.service';
 })
 export class LayoutComponent {
   @Input() showLogoAndNavBarIconComponent: boolean = true;
+  @Input() isLoading: boolean = false;
   @Output() goBack = new EventEmitter<void>();
 
   constructor(public derect: DerectService) {}

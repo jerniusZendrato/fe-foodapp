@@ -14,6 +14,8 @@ export class CartComponent implements OnInit  {
 
   order!: Order | null;
 
+  isLoading : boolean = false;
+
   constructor(
     public orderService: OrderLocalStorageCustService,
     public derect: DerectService
@@ -26,11 +28,6 @@ export class CartComponent implements OnInit  {
       { label: 'Order Type', value: this.orderService.getOrderType() },
       { label: 'Table Number', value: this.orderService.getTable() },
       { label: 'Costumer', value: this.orderService.getCostumerName() },
-    ];
-    this.orderPriceInfo = [
-      { label: 'Sub Total', value: this.orderService.getSubTotalPrice() },
-      { label: 'Tax (10%)', value: this.orderService.getTax() },
-      { label: 'Total', value: this.orderService.getTotatPrice() },
     ];
 
     this.order = this.orderService.getOrder();

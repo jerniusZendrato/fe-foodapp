@@ -32,6 +32,7 @@ import { OrderHistoryComponent } from './fe-customer/pages/order-history/order-h
 import { NavbarComponent } from './fe-customer/shared/components/navbar/navbar.component';
 import { OrderHistoryCardComponent } from './fe-customer/shared/components/order-history-card/order-history-card.component';
 import { OrderHistoryDetailComponent } from './fe-customer/pages/order-history-detail/order-history-detail.component';
+import { SpinnerComponentComponent } from './fe-customer/shared/components/spinner-component/spinner-component.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { OrderHistoryDetailComponent } from './fe-customer/pages/order-history-d
     NavbarComponent,
     OrderHistoryCardComponent,
     OrderHistoryDetailComponent,
+    SpinnerComponentComponent,
   ],
   imports: [
     BrowserModule,

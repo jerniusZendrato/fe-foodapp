@@ -5,94 +5,133 @@ import { DerectService } from '../../services/derect.service';
 @Component({
   selector: 'app-check-out-button',
   template: `
-    <div class="checkout-button-container" *ngIf="orderService.getProductTotalQuantity() > 0">
+    <div
+      class="checkout-container"
+      *ngIf="orderService.getProductTotalQuantity() > 0"
+      [@fadeInUp]
+    >
       <button type="button" class="checkout-button" routerLink="/cart">
         <div class="button-content">
-          <div class="icon-container">
-            <i class="fa-solid fa-cart-plus fa-2xl">
-              <span class="badge">
+          <div class="cart-icon-container">
+            <i class="fa-solid fa-cart-plus fa-xl">
+              <span class="item-count">
                 {{ orderService.getProductTotalQuantity() }}
               </span>
             </i>
           </div>
-          <span class="total-payment">
-            <strong>Total Payment</strong> <br />
-            {{ orderService.getSubTotalPrice() | currency : "Rp" }}
-          </span>
+          <div
+            class="price-container d-flex"
+            style="justify-content: flex-end; text-align: right; width: 100%;"
+          >
+            <span class="label" style="margin-right: 8px;">Total Payment</span>
+            <span class="price">{{
+              orderService.getSubTotalPrice() | currency : 'Rp'
+            }}</span>
+          </div>
         </div>
       </button>
     </div>
   `,
-  styles: [`
-    .checkout-button-container {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 1000;
-      width: 85%;
-      max-width: 450px;
-      background-color: #ff0000;
-      border-radius: 24px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
+  styles: [
+    `
+      .checkout-container {
+        position: fixed;
+        bottom: 24px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1000;
+        width: 85%;
+        max-width: 450px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        border-radius: 16px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+      }
 
-    .checkout-button {
-      width: 100%;
-      padding: 0;
-      border: none;
-      background-color: #ff0000;
-      color: white;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
+      .checkout-button {
+        width: 100%;
+        padding: 0;
+        border: 0;
+        background: linear-gradient(135deg, #ff3a3a, #ff0000);
+        transition: all 0.3s ease;
+      }
 
-    .checkout-button:hover {
-      background-color: #e60000;
-    }
+      .checkout-button:hover {
+        background: linear-gradient(135deg, #ff5252, #ff1a1a);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(255, 0, 0, 0.2);
+      }
 
-    .button-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px;
-    }
+      .button-content {
+        display: flex;
+        align-items: center;
+        height: 70px;
+      }
 
-    .icon-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: white;
-      color: black;
-      border-radius: 5px;
-      height: 70px;
-      width: 80px;
-      position: relative;
-    }
+      .cart-icon-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: white;
+        height: 70px;
+        min-width: 80px;
+        position: relative;
+      }
 
-    .icon-container i {
-      color: #ff0000;
-    }
+      .cart-icon-container i {
+        color: #ff0000;
+        position: relative;
+      }
 
-    .badge {
-      position: absolute;
-      top: 0;
-      right: 0;
-      transform: translate(50%, -50%);
-      background-color: #333;
-      color: white;
-      border-radius: 50%;
-      padding: 5px;
-      font-size: 0.75rem;
-    }
+      .item-count {
+        position: absolute;
+        top: -8px;
+        right: -12px;
+        background-color: #212121;
+        color: white;
+        font-size: 11px;
+        font-weight: bold;
+        height: 22px;
+        width: 22px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
 
-    .total-payment {
-      text-align: right;
-      padding: 10px 20px;
-      color: white;
-    }
-  `],
+      .price-container {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 0 20px;
+        color: white;
+        text-align: left;
+      }
+
+      .label {
+        font-size: 14px;
+        opacity: 0.9;
+        font-weight: 500;
+      }
+
+      .price {
+        font-size: 18px;
+        font-weight: 700;
+      }
+
+      .arrow-container {
+        margin-right: 16px;
+        height: 32px;
+        width: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        color: white;
+      }
+    `,
+  ],
 })
 export class CheckOutButtonComponent {
   constructor(

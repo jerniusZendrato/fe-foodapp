@@ -1,6 +1,6 @@
-<app-layout>
+<app-layout [isLoading]="this.isLoading">
   <div main class="main-container">
-    
+
     <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 16px; padding: 8px 0;">
       <span style="font-weight: bold; cursor: pointer;" (click)="this.derect.toMenuPage()">My Order</span>
       <span style="font-weight: bold; color: #f00; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#cancelModal">
@@ -79,10 +79,10 @@
 
     <div class="section-spacer"></div>
 
-    <!-- my order -->
+  <!-- my order -->
 
     <div class="order-section">
-      <span class="fw-bold" style="font-size: 12px">My order</span>
+      <span class="fw-bold m-1" style="font-size: 16px">My order</span>
       <div class="order-list">
         <div *ngFor="let productOrder of order?.productOrders">
           <app-product-card [product]="productOrder"></app-product-card>
