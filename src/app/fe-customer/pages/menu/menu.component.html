@@ -132,7 +132,7 @@
     >
       <ng-container *ngFor="let category of categories">
         <div
-          *ngIf="category.isActivated"
+          *ngIf="category.isActivated  && category.name != 'un-category'"
           class="category-container"
           [attr.id]="category.id"
           #categoryContainer
@@ -153,6 +153,12 @@
           </div>
         </div>
       </ng-container>
+      <br /><br /><br /><br /><br />
+      <br /><br /><br /><br /><br />
+      <br /><br /><br /><br /><br />
+      <br /><br /><br /><br /><br />
+      <br /><br /><br /><br /><br />
+      <br /><br /><br /><br /><br />
       <br /><br /><br /><br /><br />
     </div>
 
