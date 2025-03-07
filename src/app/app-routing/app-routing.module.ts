@@ -19,10 +19,12 @@ import { OrderHistoryComponent } from '../fe-customer/pages/order-history/order-
 import { OrderHistoryDetailComponent } from '../fe-customer/pages/order-history-detail/order-history-detail.component';
 import { TransactionKitchenAdminComponent } from '../components/admin/components/transaction-kitchen-admin/transaction-kitchen-admin.component';
 import { TransactionHistoryComponent } from '../components/admin/components/transaction-history/transaction-history.component';
+import { NavbarComponent } from '../fe-customer/shared/components/navbar/navbar.component';
 
 
 const feCustomerChildren: Routes = [
   { path: 'welcome', component: WelcomeComponent },
+  { path: 'nav', component: NavbarComponent },
   { path: 'layout', component: LayoutComponent },
   { path: 'cart', component: CartComponent },
   { path: '', component: MenuComponent },

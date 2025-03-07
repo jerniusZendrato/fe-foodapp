@@ -40,5 +40,10 @@ export class DerectService {
     this.router.navigate([`/order/${id}`]);
   }
 
+  toNavbar() {
+    this.router.navigate([`/nav`]);
+  }
+
+
 
 }
