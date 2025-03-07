@@ -17,7 +17,7 @@ export class LayoutComponent {
     if (this.goBack.observed) {
       this.goBack.emit();
     } else {
-      this.derect.goBack();
+      this.derect.toMenuPage();
     }
   }
 }

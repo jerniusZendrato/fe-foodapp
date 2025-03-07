@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { OrderHistoryCust } from '../../shared/models/order-history.model';
 import { OrderCustService } from '../../shared/services/order-cust.service';
 import { ActivatedRoute } from '@angular/router';
+import { DerectService } from '../../shared/services/derect.service';
 
 interface OrderInformation {
   label: string;
@@ -20,7 +21,9 @@ export class OrderHistoryDetailComponent implements OnInit {
 
   constructor(
     private readonly orderService: OrderCustService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public derect: DerectService
+
   ) {}
 
   ngOnInit(): void {

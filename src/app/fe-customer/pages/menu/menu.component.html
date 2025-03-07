@@ -158,17 +158,13 @@
           <span class="fw-bold">
             {{ category.name }}
           </span>
-          <div class="products-list">
-            <ng-container *ngFor="let product of filterProductsBySearch()">
-              <div
-                *ngIf="category.isActivated && category.name != 'un-category'"
-              >
-                <div *ngIf="product.categoryId === category.id" class="my-1">
-                  <app-product-card [product]="product"></app-product-card>
-                </div>
+          <ng-container *ngFor="let product of filterProductsBySearch()">
+            <div *ngIf="category.isActivated && category.name != 'un-category'">
+              <div *ngIf="product.categoryId === category.id" class="my-1">
+                <app-product-card [product]="product"></app-product-card>
               </div>
-            </ng-container>
-          </div>
+            </div>
+          </ng-container>
         </div>
       </ng-container>
       <div class="spacer"></div>

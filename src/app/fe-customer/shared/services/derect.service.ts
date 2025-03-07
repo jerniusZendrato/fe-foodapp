@@ -40,20 +40,5 @@ export class DerectService {
     this.router.navigate([`/order/${id}`]);
   }
 
-  goBack() {
-    const previousUrl = window.history.state?.previousUrl;
 
-
-    if (previousUrl) {
-      this.router.navigateByUrl(previousUrl);
-    } else {
-      // If no previous URL stored in history state, try to go back in browser history
-      if (window.history.length > 1) {
-        window.history.back();
-      } else {
-        // If no browser history, navigate to root
-        this.router.navigate(['/']);
-      }
-    }
-  }
 }

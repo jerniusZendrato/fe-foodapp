@@ -1,6 +1,13 @@
 <app-layout>
-  <div main>
-    <div class="container py-4">
+  <div main class="hide-scrollbar-wrapper">
+    <div
+      class="container py-4 hide-scrollbar"
+      style="
+        flex: 1;
+        overflow-y: auto;
+        overflow-x: hidden;
+      "
+    >
       <!-- Order Header -->
       <div class="card mb-3 border-0 shadow-sm">
         <div class="card-body">
@@ -48,9 +55,7 @@
             Order Items ({{ ordered?.totalQuantity }})
           </h6>
 
-          <div
-            *ngIf="ordered?.productOrders"
-          >
+          <div *ngIf="ordered?.productOrders">
             <div class="list-group list-group-flush">
               <div
                 *ngFor="let item of ordered?.productOrders || []"
@@ -61,7 +66,10 @@
                     <p class="mb-0 fw-medium">{{ item.productName }}</p>
                     <p class="mb-0 text-muted small">
                       {{ item.quantity }} x
-                      {{ item.productPrice | currency : "Rp " : "symbol" : "1.0-0" }}
+                      {{
+                        item.productPrice
+                          | currency : "Rp " : "symbol" : "1.0-0"
+                      }}
                     </p>
                   </div>
                   <span class="fw-bold">{{
@@ -136,3 +144,46 @@
     </div>
   </div>
 </app-layout>
+
+<style>
+  
+  .hide-scrollbar-wrapper {
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .hide-scrollbar {
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding-right: 17px; 
+    box-sizing: content-box; 
+    scrollbar-width: none; 
+    -ms-overflow-style: none; 
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    width: 0 !important;
+    display: none; 
+  }
+
+  
+  .container.hide-scrollbar {
+    max-width: calc(100% - 17px); 
+  }
+
+  
+  @supports (-webkit-touch-callout: none) {
+    .hide-scrollbar {
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+
+  
+  div[main] {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+</style>
