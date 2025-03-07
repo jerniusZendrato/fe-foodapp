@@ -59,6 +59,15 @@ const routes: Routes = [
         component: TransactionCassierAdminComponent,
         canDeactivate: [UnsavedChangesVerifikasiService],
       },
+      {path: 'kitchen-admin',
+        component: TransactionKitchenAdminComponent,
+        canDeactivate: [UnsavedChangesVerifikasiService],
+      },
+      {
+        path: 'history',
+        component: TransactionHistoryComponent,
+        canDeactivate: [UnsavedChangesVerifikasiService],
+      },
     ]
   },
   
