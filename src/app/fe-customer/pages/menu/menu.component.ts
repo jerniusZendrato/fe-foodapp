@@ -5,6 +5,7 @@ import {
   ChangeDetectorRef,
   QueryList,
   ViewChildren,
+  ViewChild,
 } from '@angular/core';
 import { ProductCustService } from '../../shared/services/product-cust.service';
 import { ProductCust as Product } from '../../shared/models/product-cust.model';
@@ -23,6 +24,8 @@ export class MenuComponent implements OnInit {
     public derect: DerectService,
     private readonly cdr: ChangeDetectorRef
   ) {}
+
+  @ViewChild('categoryNav', { static: true }) categoryNav!: ElementRef;
 
   @ViewChildren('categoryContainer') categoryContainers!: QueryList<ElementRef>;
 
@@ -64,6 +67,7 @@ export class MenuComponent implements OnInit {
   setActiveCategory(categoryId: string) {
     this.activeCategoryId = categoryId;
     this.scrollToCategory(categoryId);
+    // this.scrollActiveCategoryIntoView();
   }
 
   scrollToCategory(categoryId: string) {
@@ -72,11 +76,21 @@ export class MenuComponent implements OnInit {
       const element = this.categoryContainers.find(
         (container) => container.nativeElement.id === categoryId
       );
+
       if (element) {
-        element.nativeElement.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start',
-        });
+        const scrollContainer = element.nativeElement.parentElement; // Assuming the scrollable container is the parent
+
+        if (scrollContainer) {
+          // Calculate the desired scroll position
+          const elementOffsetTop = element.nativeElement.offsetTop;
+          const offset = 240; // Adjust this value to control how much further up you want to scroll
+
+          // Set the scroll position directly
+          scrollContainer.scrollTo({
+            top: elementOffsetTop - offset,
+            behavior: 'smooth',
+          });
+        }
       }
     });
   }
@@ -94,36 +108,56 @@ export class MenuComponent implements OnInit {
 
   updateActiveCategoryOnScroll(container: any) {
     // Find all category containers
-    const categoryElements = Array.from(document.querySelectorAll('.category-container')) as HTMLElement[];
-  
+    const categoryElements = Array.from(
+      document.querySelectorAll('.category-container')
+    ) as HTMLElement[];
+
     // Find the one that's currently most visible in the viewport
     const containerRect = container.getBoundingClientRect();
     let closestCategory: HTMLElement | null = null;
     let closestDistance = Infinity;
-  
+
     categoryElements.forEach((element) => {
       const rect = element.getBoundingClientRect();
       // Calculate distance from the top of the scroll container
-      const distance = Math.abs(rect.top - containerRect.top );
-  
+      const distance = Math.abs(rect.top - containerRect.top);
+
       if (distance < closestDistance) {
         closestDistance = distance;
         closestCategory = element as HTMLElement; // Explicitly assert as HTMLElement
       }
     });
-  
+
     // Update the active category
     if (closestCategory) {
       const newActiveCategoryId = (closestCategory as HTMLElement).id; // Ensure type assertion here
-      if (newActiveCategoryId && this.activeCategoryId !== newActiveCategoryId) {
+      if (
+        newActiveCategoryId &&
+        this.activeCategoryId !== newActiveCategoryId
+      ) {
         this.activeCategoryId = newActiveCategoryId;
         this.cdr.detectChanges();
       }
     }
   }
 
-  
+  scrollActiveCategoryIntoView() {
+    if (this.categoryNav && this.activeCategoryId) {
+      const categoryNavElement = this.categoryNav.nativeElement as HTMLElement;
+      const activeCategoryElement = categoryNavElement.querySelector(
+        '.active-category'
+      ) as HTMLElement;
 
+      if (activeCategoryElement) {
+        const offsetLeft = activeCategoryElement.offsetLeft;
+        console.log('offsetLeft :>> ', offsetLeft);
+        categoryNavElement.scrollTo({
+          left: offsetLeft,
+          behavior: 'smooth',
+        });
+      }
+    }
+  }
   // ----------------------------------------  crud to service
   getProducts() {
     this.isLoading = true; // Mulai loading
