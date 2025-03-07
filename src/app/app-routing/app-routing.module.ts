@@ -17,6 +17,9 @@ import { LayoutComponent } from '../fe-customer/shared/components/layout/layout.
 import { OrderSummaryComponent } from '../fe-customer/pages/order-summary/order-summary.component';
 import { OrderHistoryComponent } from '../fe-customer/pages/order-history/order-history.component';
 import { OrderHistoryDetailComponent } from '../fe-customer/pages/order-history-detail/order-history-detail.component';
+import { TransactionKitchenAdminComponent } from '../components/admin/components/transaction-kitchen-admin/transaction-kitchen-admin.component';
+import { TransactionHistoryComponent } from '../components/admin/components/transaction-history/transaction-history.component';
+
 
 const feCustomerChildren: Routes = [
   { path: 'welcome', component: WelcomeComponent },
@@ -60,8 +63,18 @@ const routes: Routes = [
         component: TransactionCassierAdminComponent,
         canDeactivate: [UnsavedChangesVerifikasiService],
       },
-    ],
+      {path: 'kitchen-admin',
+        component: TransactionKitchenAdminComponent,
+        canDeactivate: [UnsavedChangesVerifikasiService],
+      },
+      {
+        path: 'history',
+        component: TransactionHistoryComponent,
+        canDeactivate: [UnsavedChangesVerifikasiService],
+      },
+    ]
   },
+  
   {
     path: 'post',
     component: ParentCassierOrderComponent,

@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminProduct } from '../../models/admin-product.model';
 import { AdminCategory } from '../../models/admin-category.model';
-import { LoaderService } from '../../services/loader.service';
-import { CategoryService } from '../../services/category.service';
-import { ProductService } from '../../services/product.service';
 import { AdminTable } from '../../models/admin-table.model';
+import { LoaderService } from '../../services/loader.service';
 import { TableService } from '../../services/table.service';
+import { ProductService } from '../../services/product.service';
+import { CategoryService } from '../../services/category.service';
+import { LocalStorageOrderService } from '../../services/local-storage-order.service';
+import { ProductOrder } from '../../models/admin-order-cassier.model';
 
 @Component({
   selector: 'app-cassier-order',
@@ -19,6 +21,7 @@ export class CassierOrderComponent implements OnInit{
     this.groupProductsByCategory()
     this.loadproducts()
     this.loadtable()
+    this.loadSavedProducts()
     this.selectedDiv = localStorage.getItem('selectedDiv');
   }
 
@@ -26,7 +29,8 @@ export class CassierOrderComponent implements OnInit{
     private loaderService: LoaderService,
     private tableService: TableService,
     private productservice: ProductService,
-    private categoryservice: CategoryService
+    private categoryservice: CategoryService,
+    private localstorageorder: LocalStorageOrderService
   ){}
 
   public datacategory: AdminCategory[] = []
@@ -87,7 +91,7 @@ export class CassierOrderComponent implements OnInit{
   groupProductsByCategory(): void {
 
     const activeCategories = this.datacategory
-    .filter(category => category.activated)
+    .filter(category => category.isActivated)
     .map(category => category.name);
 
     // cek apakah di roduct memiliki kategory aktif 
@@ -128,12 +132,35 @@ export class CassierOrderComponent implements OnInit{
       })
     }
 
-    saveToLocalStorage(value: string) {
-      localStorage.setItem('selectedDiv', value); // Simpan data ke localStorage
-      this.selectedDiv = value; // Perbarui variabel untuk ditampilkan di UI
+
+    selectedProduct: ProductOrder | null = null;
+
+    selectProduct(product: ProductOrder) {
+      this.selectedProduct = product;
+      this.localstorageorder.saveSelectedProduct(product);
+      this.loadSavedProducts()
+    }
+
+    loadhapusProducts(product: ProductOrder) {
+      this.localstorageorder.removeSelectedProduct(product);
+      this.loadSavedProducts()
+    }
+
+    savedProducts: ProductOrder[] = [];
+    totalhargaorder= 0
+
+    loadSavedProducts() {
+      this.savedProducts = this.localstorageorder.getSavedProducts();
+      // this.totalhargaorder = sum(savedProducts.price)
+      this.totalhargaorder = this.savedProducts.reduce((total, product) => total + (product.price * (product.quantity || 1)), 0);
+
     }
 
 
+    clearlocalstorage(){
+      this.localstorageorder.clear()
+      this.loadSavedProducts()
+    }
     
 
 }

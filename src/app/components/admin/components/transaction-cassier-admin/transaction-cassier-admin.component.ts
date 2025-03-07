@@ -150,7 +150,7 @@ export class TransactionCassierAdminComponent implements OnInit {
   groupProductsByCategory(): void {
 
     const activeCategories = this.datacategory
-    .filter(category => category.activated)
+    .filter(category => category.isActivated)
     .map(category => category.name);
 
     // cek apakah di roduct memiliki kategory aktif 

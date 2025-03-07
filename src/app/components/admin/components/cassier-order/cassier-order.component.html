@@ -8,6 +8,7 @@
     flex-direction: row;
   "
 >
+
   <div style="height: 100%; width: 65%;">
     <div style="background-color: white;border: 1px solid #ff000040; width: 100%; height: 10%; border-radius: 20px 20px 0 0;">
         <div style="width: 100%; overflow-x: auto; white-space: nowrap;">
@@ -44,8 +45,8 @@
           </div>
           </h6>
             <div class="row" style="margin: 20px;">
-              <div class="col-auto" *ngFor="let product of category.value">
-                <div class="card h-100 shadow" style="width: 100%; ">
+              <div class="col-auto" *ngFor="let product of category.value" style="width: 180px;">
+                <div (click)="selectProduct(product)" class="card h-100 shadow" style="width: 100%; ">
                   <img class="card-img-top" [src]="product.urlImage || 'assets/default-image.png'" style="width: 100%; height: 100px; object-fit:cover">
                   <div class="card-body">
                     <h5 class="card-title">{{ product.name }}</h5>
@@ -101,22 +102,71 @@
     </div>
     </div>
     <div>
-      <table id="table-input-orderan" class="table table-striped">
+      <div style="width: 100%; height: 45vh; overflow-y: scroll;"*ngIf="savedProducts.length != 0">
+      <table id="table-input-orderan" class="table table-borderless ">
         <thead>
-          <tr>
+          <tr class="table-active">
           <th>Item Order</th>
           <th>Quantity</th>
           <th>Prices</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody >
+          <tr *ngFor="let product of savedProducts" >
+            <td> {{product.name}}</td>
+            <!-- <td><i class="fa-solid fa-plus"></i>{{product.quantity}} <i class="fa-solid fa-plus"></i></td> -->
+            <!-- <td>
+              <div style="width: 100%; border: 2px solid black;">
+              <i class="fa-solid fa-plus"></i><div tyle="width: 50%; border: 2px solid black;">{{product.quantity}}</div><i class="fa-solid fa-plus"></i>
+             </div>
+            </td> -->
+            <td>
+              <div style="display: flex; align-items: center; justify-content: center; width: 100%; ">
+                  <i class="fa-solid fa-minus" style="font-size: small;cursor: pointer;" (click)="loadhapusProducts(product)"></i>
+                  <div style="width: 50px; text-align: center;">
+                      {{ product.quantity }}
+                  </div>
+                  <i class="fa-solid fa-plus" style="font-size: small;cursor: pointer;" (click)="selectProduct(product)"></i>
+              </div>
+          </td>
           
+            <td> {{product.price}}</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td ><h5>Total</h5></td>
+            <td><h5>{{totalhargaorder}}</h5></td>
+          </tr>
+          
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
         </tbody>
       </table>
-      <div style="width: 100%; height: 100px; display: flex;flex-direction: column;justify-content: center;align-items: center;">
+
+      </div>
+      <div *ngIf="savedProducts.length != 0 " style="margin: 40px;right: 20px;float: right">
+        <button (click)="clearlocalstorage()" type="button" class="btn btn-primary">Order</button>
+      </div>
+      <div *ngIf="savedProducts.length === 0" style="width: 100%; height: 30vh; display: flex;flex-direction: column;justify-content: center;align-items: center;">
         <h3 style="opacity: 50%;">No order selected yet.</h3>
+
       </div>
     </div>
+    
     
   </div>
 </div>
