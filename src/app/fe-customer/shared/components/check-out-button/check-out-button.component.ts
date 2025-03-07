@@ -8,7 +8,6 @@ import { DerectService } from '../../services/derect.service';
     <div
       class="checkout-container"
       *ngIf="orderService.getProductTotalQuantity() > 0"
-      [@fadeInUp]
     >
       <button type="button" class="checkout-button" routerLink="/cart">
         <div class="button-content">

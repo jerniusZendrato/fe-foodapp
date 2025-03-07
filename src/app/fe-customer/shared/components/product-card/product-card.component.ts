@@ -1,5 +1,6 @@
-import { Component, Input } from "@angular/core";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { OrderLocalStorageCustService } from "../../services/order-local-storage-cust.service";
+import { ProductCust } from "../../models/product-cust.model";
 
 @Component({
   selector: 'app-product-card',
@@ -22,7 +23,7 @@ import { OrderLocalStorageCustService } from "../../services/order-local-storage
             </span>
             <div *ngIf="order.getProductQuantity(product.id) == 0">
               <button
-                (click)="order.incrementQuantity(product)"
+                (click)="incrementQuantity(product)"
                 class="product-card__add-button"
               >
                 Add
@@ -34,7 +35,7 @@ import { OrderLocalStorageCustService } from "../../services/order-local-storage
             >
               <button
                 class="rounded-button"
-                (click)="order.decrementQuantity(product)"
+                (click)="decrementQuantity(product)"
               >
                 -
               </button>
@@ -43,7 +44,7 @@ import { OrderLocalStorageCustService } from "../../services/order-local-storage
               </span>
               <button
                 class="rounded-button"
-                (click)="order.incrementQuantity(product)"
+                (click)="incrementQuantity(product)"
               >
                 +
               </button>
@@ -183,6 +184,19 @@ import { OrderLocalStorageCustService } from "../../services/order-local-storage
 })
 export class ProductCardComponent {
   @Input() product!: any;
+  @Output() updateProductOrder = new EventEmitter<void>();
 
   constructor(public order: OrderLocalStorageCustService) {}
+
+  incrementQuantity(product: ProductCust) {
+    this.order.incrementQuantity(product);
+  }
+
+  decrementQuantity(product: ProductCust) {
+    this.order.decrementQuantity(product);
+    if (product.quantity == 0) {
+      this.updateProductOrder.emit();
+    }
+  }
+
 }

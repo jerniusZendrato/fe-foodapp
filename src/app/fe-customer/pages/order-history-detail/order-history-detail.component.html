@@ -18,19 +18,39 @@
       </div>
   
       <div class="mt-2 p-3 shadow-sm bg-light rounded mb-3" *ngIf="order">
-        <div class="row text-center" >
-          <div class="col">Product Name</div>
-          <div class="col">Quantity</div>
-          <div class="col">Prices</div>
+        <div class="row" >
+          <div class="col-6">Product Name</div>
+          <div class="col-3">Quantity</div>
+          <div class="col-3">Prices</div>
         </div>
       </div>
   
       <div class="mt-2 p-3 shadow-sm bg-light rounded mb-4" *ngIf="order">
         <ng-container *ngFor="let item of order.productOrders">
-          <div class="row text-center" style="padding: 8px 0; border-bottom: 1px solid #eee;">
-            <div class="col" style="color: #555;">{{ item.productName }}</div>
-            <div class="col" style="color: #555;">{{ item.quantity }}</div>
-            <div class="col" style="color: #555;">{{ item.productPrice | currency: 'Rp' }}</div>
+          <div class="row" style="padding: 8px 0; border-bottom: 1px solid #eee;">
+            <div class="col-6" style="color: #555;">{{ item.productName }}</div>
+            <div class="col-3" style="color: #555;">{{ item.quantity }}</div>
+            <div class="col-3" style="color: #555;">{{ item.productPrice | currency: 'Rp' }}</div>
+          </div>
+        </ng-container>
+      </div>
+
+      <div class="mt-2 p-3 shadow-sm bg-light rounded mb-4" *ngIf="order">
+        <ng-container>
+          <div class="row">
+            <div class="col-4" style="color: #555;"></div>
+            <div class="col-5" style="color: #555;">Subtotal</div>
+            <div class="col-3" style="color: #555;">{{ order.subTotalPrice | currency: 'Rp' }}</div>
+          </div>
+          <div class="row">
+            <div class="col-4" style="color: #555;"></div>
+            <div class="col-5" style="color: #555;">Tax (10%)</div>
+            <div class="col-3" style="color: #555;">{{ order.tax | currency: 'Rp' }}</div>
+          </div>
+          <div class="row" >
+            <div class="col-4" style="color: #555;"></div>
+            <div class="col-5" style="color: #555;">Total</div>
+            <div class="col-3" style="color: #555;">{{ order.totalPrice | currency: 'Rp' }}</div>
           </div>
         </ng-container>
       </div>

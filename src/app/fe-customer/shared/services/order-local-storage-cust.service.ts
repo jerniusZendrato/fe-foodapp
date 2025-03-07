@@ -7,7 +7,10 @@ import {
 import { ProductCust as Product } from '../models/product-cust.model';
 import { DerectService } from './derect.service';
 import { OrderCustService } from './order-cust.service';
-import { OrderHistoryCust } from '../models/order-history.model';
+import {
+  OrderHistoryCust,
+  OrderhistoryItemCust,
+} from '../models/order-history.model';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 
 interface OrderResponse {
@@ -38,6 +41,10 @@ export class OrderLocalStorageCustService {
     }
   }
 
+  getProductOrder(): CustomerOrderItem[] | undefined {
+    return this.order.productOrders;
+  }
+
   getOrder(): Order | null {
     const storedOrder = localStorage.getItem(this.STORAGE_KEY_ORDER);
     return storedOrder ? JSON.parse(storedOrder) : null;
@@ -51,13 +58,11 @@ export class OrderLocalStorageCustService {
   }
 
   getOrdered(): OrderHistoryCust | null {
-    const storedOrdered = localStorage.getItem(
-      this.STORAGE_KEY_ORDERED
-    );
+    const storedOrdered = localStorage.getItem(this.STORAGE_KEY_ORDERED);
     return storedOrdered ? JSON.parse(storedOrdered) : null;
   }
 
-  pushOrderd(order : OrderHistoryCust){
+  pushOrderd(order: OrderHistoryCust) {
     localStorage.setItem(this.STORAGE_KEY_ORDERED, JSON.stringify(order));
   }
 
@@ -134,7 +139,6 @@ export class OrderLocalStorageCustService {
       console.error('Order or productOrders is undefined');
       return;
     }
-
 
     const existingProductOrder = this.order.productOrders.find(
       (po) => po.id === product.id

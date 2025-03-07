@@ -106,8 +106,11 @@
     <div class="order-section">
       <span class="fw-bold m-1" style="font-size: 16px">My order</span>
       <div class="order-list">
-        <div *ngFor="let productOrder of order?.productOrders">
-          <app-product-card [product]="productOrder"></app-product-card>
+        <div *ngFor="let productOrder of productOrder">
+          <app-product-card
+            [product]="productOrder"
+            (updateProductOrder)="updateProductOrder()"
+          ></app-product-card>
         </div>
       </div>
     </div>
@@ -300,7 +303,6 @@
           style="background-color: #1fac12; color: white"
           data-bs-dismiss="modal"
           (click)="placeOrder()"
-          (click)="this.orderService.insertOrder()"
         >
           Yes, sure
         </button>
@@ -335,7 +337,6 @@
   .order-list::-webkit-scrollbar {
     display: none;
   }
-
 
   .content-wrapper {
     padding: 20px 20px;
