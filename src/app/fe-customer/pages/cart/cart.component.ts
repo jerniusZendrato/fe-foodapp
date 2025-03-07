@@ -28,9 +28,9 @@ export class CartComponent implements OnInit  {
       { label: 'Costumer', value: this.orderService.getCostumerName() },
     ];
     this.orderPriceInfo = [
-      { label: 'Order Type', value: this.orderService.getOrderType() },
-      { label: 'Table Number', value: this.orderService.getTable() },
-      { label: 'Costumer', value: this.orderService.getCostumerName() },
+      { label: 'Sub Total', value: this.orderService.getSubTotalPrice() },
+      { label: 'Tax (10%)', value: this.orderService.getTax() },
+      { label: 'Total', value: this.orderService.getTotatPrice() },
     ];
 
     this.order = this.orderService.getOrder();

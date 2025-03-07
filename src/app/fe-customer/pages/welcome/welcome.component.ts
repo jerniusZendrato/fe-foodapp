@@ -34,9 +34,7 @@ export class WelcomeComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
       const tableId = params['table-id'];
-      console.log('tableId :>> ', tableId);
       if (tableId) {
-        console.log('tableId :>> ', tableId);
 
         this.tableService.getTable(tableId).subscribe({
           next: (table) => {
@@ -50,7 +48,6 @@ export class WelcomeComponent implements OnInit {
             this.router.navigate(['/404']);
           },
           complete: () => {
-            console.log('Observable completed');
           },
         });
       } else {

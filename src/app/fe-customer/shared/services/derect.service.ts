@@ -16,13 +16,11 @@ export class DerectService {
   }
 
   toCartPage() {
-    console.log('object :>> ');
     this.router.navigate(['/cart']);
   }
 
-  toOrderSummary(idOrder : string | undefined) {
-    console.log('idOrder :>> ', idOrder);
-    this.router.navigate([`/order/summary/${idOrder}`]);
+  toOrderSummary() {
+    this.router.navigate([`/order/summary`]);
   }
   refreshPage() {
     this.router.navigate([this.router.url]).then(() => {

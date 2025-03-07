@@ -13,7 +13,7 @@ import { OrderHistoryCust as OrderHistory } from '../../models/order-history.mod
           <div style="display: flex; flex-direction: column">
             <span style="font-size: 12px">KANTIN K’JAYA</span>
             <span style="font-size: 12px"
-              >{{ order.totalPrice | currency : 'Rp' }}  ({{order.totalItem}} items)</span
+              >{{ order.totalPrice | currency : 'Rp' }}  ({{order.totalQuantity}} items)</span
             >
             <span style="font-size: 12px">#{{order.code}}</span>
           </div>
@@ -29,8 +29,8 @@ import { OrderHistoryCust as OrderHistory } from '../../models/order-history.mod
       <div class="d-flex justify-content-between align-items-center">
         <div style="display: flex; flex-direction: column">
           <span style="font-size: 12px">{{order.type}}</span>
-          <span style="font-size: 12px">23 Feb 2025, 15.30</span>
-          <span style="font-size: 12px">{{order.date}}</span>
+          <span style="font-size: 12px">{{order.createdAt | date : "medium" }} </span>
+
         </div>
         <div>
           <button type="button" class="btn btn-success btn-sm">

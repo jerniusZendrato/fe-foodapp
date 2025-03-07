@@ -81,7 +81,6 @@ export class MenuComponent implements OnInit {
         this.cdr.detectChanges(); // Memicu deteksi perubahan
       },
       complete: () => {
-        console.log('Observable completed');
       },
     });
   }
@@ -100,7 +99,6 @@ export class MenuComponent implements OnInit {
         this.cdr.detectChanges(); // Memicu deteksi perubahan
       },
       complete: () => {
-        console.log('Observable completed');
       },
     });
   }

@@ -1,21 +1,21 @@
 export interface OrderhistoryItemCust {
-  name: string;
+  productName: string;
   quantity: number;
-  price: number;
+  productPrice: number;
 }
 export interface OrderHistoryCust {
   id?: string;
   code?: string | null;
-  date: string;
+  createdAt: Date;
   type: string;
   tableNumber: string | number;
   adminName: string;
   customerName: string;
   paymentMethod: string;
-  subtotal: number;
+  subTotalPrice: number;
   tax: number;
   totalPrice: number;
-  totalItem:number;
+  totalQuantity:number;
   productOrders?: OrderhistoryItemCust[];
 }
 

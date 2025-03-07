@@ -24,7 +24,7 @@ const feCustomerChildren: Routes = [
   { path: 'history', component: OrderHistoryComponent },
   { path: '', component: MenuComponent },
   { path: '404', component: WelcomeComponent },
-  { path: 'order/summary/:id', component: OrderSummaryComponent },
+  { path: 'order/summary', component: OrderSummaryComponent },
 ];
 
 const routes: Routes = [

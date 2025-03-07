@@ -95,13 +95,16 @@
     </div>
 
     <div class="content-wrapper">
-      <div class="order-info">
-        <div
-          *ngFor="let item of orderPriceInfo"
-          class="d-flex justify-content-between border-bottom"
-        >
-          <span>{{ item.label }}</span>
-          <span class="fw-bold">{{ item.value }}</span>
+      <div class="container" *ngFor="let item of orderPriceInfo">
+        <div class="row">
+          <div class="col-4 text-end">
+          </div>
+          <div class="col-4 text-start">
+            <span>{{ item.label }}</span>
+          </div>
+          <div class="col-4 text-end">
+            <span class="fw-bold">{{ item.value | currency :'Rp' }}</span>
+          </div>
         </div>
       </div>
 
@@ -121,7 +124,7 @@
         <span>Total Payment</span>
         <span
           >{{
-            this.orderService.getTotalPrice()
+            this.orderService.getSubTotalPrice()
               | currency : "Rp" : "symbol" : "1.0-0"
           }}
         </span>
