@@ -3,6 +3,7 @@ import { ProductCustService } from '../../shared/services/product-cust.service';
 import { ProductCust as Product } from '../../shared/models/product-cust.model';
 import { CategoryCustService } from '../../shared/services/category-cust.service';
 import { CategoryCust as Category } from '../../shared/models/category-cust.model';
+import { DerectService } from '../../shared/services/derect.service';
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -12,6 +13,7 @@ export class MenuComponent implements OnInit {
   constructor(
     private readonly productService: ProductCustService,
     private readonly categoryService: CategoryCustService,
+    public derect: DerectService,
     private readonly cdr: ChangeDetectorRef
   ) {}
 

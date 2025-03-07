@@ -23,6 +23,7 @@
             color: white;
           "
           aria-label="Menu"
+          (click)="onGoBack()"
         >
           <i class="fa-solid fa-bars"></i>
         </button>
@@ -41,6 +42,15 @@
           src="https://image-storage-order-app.s3.eu-north-1.amazonaws.com/product_image/logo-white.png"
         />
       </div>
+    </div>
+    <div style="position: absolute; bottom: 15px; left: 15px">
+      <button
+        class="btn text-decoration-none border-0 d-flex align-items-center p-0"
+        (click) = "derect.goBack()"
+      >
+        <i class="fa-solid fa-arrow-left me-1" style="color: white"></i>
+        <span class="fw-bold" style="color: white">Back</span>
+      </button>
     </div>
 
     <ng-content select="[header]" style="min-height: 30%"> </ng-content>

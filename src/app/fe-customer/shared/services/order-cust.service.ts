@@ -36,4 +36,31 @@ export class OrderCustService {
         })
       );
   }
+
+
+  getOrder(orderId: string): Observable<{
+    isSuccess: boolean;
+    data: OrderHistoryCust;
+    errors: any
+  }> {
+    return this.http
+      .get<{
+        data: OrderHistoryCust;
+        isSuccess: boolean;
+        errors: any;
+      }>(`${environment.API_URL}/order/${orderId}`)
+      .pipe(
+        map((response) => {
+          if (response.isSuccess) {
+            return response;
+          } else {
+            throw new Error('Failed to fetch order');
+          }
+        }),
+        catchError((error) => {
+          console.error('Error occurred while fetching order:', error);
+          return throwError(() => new Error('Failed to fetch order'));
+        })
+      );
+  }
 }

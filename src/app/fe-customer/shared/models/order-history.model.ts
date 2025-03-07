@@ -9,6 +9,7 @@ export interface OrderHistoryCust {
   createdAt: Date;
   type: string;
   tableNumber: string | number;
+  tableName: string | number;
   adminName: string;
   customerName: string;
   paymentMethod: string;

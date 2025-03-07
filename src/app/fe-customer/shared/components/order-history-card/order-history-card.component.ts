@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { OrderHistoryCust as OrderHistory } from '../../models/order-history.model';
+import { DerectService } from '../../services/derect.service';
 
 @Component({
   selector: 'app-order-history-card',
@@ -13,13 +14,16 @@ import { OrderHistoryCust as OrderHistory } from '../../models/order-history.mod
           <div style="display: flex; flex-direction: column">
             <span style="font-size: 12px">KANTIN K’JAYA</span>
             <span style="font-size: 12px"
-              >{{ order.totalPrice | currency : 'Rp' }}  ({{order.totalQuantity}} items)</span
+              >{{ order.totalPrice | currency : 'Rp' }} ({{
+                order.totalQuantity
+              }}
+              items)</span
             >
-            <span style="font-size: 12px">#{{order.code}}</span>
+            <span style="font-size: 12px">#{{ order.code }}</span>
           </div>
         </div>
         <div class="col-4 d-flex justify-content-end">
-          <button class="btn">
+          <button class="btn" (click)="derect.historyDetailPage(order.id)">
             Detail
             <i class="fa-solid fa-chevron-right"></i>
           </button>
@@ -28,9 +32,10 @@ import { OrderHistoryCust as OrderHistory } from '../../models/order-history.mod
       <hr />
       <div class="d-flex justify-content-between align-items-center">
         <div style="display: flex; flex-direction: column">
-          <span style="font-size: 12px">{{order.type}}</span>
-          <span style="font-size: 12px">{{order.createdAt | date : "medium" }} </span>
-
+          <span style="font-size: 12px">{{ order.type }}</span>
+          <span style="font-size: 12px"
+            >{{ order.createdAt | date : 'medium' }}
+          </span>
         </div>
         <div>
           <button type="button" class="btn btn-success btn-sm">
@@ -41,8 +46,9 @@ import { OrderHistoryCust as OrderHistory } from '../../models/order-history.mod
       </div>
     </div>
   `,
-  styleUrls: ['./order-history-card.component.css'],
 })
 export class OrderHistoryCardComponent {
   @Input() order!: OrderHistory;
+
+  constructor(public derect: DerectService) {}
 }
