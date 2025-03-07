@@ -7,6 +7,7 @@
         style="color: #f00"
         data-bs-toggle="modal"
         data-bs-target="#cancelModal"
+        style="cursor: pointer"
         >Cancel
       </span>
     </div>
@@ -95,15 +96,38 @@
     </div>
 
     <div class="content-wrapper">
-      <div class="container" *ngFor="let item of orderPriceInfo">
+      <div class="container">
         <div class="row">
-          <div class="col-4 text-end">
-          </div>
+          <div class="col-4 text-end"></div>
           <div class="col-4 text-start">
-            <span>{{ item.label }}</span>
+            <span>Sub Total</span>
           </div>
           <div class="col-4 text-end">
-            <span class="fw-bold">{{ item.value | currency :'Rp' }}</span>
+            <span class="fw-bold">{{
+              this.orderService.getSubTotalPrice() | currency : "Rp"
+            }}</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4 text-end"></div>
+          <div class="col-4 text-start">
+            <span>Tax (10%)</span>
+          </div>
+          <div class="col-4 text-end">
+            <span class="fw-bold">{{
+              this.orderService.getTax() | currency : "Rp"
+            }}</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4 text-end"></div>
+          <div class="col-4 text-start">
+            <span>Tax (10%)</span>
+          </div>
+          <div class="col-4 text-end">
+            <span class="fw-bold">{{
+              this.orderService.getTotatPrice() | currency : "Rp"
+            }}</span>
           </div>
         </div>
       </div>
@@ -118,16 +142,11 @@
           margin-top: 5px;
           border-top: 1px solid #ddd;
           font-weight: bold;
-          font-size: 13px;
+          font-size: 20px;
         "
       >
         <span>Total Payment</span>
-        <span
-          >{{
-            this.orderService.getSubTotalPrice()
-              | currency : "Rp" : "symbol" : "1.0-0"
-          }}
-        </span>
+        <span>{{ this.orderService.getTotatPrice() | currency : "Rp" }} </span>
       </div>
 
       <!-- Buttons -->
@@ -246,7 +265,8 @@
         </h1>
       </div>
       <div class="modal-body fw-bold">
-        Are you sure you want to <span class="main-color">cancel </span> your
+        Are you sure you want to
+        <span class="main-color" >cancel </span> your
         order?
       </div>
       <div class="modal-footer">

@@ -59,7 +59,7 @@ import { DerectService } from '../../services/derect.service';
             style="text-align: right; padding: 10px 20px; color:white"
           >
             <strong>Total Payment</strong> <br />
-            {{ orderService.getSubTotalPrice() }}
+            {{ orderService.getSubTotalPrice()  | currency : "Rp" }}
           </span>
         </div>
       </button>
