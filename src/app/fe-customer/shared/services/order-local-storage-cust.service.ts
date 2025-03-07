@@ -8,6 +8,13 @@ import { ProductCust as Product } from '../models/product-cust.model';
 import { DerectService } from './derect.service';
 import { OrderCustService } from './order-cust.service';
 import { OrderHistoryCust } from '../models/order-history.model';
+import { catchError, Observable, tap, throwError } from 'rxjs';
+
+interface OrderResponse {
+  isSuccess: boolean;
+  data: OrderHistoryCust;
+  errors: any;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -84,31 +91,27 @@ export class OrderLocalStorageCustService {
     };
   }
 
-  insertOrder(): void {
-    this.orderService.insertOrder(this.order).subscribe({
-      next: (response) => {
+  insertOrder(): Observable<OrderResponse> {
+    return this.orderService.insertOrder(this.order).pipe(
+      tap((response) => {
         if (response.isSuccess) {
-          let order: OrderHistoryCust = response.data;
-
-          localStorage.removeItem(this.STORAGE_KEY_ORDER);
-          // this.mappingOrderHistory(order)
-          this.order.productOrders = [];
-          this.saveOrder(this.order);
-          this.pushOrderd(order)
-
-          this.addOrderToHistory(order);
-          this.derect.toOrderSummary();
-        } else {
-          console.error('Failed to insert order:', response.errors);
+          this.handleSuccessfulOrder(response.data);
         }
-      },
-      error: (error) => {
+      }),
+      catchError((error) => {
         console.error('Error inserting order:', error);
-      },
-      complete: () => {
-        console.log('Insert order observable completed');
-      },
-    });
+        return throwError(() => new Error('Failed to insert order'));
+      })
+    );
+  }
+
+  private handleSuccessfulOrder(order: OrderHistoryCust): void {
+    localStorage.removeItem(this.STORAGE_KEY_ORDER);
+    this.order.productOrders = [];
+    this.saveOrder(this.order);
+    this.pushOrderd(order);
+    this.addOrderToHistory(order);
+    this.derect.toOrderSummary();
   }
 
   saveOrder(order: Order): void {

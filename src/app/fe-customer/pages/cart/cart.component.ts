@@ -2,19 +2,21 @@ import { Component, OnInit } from '@angular/core';
 import { OrderLocalStorageCustService } from '../../shared/services/order-local-storage-cust.service';
 import { OrderCust as Order } from '../../shared/models/order-cust.model';
 import { DerectService } from '../../shared/services/derect.service';
+import { OrderHistoryCust } from '../../shared/models/order-history.model';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css'],
 })
-export class CartComponent implements OnInit  {
+export class CartComponent implements OnInit {
   orderInformation: Array<{ label: string; value: string | number }> = [];
   orderPriceInfo: Array<{ label: string; value: string | number }> = [];
 
   order!: Order | null;
 
-  isLoading : boolean = false;
+  isLoading: boolean = false;
 
   constructor(
     public orderService: OrderLocalStorageCustService,
@@ -31,5 +33,24 @@ export class CartComponent implements OnInit  {
     ];
 
     this.order = this.orderService.getOrder();
+  }
+
+  placeOrder(): void {
+    this.isLoading = true;
+    this.orderService
+      .insertOrder()
+      .pipe(finalize(() => (this.isLoading = false)))
+      .subscribe({
+        next: (response) => {
+          if (response.isSuccess) {
+            // Handle success
+          } else {
+            // Handle failure
+          }
+        },
+        error: (error) => {
+          // Handle error
+        },
+      });
   }
 }
