@@ -1,0 +1,42 @@
+html, body {
+    height: 100%;
+    margin: 0;
+  }
+  
+  .not-found {
+    position: relative;
+    text-align: center;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .not-found__title {
+    color: var(--Text, #f00);
+    -webkit-text-stroke-width: 1;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 96px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+  }
+  
+  .not-found__subtitle {
+    color: var(--Text, black);
+    -webkit-text-stroke-width: 1;
+    font-family: inter, Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 100;
+    line-height: normal;
+  }
+  
+  .not-found__note {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 16px;
+    color: #000;
+  }

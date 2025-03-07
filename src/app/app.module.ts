@@ -33,6 +33,7 @@ import { NavbarComponent } from './fe-customer/shared/components/navbar/navbar.c
 import { OrderHistoryCardComponent } from './fe-customer/shared/components/order-history-card/order-history-card.component';
 import { OrderHistoryDetailComponent } from './fe-customer/pages/order-history-detail/order-history-detail.component';
 import { SpinnerComponentComponent } from './fe-customer/shared/components/spinner-component/spinner-component.component';
+import { NotFoundComponent } from './fe-customer/pages/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { SpinnerComponentComponent } from './fe-customer/shared/components/spinn
     OrderHistoryCardComponent,
     OrderHistoryDetailComponent,
     SpinnerComponentComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
