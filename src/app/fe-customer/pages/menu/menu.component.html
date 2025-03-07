@@ -91,12 +91,29 @@
       <div class="spinner"></div>
     </div>
 
-    <div class="m-3" style="white-space: nowrap; overflow-x: auto">
+    <div
+      class="m-3 category-nav"
+      style="
+        white-space: nowrap;
+        overflow-x: auto;
+        position: sticky;
+        top: 0;
+        background-color: white;
+        z-index: 10;
+      "
+      #categoryNav
+    >
       <div style="padding-inline: 9px">
         <ng-container *ngFor="let category of categories">
           <span
-            (click)="scrollToCategory(category.id)"
-            style="cursor: pointer; padding: 10px"
+            [ngClass]="{ 'active-category': activeCategoryId === category.id }"
+            (click)="setActiveCategory(category.id)"
+            style="
+              cursor: pointer;
+              padding: 10px;
+              display: inline-block;
+              margin-right: 5px;
+            "
             *ngIf="category.isActivated && category.name != 'un-category'"
           >
             {{ category.name }}
@@ -186,5 +203,20 @@
 
   .blur-content {
     filter: blur(3px);
+  }
+
+  .active-category {
+    border-bottom: 2px solid #f00;
+    font-weight: bold;
+    color: #f00;
+  }
+
+  .category-nav {
+    padding-bottom: 5px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .category-container {
+    scroll-margin-top: 60px; /* Adjust based on your header height */
   }
 </style>
