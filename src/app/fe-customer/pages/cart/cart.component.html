@@ -1,25 +1,20 @@
 <app-layout>
   <div main class="main-container">
-    <div class="d-flex justify-content-between mt-2">
-      <span class="fw-bold" (click)="this.derect.toMenuPage()">My Order</span>
-      <span
-        class="fw-bold"
-        style="color: #f00"
-        data-bs-toggle="modal"
-        data-bs-target="#cancelModal"
-        style="cursor: pointer"
-        >Cancel
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 16px; padding: 8px 0;">
+      <span style="font-weight: bold; cursor: pointer;" (click)="this.derect.toMenuPage()">My Order</span>
+      <span style="font-weight: bold; color: #f00; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#cancelModal">
+        Cancel
       </span>
     </div>
-    <hr class="fw-bold" />
-    <!-- order information -->
-    <div
-      *ngFor="let item of orderInformation"
-      class="d-flex justify-content-between border-bottom"
-    >
-      <span>{{ item.label }}</span>
-      <span class="fw-bold">{{ item.value }}</span>
+    <hr style="border-top: 2px solid #ddd; margin: 8px 0;" />
+    <!-- Order Information -->
+    <div *ngFor="let item of orderInformation" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #eee;">
+      <span style="color: #555;">{{ item.label }}</span>
+      <span style="font-weight: bold; color: #333;">{{ item.value }}</span>
     </div>
+    
+    
 
     <!-- payment method -->
 

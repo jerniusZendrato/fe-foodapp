@@ -132,8 +132,8 @@
     >
       <ng-container *ngFor="let category of categories">
         <div
-          *ngIf="category.isActivated  && category.name != 'un-category'"
-          class="category-container"
+          *ngIf="category.isActivated && category.name != 'un-category'"
+          class="category-container my-3"
           [attr.id]="category.id"
           #categoryContainer
         >
@@ -153,13 +153,7 @@
           </div>
         </div>
       </ng-container>
-      <br /><br /><br /><br /><br />
-      <br /><br /><br /><br /><br />
-      <br /><br /><br /><br /><br />
-      <br /><br /><br /><br /><br />
-      <br /><br /><br /><br /><br />
-      <br /><br /><br /><br /><br />
-      <br /><br /><br /><br /><br />
+      <div class="spacer"></div>
     </div>
 
     <app-check-out-button></app-check-out-button>
@@ -167,6 +161,9 @@
 </div>
 
 <style>
+  .spacer {
+    height: 800px; /* Adjust the height as needed */
+  }
   div::-webkit-scrollbar {
     display: none;
   }

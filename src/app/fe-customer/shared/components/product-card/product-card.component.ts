@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { OrderLocalStorageCustService } from '../../services/order-local-storage-cust.service';
+import { Component, Input } from "@angular/core";
+import { OrderLocalStorageCustService } from "../../services/order-local-storage-cust.service";
 
 @Component({
   selector: 'app-product-card',
@@ -38,7 +38,7 @@ import { OrderLocalStorageCustService } from '../../services/order-local-storage
               >
                 -
               </button>
-              <span class="quantity-display mx-1">
+              <span class="quantity-display">
                 {{ order.getProductQuantity(product.id) }}
               </span>
               <button
@@ -58,117 +58,116 @@ import { OrderLocalStorageCustService } from '../../services/order-local-storage
       .product-card {
         width: 100%;
         max-width: 500px;
-        padding: 6px 0px;
-        border: 0.5px solid #fefefe;
-        border-bottom: 0.1px solid rgb(218, 216, 216);
+        padding: 12px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
       }
 
       .product-card__content {
         display: grid;
-        grid-template-columns: 72px 1fr;
-        grid-template-rows: auto;
+        grid-template-columns: 80px 1fr;
         gap: 16px;
         align-items: start;
       }
 
       .product-card__image-container {
-        width: 72px;
-        height: 72px;
-        grid-column: 1;
-        grid-row: 1;
+        width: 80px;
+        height: 80px;
       }
 
       .product-card__image {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        border-radius: 12px;
+        border-radius: 8px;
       }
 
       .product-card__details {
-        grid-column: 2;
-        grid-row: 1;
-        min-width: 0;
         display: flex;
         flex-direction: column;
-        height: 100%;
+        justify-content: space-between;
       }
 
       .product-card__name {
-        margin: 0 0 4px 0;
-        font-size: 14px;
+        margin: 0 0 8px 0;
+        font-size: 1.1rem;
+        font-weight: bold;
+        color: #333;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
       }
 
       .product-card__description {
-        margin: 0 0 4px 0;
-        font-size: 12px;
+        margin: 0 0 8px 0;
+        font-size: 0.9rem;
+        color: #666;
         display: -webkit-box;
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
         overflow: hidden;
-        flex-grow: 1;
       }
 
       .product-card__price-and-button {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-top: auto;
       }
 
       .product-card__price {
-        font-size: 14px;
+        font-size: 1rem;
+        color: #e91e63;
       }
 
       .product-card__add-button {
-        font-size: 10px;
-        border: 2px solid #ff0000; /* Border merah */
-        color: #ff0000;
+        font-size: 0.9rem;
+        border: 2px solid #e91e63;
+        color: #e91e63;
         border-radius: 4px;
         background-color: white;
         cursor: pointer;
+        padding: 4px 8px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
+      .product-card__add-button:hover {
+        background-color: #e91e63;
+        color: white;
       }
 
       .rounded-button {
-        width: 20px; /* Ukuran dikurangi */
-        height: 20px; /* Ukuran dikurangi */
+        width: 24px;
+        height: 24px;
         border-radius: 50%;
         background-color: white;
-        border: 2px solid #ff0000; /* Border merah */
-        font-size: 10px; /* Ukuran font dikurangi */
+        border: 2px solid #e91e63;
+        font-size: 0.9rem;
         font-weight: bold;
-        color: #ff0000; /* Warna teks merah */
+        color: #e91e63;
         cursor: pointer;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        margin: 0 3px; /* Margin dikurangi */
         transition: background-color 0.3s ease, color 0.3s ease;
       }
 
       .rounded-button:hover {
-        background-color: #ff0000;
-        color: white;
-      }
-
-      .rounded-button:active {
-        background-color: #cc0000; /* Warna merah yang lebih gelap saat ditekan */
+        background-color: #e91e63;
         color: white;
       }
 
       .quantity-display {
-        font-size: 12px;
-        color: #ff0000;
+        font-size: 0.9rem;
+        color: #e91e63;
         text-align: center;
-        flex: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 15%;
-        border: 1px solid #ff0000;
+        padding: 0 8px;
       }
 
       .quantity-container {
@@ -176,9 +175,8 @@ import { OrderLocalStorageCustService } from '../../services/order-local-storage
         align-items: center;
         justify-content: space-between;
         border-radius: 4px;
-        padding: 2px;
-        background-color: white;
-        width: 100px; /* Atur lebar sesuai kebutuhan */
+        padding: 4px;
+        background-color: #f9f9f9;
       }
     `,
   ],
