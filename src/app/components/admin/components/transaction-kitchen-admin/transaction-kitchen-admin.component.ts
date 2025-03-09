@@ -59,7 +59,6 @@ export class TransactionKitchenAdminComponent implements OnInit {
       (response) => {
         if (response['isSuccess']==true){
           console.log('saved successfully',response);
-          this.getkitchenorder()
           this.showsuccessToast()
         }
         else {
@@ -67,6 +66,7 @@ export class TransactionKitchenAdminComponent implements OnInit {
           this.showErrorToast()
         }
         console.log("masuk ke sini jka gagal atau berhasil save")
+        this.getkitchenorder()
         this.loaderService.hideWithDelay(200);
       },
       (error) => {
