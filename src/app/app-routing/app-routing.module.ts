@@ -80,6 +80,10 @@ const routes: Routes = [
         component: CassierOrderComponent,
         canDeactivate: [UnsavedChangesVerifikasiService],
       },
+      {path: 'kitchen-admin',
+        component: TransactionKitchenAdminComponent,
+        canDeactivate: [UnsavedChangesVerifikasiService],
+      },
     ],
   },
   {

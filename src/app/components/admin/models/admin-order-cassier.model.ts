@@ -5,20 +5,23 @@ export interface AdminOrderCassier {
     totalPrice: number;
     priceBeforeTax: number;
     tax: number | null;
-    paymentStatus: string;
     createdAt: string;
-    // paymentStatus: 'paid' | 'unpaid';
+    paymentStatus: string;
     paymentPaidAt: string | null;
-    deliverdAt: string | null;
-    // status: 'process' | 'delivered';
-    // type: 'dine in' | 'take away' | 'delivery';
+    deliveredAt: string | null;
     status: string;
     type: string;
     adminId: string;
     adminName: string;
     tableName: string;
     tableId: string;
-    productOrders: ProductOrder[];
+    productOrders: AdminDetailOrderCassier[];
+  }
+  export interface AdminDetailOrderCassier{
+    id : string;
+    productName : string;
+    quantity : number;
+    subTotalPrice : number;
   }
 
   export interface ProductOrder {
@@ -32,3 +35,7 @@ export interface AdminOrderCassier {
     isActivated: Boolean;
     quantity?: number;
   }
+
+  // export interface patchstatus{
+
+  // }
