@@ -27,7 +27,13 @@ import { CheckOutButtonComponent } from './fe-customer/shared/components/check-o
 import { CartComponent } from './fe-customer/pages/cart/cart.component';
 import { LayoutComponent } from './fe-customer/shared/components/layout/layout.component';
 import { ModalComponent } from './fe-customer/shared/components/modal/modal.component';
-import { OrderSummaryComponent } from './fe-component/pages/order-summary/order-summary.component';
+import { OrderSummaryComponent } from './fe-customer/pages/order-summary/order-summary.component';
+import { OrderHistoryComponent } from './fe-customer/pages/order-history/order-history.component';
+import { NavbarComponent } from './fe-customer/shared/components/navbar/navbar.component';
+import { OrderHistoryCardComponent } from './fe-customer/shared/components/order-history-card/order-history-card.component';
+import { OrderHistoryDetailComponent } from './fe-customer/pages/order-history-detail/order-history-detail.component';
+import { SpinnerComponentComponent } from './fe-customer/shared/components/spinner-component/spinner-component.component';
+import { NotFoundComponent } from './fe-customer/pages/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +61,12 @@ import { OrderSummaryComponent } from './fe-component/pages/order-summary/order-
     LayoutComponent,
     ModalComponent,
     OrderSummaryComponent,
+    OrderHistoryComponent,
+    NavbarComponent,
+    OrderHistoryCardComponent,
+    OrderHistoryDetailComponent,
+    SpinnerComponentComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,

@@ -9,39 +9,45 @@
   "
 >
   <div
-    style="min-height: 15vh; width: 100%; position: relative"
-    class="d-flex flex-column justify-content-center align-items-center"
+    style="
+      min-height: 15vh;
+      width: 100%;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    "
   >
-    <!-- Tombol Ikon Burger -->
+    <!-- Burger Icon Button -->
     <div style="position: absolute; top: 10px; right: 10px">
       <button
         style="
           background: none;
           border: none;
           cursor: pointer;
-          font-size: px;
+          font-size: 24px;
           color: white;
+          transition: color 0.3s ease;
         "
         aria-label="Menu"
+        (click)="derect.toNavbar()"
       >
         <i class="fa-solid fa-bars"></i>
       </button>
     </div>
 
+    <!-- brand image -->
+
     <div>
       <img
-        style="
-          width: 202px;
-          height: 41px;
-          opacity: 1;
-          margin-top: 0;
-          margin-bottom: 1%;
-        "
+        style="width: 200px; height: auto; opacity: 1; margin: 10px 0"
         alt="icon"
         src="https://image-storage-order-app.s3.eu-north-1.amazonaws.com/product_image/logo-white.png"
       />
     </div>
 
+    <!-- search inptu -->
     <div
       style="
         display: flex;
@@ -49,24 +55,37 @@
         align-items: center;
         height: 100%;
         max-height: 30px;
-        margin-top: 10px;
+        margin-top: 5px;
       "
     >
-      <div class="input-group mb-2" style="width: 246px">
+      <div class="input-group mb-2" style="width: 300px">
         <span
           class="input-group-text"
           style="
-            background-color: white !important;
+            background-color: white;
             border-right: none;
-            height: 25px !important;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 10px;
           "
-          ><i class="fa-solid fa-magnifying-glass"></i
-        ></span>
+        >
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </span>
         <input
-          style="border-left: none; height: 25px !important"
+          style="
+            border-left: none;
+            height: 40px;
+            flex: 1;
+            padding: 0 10px;
+            outline: none;
+            border: 1px solid #ccc;
+            border-radius: 0 4px 4px 0;
+          "
           type="text"
           class="form-control border-black--focus"
-          placeholder="search ......"
+          placeholder="Search..."
           aria-label="product_name_search"
           [(ngModel)]="searchQuery"
         />
@@ -90,12 +109,29 @@
       <div class="spinner"></div>
     </div>
 
-    <div class="m-3" style="white-space: nowrap; overflow-x: auto">
+    <div
+      class="m-3 category-nav"
+      style="
+        white-space: nowrap;
+        overflow-x: auto;
+        position: sticky;
+        top: 0;
+        background-color: white;
+        z-index: 10;
+      "
+      #categoryNav
+    >
       <div style="padding-inline: 9px">
         <ng-container *ngFor="let category of categories">
           <span
-            (click)="scrollToCategory(category.id)"
-            style="cursor: pointer; padding: 10px"
+            [ngClass]="{ 'active-category': activeCategoryId === category.id }"
+            (click)="setActiveCategory(category.id)"
+            style="
+              cursor: pointer;
+              padding: 10px;
+              display: inline-block;
+              margin-right: 5px;
+            "
             *ngIf="category.isActivated && category.name != 'un-category'"
           >
             {{ category.name }}
@@ -114,28 +150,24 @@
     >
       <ng-container *ngFor="let category of categories">
         <div
-          *ngIf="category.isActivated"
-          class="category-container"
+          *ngIf="category.isActivated && category.name != 'un-category'"
+          class="category-container my-3"
           [attr.id]="category.id"
           #categoryContainer
         >
           <span class="fw-bold">
             {{ category.name }}
           </span>
-          <div class="products-list">
-            <ng-container *ngFor="let product of filterProductsBySearch()">
-              <div
-                *ngIf="category.isActivated && category.name != 'un-category'"
-              >
-                <div *ngIf="product.categoryId === category.id">
-                  <app-product-card [product]="product"></app-product-card>
-                </div>
+          <ng-container *ngFor="let product of filterProductsBySearch()">
+            <div *ngIf="category.isActivated && category.name != 'un-category'">
+              <div *ngIf="product.categoryId === category.id" class="my-1">
+                <app-product-card [product]="product"></app-product-card>
               </div>
-            </ng-container>
-          </div>
+            </div>
+          </ng-container>
         </div>
       </ng-container>
-      <br /><br /><br /><br /><br />
+      <div class="spacer"></div>
     </div>
 
     <app-check-out-button></app-check-out-button>
@@ -143,6 +175,9 @@
 </div>
 
 <style>
+  .spacer {
+    height: 700px; /* Adjust the height as needed */
+  }
   div::-webkit-scrollbar {
     display: none;
   }
@@ -185,5 +220,20 @@
 
   .blur-content {
     filter: blur(3px);
+  }
+
+  .active-category {
+    border-bottom: 2px solid #f00;
+    font-weight: bold;
+    color: #f00;
+  }
+
+  .category-nav {
+    padding-bottom: 5px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .category-container {
+    scroll-margin-top: 60px; /* Adjust based on your header height */
   }
 </style>

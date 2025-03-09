@@ -7,6 +7,17 @@ import {
 import { ProductCust as Product } from '../models/product-cust.model';
 import { DerectService } from './derect.service';
 import { OrderCustService } from './order-cust.service';
+import {
+  OrderHistoryCust,
+  OrderhistoryItemCust,
+} from '../models/order-history.model';
+import { catchError, Observable, tap, throwError } from 'rxjs';
+
+interface OrderResponse {
+  isSuccess: boolean;
+  data: OrderHistoryCust;
+  errors: any;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +27,7 @@ export class OrderLocalStorageCustService {
   orderItem: CustomerOrderItem[] = [];
 
   private readonly STORAGE_KEY_ORDER = 'order';
+  private readonly STORAGE_KEY_ORDERED = 'ordered';
   private readonly STORAGE_KEY_ORDER_HISTORY = 'order-history';
 
   constructor(
@@ -29,24 +41,37 @@ export class OrderLocalStorageCustService {
     }
   }
 
+  getProductOrder(): CustomerOrderItem[] | undefined {
+    return this.order.productOrders;
+  }
+
   getOrder(): Order | null {
     const storedOrder = localStorage.getItem(this.STORAGE_KEY_ORDER);
     return storedOrder ? JSON.parse(storedOrder) : null;
   }
 
-  getHistoryOrder(): Order[] | null {
+  getHistoryOrder(): OrderHistoryCust[] | null {
     const storedHistoyOrder = localStorage.getItem(
       this.STORAGE_KEY_ORDER_HISTORY
     );
     return storedHistoyOrder ? JSON.parse(storedHistoyOrder) : null;
   }
 
-  addOrderToHistory(newOrder: Order): void {
+  getOrdered(): OrderHistoryCust | null {
+    const storedOrdered = localStorage.getItem(this.STORAGE_KEY_ORDERED);
+    return storedOrdered ? JSON.parse(storedOrdered) : null;
+  }
+
+  pushOrderd(order: OrderHistoryCust) {
+    localStorage.setItem(this.STORAGE_KEY_ORDERED, JSON.stringify(order));
+  }
+
+  addOrderToHistory(newOrder: OrderHistoryCust): void {
     // Retrieve existing order history
     const storedHistoryOrder = localStorage.getItem(
       this.STORAGE_KEY_ORDER_HISTORY
     );
-    const orderHistory: Order[] = storedHistoryOrder
+    const orderHistory: OrderHistoryCust[] = storedHistoryOrder
       ? JSON.parse(storedHistoryOrder)
       : [];
 
@@ -71,51 +96,27 @@ export class OrderLocalStorageCustService {
     };
   }
 
-  // insertOrder(): void {
-  //   this.orderService.insertOrder(this.order).subscribe({
-  //     next: (order) => {
-  //       this.order = order
-  //       this.derect.toOrderSummary(order.id); // Perbaiki kesalahan pengetikan
-  //       localStorage.removeItem(this.STORAGE_KEY_ORDER);
-  
-  //       this.addOrderToHistory(this.order);
-  
-  //       this.order.productOrders = [];
-  //       this.saveOrder(this.order);
-  //     },
-  //     error: (error) => {
-  //       console.error('Error inserting product:', error);
-  //     },
-  //     complete: () => {
-  //       console.log('Insert product observable completed');
-  //     },
-  //   });
-  // }
-
-  insertOrder(): void {
-    this.orderService.insertOrder(this.order).subscribe({
-      next: (response) => {
-        console.log('response :>> ', response);
+  insertOrder(): Observable<OrderResponse> {
+    return this.orderService.insertOrder(this.order).pipe(
+      tap((response) => {
         if (response.isSuccess) {
-          this.order = response.data; // Ambil data dari response
-          const orderId = this.order.id
-          localStorage.removeItem(this.STORAGE_KEY_ORDER);
-          this.order.productOrders = [];
-          this.saveOrder(this.order);
-          this.addOrderToHistory(this.order)
-          this.derect.toOrderSummary(orderId);
-
-        } else {
-          console.error('Failed to insert order:', response.errors);
+          this.handleSuccessfulOrder(response.data);
         }
-      },
-      error: (error) => {
+      }),
+      catchError((error) => {
         console.error('Error inserting order:', error);
-      },
-      complete: () => {
-        console.log('Insert order observable completed');
-      },
-    });
+        return throwError(() => new Error('Failed to insert order'));
+      })
+    );
+  }
+
+  private handleSuccessfulOrder(order: OrderHistoryCust): void {
+    localStorage.removeItem(this.STORAGE_KEY_ORDER);
+    this.order.productOrders = [];
+    this.saveOrder(this.order);
+    this.pushOrderd(order);
+    this.addOrderToHistory(order);
+    this.derect.toOrderSummary();
   }
 
   saveOrder(order: Order): void {
@@ -134,13 +135,10 @@ export class OrderLocalStorageCustService {
   }
 
   incrementQuantity(product: Product): void {
-    console.log('start inc');
     if (!this.order.productOrders) {
       console.error('Order or productOrders is undefined');
       return;
     }
-
-    console.log('existingProductOrder');
 
     const existingProductOrder = this.order.productOrders.find(
       (po) => po.id === product.id
@@ -151,8 +149,6 @@ export class OrderLocalStorageCustService {
     } else {
       this.order.productOrders.push({ ...product, quantity: 1 });
     }
-
-    console.log('this.order :>> ', this.order);
 
     this.saveOrder(this.order);
   }
@@ -203,7 +199,7 @@ export class OrderLocalStorageCustService {
     return totalQuantity;
   }
 
-  getTotalPrice(): number {
+  getSubTotalPrice(): number {
     let totalPrice = 0;
 
     if (this.order.productOrders) {
@@ -212,6 +208,21 @@ export class OrderLocalStorageCustService {
       }
     }
     return totalPrice;
+  }
+
+  getTax(): number {
+    let tax = 0;
+    let subTotalPrice = this.getSubTotalPrice();
+
+    tax = subTotalPrice * 0.1;
+
+    return tax;
+  }
+
+  getTotatPrice(): number {
+    let subTotalPrice = this.getSubTotalPrice();
+    let tax = this.getTax();
+    return subTotalPrice + tax;
   }
 
   getCostumerName(): string {

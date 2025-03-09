@@ -7,4 +7,5 @@ export interface ProductCust {
   category: string;
   categoryId: string;
   isActivated: boolean;
+  quantity?: number
 }

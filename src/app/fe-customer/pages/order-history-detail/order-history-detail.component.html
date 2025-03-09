@@ -1,0 +1,64 @@
+<app-layout (goBack)="this.derect.toHistoryOrderPage()">
+    <div main style="padding: 20px;">
+      <div class="d-flex justify-content-center mb-4">
+        <span class="fw-bold fs-3" style="color: #333;">Kantin K’Jaya</span>
+      </div>
+  
+      <div class="p-3 shadow-sm bg-light rounded mb-3" *ngIf="order">
+        <div class="d-flex justify-content-between mb-2">
+          <span style="color: #555;">{{ order.createdAt | date: 'dd MMM yyyy, HH.mm' }}</span>
+          <span class="fw-bold" >#KKJY250307Z6QSZ</span>
+        </div>
+        <ng-container *ngFor="let item of orderInformation">
+          <div class="d-flex justify-content-between" style="padding: 4px 0; border-bottom: 1px solid #eee;">
+            <span style="color: #555;">{{ item.label }}</span>
+            <span style="color: #333;">{{ item.value }}</span>
+          </div>
+        </ng-container>
+      </div>
+  
+      <div class="mt-2 p-3 shadow-sm bg-light rounded mb-3" *ngIf="order">
+        <div class="row" >
+          <div class="col-6">Product Name</div>
+          <div class="col-3">Quantity</div>
+          <div class="col-3">Prices</div>
+        </div>
+      </div>
+  
+      <div class="mt-2 p-3 shadow-sm bg-light rounded mb-4" *ngIf="order">
+        <ng-container *ngFor="let item of order.productOrders">
+          <div class="row" style="padding: 8px 0; border-bottom: 1px solid #eee;">
+            <div class="col-6" style="color: #555;">{{ item.productName }}</div>
+            <div class="col-3" style="color: #555;">{{ item.quantity }}</div>
+            <div class="col-3" style="color: #555;">{{ item.productPrice | currency: 'Rp' }}</div>
+          </div>
+        </ng-container>
+      </div>
+
+      <div class="mt-2 p-3 shadow-sm bg-light rounded mb-4" *ngIf="order">
+        <ng-container>
+          <div class="row">
+            <div class="col-4" style="color: #555;"></div>
+            <div class="col-5" style="color: #555;">Subtotal</div>
+            <div class="col-3" style="color: #555;">{{ order.subTotalPrice | currency: 'Rp' }}</div>
+          </div>
+          <div class="row">
+            <div class="col-4" style="color: #555;"></div>
+            <div class="col-5" style="color: #555;">Tax (10%)</div>
+            <div class="col-3" style="color: #555;">{{ order.tax | currency: 'Rp' }}</div>
+          </div>
+          <div class="row" >
+            <div class="col-4" style="color: #555;"></div>
+            <div class="col-5" style="color: #555;">Total</div>
+            <div class="col-3" style="color: #555;">{{ order.totalPrice | currency: 'Rp' }}</div>
+          </div>
+        </ng-container>
+      </div>
+  
+      <div class="d-flex justify-content-center mt-4" *ngIf="order">
+        <button type="button" class="btn btn-primary" style="display: flex; align-items: center; gap: 5px;">
+          Download <i class="fa-solid fa-print"></i>
+        </button>
+      </div>
+    </div>
+  </app-layout>

@@ -14,18 +14,25 @@ import { FeCustomerComponent } from '../fe-customer/fe-customer.component';
 import { MenuComponent } from '../fe-customer/pages/menu/menu.component';
 import { CartComponent } from '../fe-customer/pages/cart/cart.component';
 import { LayoutComponent } from '../fe-customer/shared/components/layout/layout.component';
-import { OrderSummaryComponent } from '../fe-component/pages/order-summary/order-summary.component';
+import { OrderSummaryComponent } from '../fe-customer/pages/order-summary/order-summary.component';
+import { OrderHistoryComponent } from '../fe-customer/pages/order-history/order-history.component';
+import { OrderHistoryDetailComponent } from '../fe-customer/pages/order-history-detail/order-history-detail.component';
 import { TransactionKitchenAdminComponent } from '../components/admin/components/transaction-kitchen-admin/transaction-kitchen-admin.component';
 import { TransactionHistoryComponent } from '../components/admin/components/transaction-history/transaction-history.component';
+import { NotFoundComponent } from '../fe-customer/pages/not-found/not-found.component';
+import { NavbarComponent } from '../fe-customer/shared/components/navbar/navbar.component';
 
 
 const feCustomerChildren: Routes = [
   { path: 'welcome', component: WelcomeComponent },
+  { path: 'nav', component: NavbarComponent },
   { path: 'layout', component: LayoutComponent },
   { path: 'cart', component: CartComponent },
   { path: '', component: MenuComponent },
-  { path: '404', component: WelcomeComponent },
-  { path: 'order/summary/:id', component: OrderSummaryComponent },
+  { path: '404', component: NotFoundComponent },
+  { path: 'order/summary', component: OrderSummaryComponent },
+  { path: 'history', component: OrderHistoryComponent },
+  { path: 'history/:id', component: OrderHistoryDetailComponent },
 ];
 
 const routes: Routes = [

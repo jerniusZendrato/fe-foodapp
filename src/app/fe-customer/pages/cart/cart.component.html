@@ -1,23 +1,41 @@
-<app-layout>
+<app-layout [isLoading]="this.isLoading">
   <div main class="main-container">
-    <div class="d-flex justify-content-between mt-2">
-      <span class="fw-bold" (click)="this.derect.toMenuPage()">My Order</span>
+    <div
+      style="
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 16px;
+        padding: 8px 0;
+      "
+    >
       <span
-        class="fw-bold"
-        style="color: #f00"
+        style="font-weight: bold; cursor: pointer"
+        (click)="this.derect.toMenuPage()"
+        >My Order</span
+      >
+      <span
+        style="font-weight: bold; color: #f00; cursor: pointer"
         data-bs-toggle="modal"
         data-bs-target="#cancelModal"
-        >Cancel
+      >
+        Cancel
       </span>
     </div>
-    <hr class="fw-bold" />
-    <!-- order information -->
+    <hr style="border-top: 2px solid #ddd; margin: 8px 0" />
+    <!-- Order Information -->
     <div
       *ngFor="let item of orderInformation"
-      class="d-flex justify-content-between border-bottom"
+      style="
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 0;
+        border-bottom: 1px solid #eee;
+      "
     >
-      <span>{{ item.label }}</span>
-      <span class="fw-bold">{{ item.value }}</span>
+      <span style="color: #555">{{ item.label }}</span>
+      <span style="font-weight: bold; color: #333">{{ item.value }}</span>
     </div>
 
     <!-- payment method -->
@@ -86,22 +104,51 @@
     <!-- my order -->
 
     <div class="order-section">
-      <span class="fw-bold" style="font-size: 12px">My order</span>
+      <span class="fw-bold m-1" style="font-size: 16px">My order</span>
       <div class="order-list">
-        <div *ngFor="let productOrder of order?.productOrders">
-          <app-product-card [product]="productOrder"></app-product-card>
+        <div *ngFor="let productOrder of productOrder">
+          <app-product-card
+            [product]="productOrder"
+            (updateProductOrder)="updateProductOrder()"
+          ></app-product-card>
         </div>
       </div>
     </div>
 
     <div class="content-wrapper">
-      <div class="order-info">
-        <div
-          *ngFor="let item of orderPriceInfo"
-          class="d-flex justify-content-between border-bottom"
-        >
-          <span>{{ item.label }}</span>
-          <span class="fw-bold">{{ item.value }}</span>
+      <div class="container">
+        <div class="row">
+          <div class="col-4 text-end"></div>
+          <div class="col-4 text-start">
+            <span>Sub Total</span>
+          </div>
+          <div class="col-4 text-end">
+            <span class="fw-bold">{{
+              this.orderService.getSubTotalPrice() | currency : "Rp"
+            }}</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4 text-end"></div>
+          <div class="col-4 text-start">
+            <span>Tax (10%)</span>
+          </div>
+          <div class="col-4 text-end">
+            <span class="fw-bold">{{
+              this.orderService.getTax() | currency : "Rp"
+            }}</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4 text-end"></div>
+          <div class="col-4 text-start">
+            <span>Total</span>
+          </div>
+          <div class="col-4 text-end">
+            <span class="fw-bold">{{
+              this.orderService.getTotatPrice() | currency : "Rp"
+            }}</span>
+          </div>
         </div>
       </div>
 
@@ -115,16 +162,11 @@
           margin-top: 5px;
           border-top: 1px solid #ddd;
           font-weight: bold;
-          font-size: 13px;
+          font-size: 20px;
         "
       >
         <span>Total Payment</span>
-        <span
-          >{{
-            this.orderService.getTotalPrice()
-              | currency : "Rp" : "symbol" : "1.0-0"
-          }}
-        </span>
+        <span>{{ this.orderService.getTotatPrice() | currency : "Rp" }} </span>
       </div>
 
       <!-- Buttons -->
@@ -243,8 +285,8 @@
         </h1>
       </div>
       <div class="modal-body fw-bold">
-        Are you sure you want to <span class="main-color">cancel </span> your
-        order?
+        Are you sure you want to
+        <span class="main-color">cancel </span> your order?
       </div>
       <div class="modal-footer">
         <button
@@ -260,7 +302,7 @@
           class="btn"
           style="background-color: #1fac12; color: white"
           data-bs-dismiss="modal"
-          (click)="this.orderService.insertOrder()"
+          (click)="placeOrder()"
         >
           Yes, sure
         </button>
