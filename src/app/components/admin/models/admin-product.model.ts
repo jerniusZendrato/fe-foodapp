@@ -9,6 +9,17 @@ export interface AdminProduct {
     isActivated: Boolean;
   } 
   
+  export interface updateAdminProduct {
+    id: string;
+    name: string;
+    urlImage?: string| null;
+    price: number;
+    description: string;
+    category?: string;
+    categoryId: string;
+    isActivated: Boolean;
+  } 
+  
   
   
   // export interface Product {
