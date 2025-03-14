@@ -1,7 +1,7 @@
 export interface AdminTable {
     id:string;
     name: number;
-    qrimageurl:string;
+    urlWelcomePage:string;
     qrImage?: string;
     activated: boolean;
 }

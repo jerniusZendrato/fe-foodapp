@@ -48,10 +48,11 @@ export class MasterProductComponent implements OnInit, CanComponentDeactivate{
     this.producteditForm = this.formBuilder.group({
       id: ['', Validators.required],
       name: ['', Validators.required],
-      category: [null, Validators.required],
       price: ['', Validators.required],
       image: [''],
       description: [''],
+      category: [null, Validators.required],
+      categoryId: [null, Validators.required],
       isActivated: [true],
     });
     
@@ -117,13 +118,15 @@ export class MasterProductComponent implements OnInit, CanComponentDeactivate{
       this.producteditForm.patchValue({
         id: this.productToEdit.id,
         name: this.productToEdit.name,
+        image: this.productToEdit.urlImage,
         price: this.productToEdit.price,
         category: this.productToEdit.category,
+        categoryId: this.productToEdit.categoryId,
         description: this.productToEdit.description
       });
     }
     
-    console.log("ini productToEdit",this.productToEdit)
+    console.log("Updated Form Value:", this.producteditForm.value);
   }
 
   isDisabled: boolean = true; // Status awal ( disable)
@@ -385,21 +388,22 @@ groupProductsByCategory(): void {
 // update data product--------------------------------------------------
   updateproduct(id:string){
     this.loaderService.show();
-    console.log('update product');
 
     if (this.producteditForm.valid) {
       const updateproduct: updateAdminProduct = {
-        id: this.productForm.get('id')?.value,
-        name: this.productForm.get('name')?.value,
-        price: this.productForm.get('price')?.value,
-        description: this.productForm.get('description')?.value,
-        isActivated: this.productForm.get('isActivated')?.value,
-        categoryId: this.productForm.get('category')?.value?.id,
+        id: this.producteditForm.get('id')?.value,
+        name: this.producteditForm.get('name')?.value,
+        price: this.producteditForm.get('price')?.value,
+        description: this.producteditForm.get('description')?.value,
+        category: this.producteditForm.get('category')?.value?.name,
+        categoryId: this.producteditForm.get('category')?.value?.id,
+        isActivated: this.producteditForm.get('isActivated')?.value,
       };
+      console.log("updateproduct",updateproduct)
       if (this.image){
         this.productservice.updateroduct(updateproduct, this.image, id).subscribe(
           (savedProduct) => {
-            // window.location.reload();
+            window.location.reload();
             this.showsuccessToast()
           },
           (error) => {

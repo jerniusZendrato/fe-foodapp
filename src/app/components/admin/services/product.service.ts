@@ -82,9 +82,16 @@ export class ProductService {
 
   updateroduct(product: AdminProduct, image: File,id:string): Observable<any> {
     const formData: FormData = new FormData();
-    const idproduct = encodeURIComponent(id); 
+    console.log("ini formData",product)
+    const idproduct = encodeURIComponent(id);
+    if (product.id) {
+      formData.append('id', product.id);
+    }
     if (product.name) {
       formData.append('name', product.name);
+    }
+    if (image) {
+      formData.append('urlImage', image, image.name);
     }
     if (product.price !== undefined) {
       formData.append('price', product.price.toString());
@@ -92,12 +99,14 @@ export class ProductService {
     if (product.description) {
       formData.append('description', product.description);
     }
+    if (product.category) {
+      formData.append('categoryId', product.category.toString());
+    }
     if (product.categoryId) {
       formData.append('categoryId', product.categoryId.toString());
     }
-    if (image) {
-      formData.append('image', image, image.name);
-    }
-    return this.http.put<any>(`${this.apiUrl}/${idproduct}`, formData);
+    console.log("ini formData",formData)
+    
+    return this.http.put<any>(`${this.apiUrl}/${idproduct}`,formData );
   }
 }

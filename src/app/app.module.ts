@@ -69,15 +69,16 @@ import { FilterPipe } from './filter.pipe';
     SpinnerComponentComponent,
     NotFoundComponent,
     FilterPipe,
+    
+    
   ],
   imports: [
     BrowserModule,
     CommonModule,
     AppRoutingModule,
     ReactiveFormsModule,
-
     HttpClientModule,
-    FormsModule
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -303,7 +303,6 @@
                     
                     <div class="mb-3">
                       <label for="productCategory" class="form-label">Product Category</label>
-                      
                       <select class="form-control"
                               id="productCategory"
                               name="category"
@@ -312,8 +311,8 @@
                               <option *ngIf="productToEdit" [ngValue]="productToEdit.category" disabled style="background-color: rgb(216, 216, 216);" selected>
                                 {{ productToEdit.category }}
                               </option>
-                        <option *ngFor="let category of categories"
-                                [ngValue]="category">
+                              <option *ngFor="let category of categories"
+                              [ngValue]="category">
                           {{ category.name }}
                         </option>
                       </select>
@@ -375,7 +374,7 @@
             >
               Close
             </button>
-            <button type="button" class="btn btn-primary" (click)="updateproduct(productToEdit.id)">Save changes</button>
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="updateproduct(productToEdit.id)">Save changes</button>
           </div>
         </div>
       </div>
