@@ -17,7 +17,6 @@ export class TransactionCassierAdminComponent implements OnInit {
   this.getorderview()
   this.loadcategory()
   this.groupProductsByCategory()
-  this.loadproducts()
     
   }
   constructor(
@@ -39,23 +38,31 @@ export class TransactionCassierAdminComponent implements OnInit {
     }
     
   }
+  public currentDate = new Date().toISOString().split('T')[0]; 
 
   getorderview(): Promise<void>{
     return new Promise((resolve, reject) => {
       this.loaderService.show();
-      this.orderadmin.getorder().subscribe(
+      this.orderadmin.getorder(this.currentDate).subscribe(
         (Response: AdminOrderCassier[]) => {
           if (Response) {
             const tanggalSekarang: string = new Date().toISOString().split('T')[0];
+            console.log("tanggalSekarang",tanggalSekarang)
+
              // Filter hanya order yang dibuat hari ini
              
             this.orderview = Response.filter(order => {
-              if (order.createdAt) {
-                const createdAtDate = new Date(order.createdAt).toISOString().split('T')[0];
+              console.log('order.createdAt',order.createdAt)
+              if (order.createdAt ) {
+                
+                const createdAtDate = new Date(order.createdAt).toLocaleDateString('en-CA').split('T')[0];
+                // console.log("Order ditemukan:", order);
+                console.log("createdAtDate",createdAtDate,order.customerName)
                 return createdAtDate === tanggalSekarang;
               }
               return false;
             });
+            
 
             // memasukkan status prosess ke orderprocess
             this.orderprocess = Response.filter(order =>{
@@ -70,7 +77,8 @@ export class TransactionCassierAdminComponent implements OnInit {
             this.orderdeliverd = Response.filter(order => {
               if (order.createdAt && order.status) {
                 const createdAtDate = new Date(order.createdAt).toISOString().split('T')[0];
-                return createdAtDate === tanggalSekarang && order.status.toLowerCase() === 'deliverd';
+                // console.log('createdAtDateEEEE',order.status.toLowerCase())
+                return createdAtDate === tanggalSekarang && order.status.toLowerCase() === 'delivered';
               }
               return false;
             });
@@ -124,24 +132,7 @@ export class TransactionCassierAdminComponent implements OnInit {
 
   // menu Add new Order
 
-  // add product
-  loadproducts(): Promise<void> {
-    return new Promise((resolve, reject) => {
-    this.productservice.getproduct().subscribe(
-      (Response: AdminProduct[]) => {
-        if (Response) {
-          this.products = Response
-          console.log(this.products, "this producttt")
-          this.groupProductsByCategory()
-          resolve();
-        }
-        else
-          console.log("data tidak isSuccess=true")
-          reject()
-      }
-    )
-  })
-}
+ 
 
   // categories: any[] = [];
   public products: AdminProduct[] = []
@@ -169,6 +160,32 @@ export class TransactionCassierAdminComponent implements OnInit {
     
     ;}
 
+
+  // public datacordercassier: AdminOrderCassier[] = []
+  // public currentDate = new Date().toISOString().split('T')[0]; 
+
+  // loaderAdminOrderCassier(): Promise<void>{
+  //   return new Promise((resolve, reject) => {
+  //     this.loaderService.show();
+  //     this.orderadmin.getorder(this.currentDate).subscribe(
+  //       (Response: AdminOrderCassier[]) => {
+  //         if (Response) {
+  //           this.datacordercassier = Response
+  //           console.log("ini category", this.datacategory)
+  //           // this.groupProductsByCategory()
+  //           this.loaderService.hideWithDelay(1000);
+  //           resolve();
+  //         }
+  //         else
+  //           console.log("data tidak isSuccess=true")
+  //           this.loaderService.hideWithDelay(1000);
+  //         reject()
+  //       }
+  //     )
+      
+  //   })
+
+  // }
 
 
 }

@@ -1,11 +1,11 @@
 import { ChangeDetectorRef, Component, HostListener, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CanComponentDeactivate } from 'src/app/guards/unsaved-changes-verifikasi.service';
-import { AdminCategory } from '../../models/admin-category.model';
+import { AdminCategory, AdminCategoryselect } from '../../models/admin-category.model';
 import { ProductService } from '../../services/product.service';
 import { CategoryService } from '../../services/category.service';
 import { LoaderService } from '../../services/loader.service';
-import { AdminProduct } from '../../models/admin-product.model';
+import { AdminProduct, updateAdminProduct } from '../../models/admin-product.model';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
@@ -21,9 +21,10 @@ export class MasterProductComponent implements OnInit, CanComponentDeactivate{
 
 
   productForm: FormGroup;
+  producteditForm: FormGroup;
   visible: boolean = false;
   productName: string | undefined;
-  selectedCategory: AdminCategory | undefined;
+  selectedCategory: any;
   // categories?: Category[];
   image: File | null = null;
 
@@ -44,6 +45,17 @@ export class MasterProductComponent implements OnInit, CanComponentDeactivate{
       description: [''],
       isActivated: [true],
     });
+    this.producteditForm = this.formBuilder.group({
+      id: ['', Validators.required],
+      name: ['', Validators.required],
+      price: ['', Validators.required],
+      image: [''],
+      description: [''],
+      category: [null, Validators.required],
+      categoryId: [null, Validators.required],
+      isActivated: [true],
+    });
+    
   }
 
   public product: AdminProduct[] = []
@@ -59,7 +71,7 @@ export class MasterProductComponent implements OnInit, CanComponentDeactivate{
   categories$ = this.categoriesSubject.asObservable(); 
 
   // variabel edit
-  productToEdit: AdminProduct | null = null;
+  productToEdit: updateAdminProduct| null = null;
 
     // variabel save
   productToSave: AdminProduct[]  = [];
@@ -83,6 +95,7 @@ export class MasterProductComponent implements OnInit, CanComponentDeactivate{
     
     console.log("originalProducts",this.originalProducts)
 
+    
   }
 
   public originalGroupedProducts: { [key: string]: AdminProduct[] } = {};
@@ -98,20 +111,22 @@ export class MasterProductComponent implements OnInit, CanComponentDeactivate{
   }
   
 
-  // editstatusproduct(event:Event):void{
-  //   const isChecked = (event.target as HTMLInputElement).checked;
 
-   
-  //   this.isSecondCheckboxDisabled = !isChecked;
-  //   if (!isChecked) {
-  //     this.cekstatus();  // Menjalankan fungsi cekstatus jika checkbox unchecked
-  //   }
-
-  // }
-
-  onEditProduct(product:AdminProduct) :void{
+  onEditProduct(product:updateAdminProduct) :void{
     this.productToEdit = product;
-    console.log(this.productToEdit)
+    if (this.productToEdit) {
+      this.producteditForm.patchValue({
+        id: this.productToEdit.id,
+        name: this.productToEdit.name,
+        image: this.productToEdit.urlImage,
+        price: this.productToEdit.price,
+        category: this.productToEdit.category,
+        categoryId: this.productToEdit.categoryId,
+        description: this.productToEdit.description
+      });
+    }
+    
+    console.log("Updated Form Value:", this.producteditForm.value);
   }
 
   isDisabled: boolean = true; // Status awal ( disable)
@@ -120,6 +135,11 @@ export class MasterProductComponent implements OnInit, CanComponentDeactivate{
     this.isDisabled = !this.isDisabled;
     console.log("cek 123456") // Toggle status
   }
+
+
+
+  // menu search text
+  searchText: string = '';
 
 
   // edi status product.....................................................
@@ -135,7 +155,6 @@ export class MasterProductComponent implements OnInit, CanComponentDeactivate{
   // Mengambil semua data dari groupedProducts
 
   isFormDirty: boolean = false;
-  // changestatusdisable: boolean = true;
   cekstatus(): void{
   this.allProducts = Object.values(this.groupedProducts).flat(); // Data saat ini
   if (this.allProducts.length !== this.originalProducts.length) {
@@ -149,28 +168,16 @@ export class MasterProductComponent implements OnInit, CanComponentDeactivate{
   });
   if(this.changedProducts.length > 0){
     console.log("data ada perubahan", this.changedProducts)
-    // this.changestatusdisable= false
+    
     this.isFormDirty = true;
   }
   else{
     console.log("data tidak ada perubahan")
     this.isFormDirty = false;
-    // this.changestatusdisable= false
   }
   
 }
 
-// verifikasichanges(): void{
-//   this.cekstatus()
-//   if(this.changedProducts.length > 0){
-//     console.log("data ada perubahan", this.changedProducts)
-//     this.isFormDirty = true;
-//   }
-//   else{
-//     console.log("data tidak ada perubahan")
-//     this.isFormDirty = false;
-//   }
-// }
 
 
   cekperubahan(): void{
@@ -225,7 +232,7 @@ export class MasterProductComponent implements OnInit, CanComponentDeactivate{
   
   
   
-
+// button jika ada perubahan status
   buttonsaveproduct() :void{
     // this.productToSave = [...this.allProducts];
     this.productToSave = JSON.parse(JSON.stringify(this.allProducts));
@@ -353,22 +360,9 @@ groupProductsByCategory(): void {
   
   ;}
 
-  // search menu------------------------------------------------
-  searchKeyword: string = '';
-  filteredGroupedProducts: { [key: string]: any[] } = {};
 
-  filterGroupedProducts(): void {
-    const keyword = this.searchKeyword.toLowerCase();
 
-    const filteredProducts = this.products.filter(product =>
-      product.name.toLowerCase().includes(keyword)
-    );
 
-    this.filteredGroupedProducts = filteredProducts.reduce((grouped: any, product: any) => {
-      (grouped[product.category] = grouped[product.category] || []).push(product);
-      return grouped;
-    }, {});
-  }
 
   // menu add save.......................
   // menu simpan gambar..................
@@ -391,10 +385,52 @@ groupProductsByCategory(): void {
   }
 
 
+// update data product--------------------------------------------------
+  updateproduct(id:string){
+    this.loaderService.show();
+
+    if (this.producteditForm.valid) {
+      const updateproduct: updateAdminProduct = {
+        id: this.producteditForm.get('id')?.value,
+        name: this.producteditForm.get('name')?.value,
+        price: this.producteditForm.get('price')?.value,
+        description: this.producteditForm.get('description')?.value,
+        category: this.producteditForm.get('category')?.value?.name,
+        categoryId: this.producteditForm.get('category')?.value?.id,
+        isActivated: this.producteditForm.get('isActivated')?.value,
+      };
+      console.log("updateproduct",updateproduct)
+      if (this.image){
+        this.productservice.updateroduct(updateproduct, this.image, id).subscribe(
+          (savedProduct) => {
+            window.location.reload();
+            this.showsuccessToast()
+          },
+          (error) => {
+            console.log('error :>> ', error);
+            this.showErrorToast()
+          }
+        );
+        this.loaderService.hideWithDelay(2000);
+      } else {
+        this.showErrorToast()
+        console.log("no image")
+        this.loaderService.hideWithDelay(2000);
+      }
+    }else {
+      this.showErrorToast()
+      console.log("producteditForm invalid")
+      this.loaderService.hideWithDelay(2000);
+    }
+    
+  }
+
+
+
+// add product----------------------------------------------
   saveProduct() {
     this.loaderService.show();
     console.log('save product');
-    // console.log('this.productForm :>> ', this.productForm);
 
     if (this.productForm.valid) {
       const product: AdminProduct = {
@@ -444,28 +480,5 @@ groupProductsByCategory(): void {
     }
   }
 
-
-
-
-
-
-// ProductsByCategory() : Promise<void>{
-//   return new Promise((resolve, reject) => {
-//     this.productbycategoryservice.getProductsbycategory().subscribe(
-//       (Response: ProductsByCategory[]) => {
-//         if (Response) {
-//           this.productsbycategory = Response
-//           console.log(Response, "this producttt")
-//           resolve();
-//         }
-//         else
-//           console.log("data tidak isSuccess=true")
-//           reject()
-//       }  
-
-//     )
-
-//   })
-// }
 
 }

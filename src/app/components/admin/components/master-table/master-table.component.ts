@@ -1,8 +1,10 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { TableService } from '../../services/table.service';
 import { AdminTable } from '../../models/admin-table.model';
-import * as QRCode from 'qrcode';
+// import * as QRCode from 'qrcode-esm';
 import { LoaderService } from '../../services/loader.service';
+import * as QRCode from 'qrcode-generator';
+
 
 @Component({
   selector: 'app-master-table',
@@ -31,6 +33,7 @@ export class MasterTableComponent implements OnInit {
           if (Response) {
             this.table = Response
             this.generateQRCodes()
+            console.log ("this.generateQRCodes()",this.generateQRCodes())
             console.log("ini category", this.table)
             this.loaderService.hideWithDelay(1000);
             resolve();
@@ -46,11 +49,18 @@ export class MasterTableComponent implements OnInit {
   }
 
   async generateQRCodes() {
+    // const QRCode = (await import('qrcode-generator')).default;
     for (const item of this.table) {
       try {
+        console.log("item.qrimageurl",item.urlWelcomePage)
         // Generate QR Code untuk setiap item berdasarkan ID
-        if(item.qrimageurl){
-          item.qrImage = await QRCode.toDataURL(item.qrimageurl);
+        if(item.urlWelcomePage){
+          const qr = QRCode(0, 'M');
+          qr.addData(item.urlWelcomePage);
+          qr.make();
+          item.qrImage = qr.createDataURL();
+      
+  
         }
       } catch (error) {
         console.error('Error generating QR Code', error);

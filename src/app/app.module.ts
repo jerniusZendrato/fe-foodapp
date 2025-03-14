@@ -34,6 +34,7 @@ import { OrderHistoryCardComponent } from './fe-customer/shared/components/order
 import { OrderHistoryDetailComponent } from './fe-customer/pages/order-history-detail/order-history-detail.component';
 import { SpinnerComponentComponent } from './fe-customer/shared/components/spinner-component/spinner-component.component';
 import { NotFoundComponent } from './fe-customer/pages/not-found/not-found.component';
+import { FilterPipe } from './filter.pipe';
 
 @NgModule({
   declarations: [
@@ -67,15 +68,17 @@ import { NotFoundComponent } from './fe-customer/pages/not-found/not-found.compo
     OrderHistoryDetailComponent,
     SpinnerComponentComponent,
     NotFoundComponent,
+    FilterPipe,
+    
+    
   ],
   imports: [
     BrowserModule,
     CommonModule,
     AppRoutingModule,
     ReactiveFormsModule,
-
     HttpClientModule,
-    FormsModule
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

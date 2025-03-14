@@ -7,6 +7,16 @@ export interface AdminCategory {
     // activated: boolean;
 
 }
+export interface AdminCategoryselect {
+    // categoryId: any;
+    id:string;
+    name: string;
+    isActivated: boolean;
+    // activated: boolean;
+
+}
+
+
 export interface patchCategory{
     category: menu[];
 }

@@ -78,4 +78,35 @@ export class ProductService {
     return this.http.post<any>(this.apiUrl, formData);
   }
 
+
+
+  updateroduct(product: AdminProduct, image: File,id:string): Observable<any> {
+    const formData: FormData = new FormData();
+    console.log("ini formData",product)
+    const idproduct = encodeURIComponent(id);
+    if (product.id) {
+      formData.append('id', product.id);
+    }
+    if (product.name) {
+      formData.append('name', product.name);
+    }
+    if (image) {
+      formData.append('urlImage', image, image.name);
+    }
+    if (product.price !== undefined) {
+      formData.append('price', product.price.toString());
+    }
+    if (product.description) {
+      formData.append('description', product.description);
+    }
+    if (product.category) {
+      formData.append('categoryId', product.category.toString());
+    }
+    if (product.categoryId) {
+      formData.append('categoryId', product.categoryId.toString());
+    }
+    console.log("ini formData",formData)
+    
+    return this.http.put<any>(`${this.apiUrl}/${idproduct}`,formData );
+  }
 }
