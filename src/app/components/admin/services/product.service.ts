@@ -48,8 +48,14 @@ export class ProductService {
 
   savestatusProducts(products: AdminProduct[]): Observable<any> {
     if (products && products.length > 0) {
-      const dataToSend = products;  // Data produk yang akan dikirimkan langsung
-      return this.http.patch< {isSuccess: boolean} >(`${environment.API_URL}/product`, dataToSend);
+      const dataToSend = {
+        "product": products.map(p => ({
+          "id": p.id,
+          "isActivated": p.isActivated
+        }))
+      }
+      console.log("dataToSend",dataToSend)
+      return this.http.patch< {isSuccess: boolean} >(`${environment.API_URL}/product/status`, dataToSend);
     } else {
       return new Observable((observer) => {
         observer.error('No valid products to save');
