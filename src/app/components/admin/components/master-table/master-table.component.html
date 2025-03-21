@@ -74,7 +74,7 @@
           <tbody>
             <!-- <h6 style="margin-left: 10px;">{{ category.key }}</h6> -->
             <tr *ngFor="let table of table">
-              <td id="category-name" (click)="selecttable(table.qrImage)">
+              <td id="category-name" (click)="selecttable(table.qrImage, table.name)">
                 {{ table.name }}
               </td>
   
@@ -142,7 +142,7 @@
             alt="QR Code for {{ selectedtable }}"
             width="100%"
           />
-          <h3 style="margin:0 0 10px 0; height: 100%;">Tabel 1</h3>
+          <h3 style="margin:0 0 10px 0; height: 100%;">Tabel {{selectednametable}}</h3>
           
   
           
@@ -152,6 +152,7 @@
           <button
             type="button"
             class="btn btn-primary btn-sm"
+            (click)="downloadpdf(selectedtable,selectednametable )"
           >
             Download
           </button>
@@ -224,8 +225,8 @@
              > -->
              <select
                         type="text"
-                        class="form-control"
-                        id="category"
+                        class="form-control "
+                        id="inputtablebaru"
                         name="name"
                         [(ngModel)]="newtable"
                         required
@@ -245,7 +246,7 @@
         </div> 
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="addtable()" >Save
+          <button type="button" class="btn btn-primary " data-bs-dismiss="modal" (click)="addtable()" >Save
             Change</button>
         </div>
       </div>

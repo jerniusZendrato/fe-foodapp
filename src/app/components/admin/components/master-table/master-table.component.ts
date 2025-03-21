@@ -4,6 +4,8 @@ import { AdminTable } from '../../models/admin-table.model';
 // import * as QRCode from 'qrcode-esm';
 import { LoaderService } from '../../services/loader.service';
 import * as QRCode from 'qrcode-generator';
+import { environment } from 'src/app/environment/environment';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -28,7 +30,8 @@ export class MasterTableComponent implements OnInit {
   }
   constructor(
     private tableService: TableService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private http: HttpClient
 
   ){}
 
@@ -152,23 +155,33 @@ export class MasterTableComponent implements OnInit {
   }
 
   // tampungan untuk menyimpan data yang dipilih
-  newtable: number | null = null;
+  newtable: number | null  = null;
 
   addtable(): void{
-    this.loaderService.show(); 
     const toadd ={
       "name": this.newtable,
-     }
-     console.log("toadd toadd",JSON.stringify(toadd))
-    if(toadd){
+    }
+    if (this.newtable === null){
+      const inputElement = document.getElementById("inputtablebaru");
+      if (inputElement) {
+        inputElement.classList.add("is-invalid");
+      }
+    }
+    
+    if(toadd && this.newtable != null){
+      this.loaderService.show(); 
       this.tableService.addTable(toadd).subscribe(
         (response) => {
+          const inputElement = document.getElementById("inputtablebaru");
           if (response['isSuccess']==true) {
             console.log('All products saved successfully',response);
             this.closeModal();
             this.showsuccessToast()
             this.datatableawal()
-            this.newtable = null;
+            // this.newtable = null;
+            
+            
+            
             
           } else {
             console.error('Failed to save products');
@@ -189,6 +202,71 @@ export class MasterTableComponent implements OnInit {
         }
       );
     }
+  }
+
+
+  //download pdf tabel
+  downloadpdf(imageUrl:string, name: number):void{
+    const nametable = name
+    if (!imageUrl && name) {
+      console.error("QR Table tidak valid!");
+      return;
+    }
+    fetch(imageUrl) // Ambil gambar dari URL
+    .then(response => response.blob()) // Konversi ke Blob
+    .then(blob =>{
+      const img = new Image();
+      img.src = URL.createObjectURL(blob);
+      img.onload = () => {
+        // Buat ukuran 5x7 cm (≈ 198x276 px pada 100 DPI)
+        const width = 198;
+        const height = 276;
+
+        // Buat canvas dengan ukuran 5x7 cm
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+
+        if (ctx) {
+          ctx.drawImage(img, 0, 0, width, height); // Render ulang gambar di canvas
+          // Background putih
+          ctx.fillStyle = "#FFFFFF";
+          ctx.fillRect(0, 0, width, height);
+
+          // Tambahkan QR Code ke canvas
+          ctx.drawImage(img, 10, 40, width - 20, width - 20);
+
+          // Tambahkan teks di atas QR Code
+          ctx.font = "14px Arial";
+          ctx.fillStyle = "#000000";
+          ctx.textAlign = "center";
+          ctx.fillText("Scan QR untuk Menu", width / 2, 20);
+
+          // Tambahkan teks di bawah QR Code
+          ctx.font = "12px Arial";
+          ctx.fillText(`Table ${nametable}`, width / 2, height - 20);
+        }
+
+        // Konversi ke Blob untuk diunduh
+        canvas.toBlob((resizedBlob) => {
+          if (resizedBlob) {
+            const url = URL.createObjectURL(resizedBlob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "QR_Code_5x7cm.png"; // Nama file saat di-download
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a); // Hapus elemen <a> setelah selesai
+            URL.revokeObjectURL(url); // Hapus URL blob dari memori
+          }
+        }, "image/png");
+      };
+    })
+    .catch(error => console.error("Gagal mengunduh gambar:", error));
+
+
+    
   }
 
 
@@ -279,8 +357,10 @@ export class MasterTableComponent implements OnInit {
   // fungsi detail QR
 
   selectedtable: string | undefined = undefined;
-  selecttable(QRtable: string | undefined): void {
+  selectednametable : number = 0
+  selecttable(QRtable: string | undefined, name: number): void {
     this.selectedtable = QRtable;
+    this.selectednametable = name;
     console.log('Selected Category:', this.selectedtable);
   }
   clearselectedtabel(): void{
