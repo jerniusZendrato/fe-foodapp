@@ -17,6 +17,14 @@ export class MasterTableComponent implements OnInit {
 
     this.datatableawal()
     
+    // // ✅ Subscribe ke BehaviorSubject agar tabel otomatis update
+    // this.tableService.table$.subscribe((data) => {
+    //   this.table = data;
+    // });
+
+    // // ✅ Ambil data pertama kali saat komponen di-load
+    // this.tableService.gettable().subscribe();
+    
   }
   constructor(
     private tableService: TableService,
@@ -32,6 +40,7 @@ export class MasterTableComponent implements OnInit {
         (Response: AdminTable[]) => {
           if (Response) {
             this.table = Response
+            console.log("this.table",this.table)
             this.generateQRCodes()
             console.log ("this.generateQRCodes()",this.generateQRCodes())
             console.log("ini category", this.table)
@@ -60,7 +69,6 @@ export class MasterTableComponent implements OnInit {
           qr.make();
           item.qrImage = qr.createDataURL();
       
-  
         }
       } catch (error) {
         console.error('Error generating QR Code', error);
@@ -69,19 +77,6 @@ export class MasterTableComponent implements OnInit {
     console.log('Updated Table Data:', this.table); // Debug untuk memastikan QR Code sudah diperbarui
   }
 
-
-
-
-
-  // isSecondCheckboxDisabled = true;
-  // editstatusproduct(event:Event):void{
-  //   const isChecked = (event.target as HTMLInputElement).checked;
-  //   this.isSecondCheckboxDisabled = !isChecked;
-  //   if (!isChecked) {
-  //     this.cekstatus();  // Menjalankan fungsi cekstatus jika checkbox unchecked
-  //     console.log("cek kalau sudah uncheck")
-  //   }
-  // }
 
   originalTable: AdminTable[] = [];
   datatableawal(){
@@ -92,11 +87,15 @@ export class MasterTableComponent implements OnInit {
 
   private tableToSave: AdminTable[] = []
   buttonsavetable() :void{
-    this.tableToSave = JSON.parse(JSON.stringify(this.allTable));
+    this.tableToSave = JSON.parse(JSON.stringify(this.changedTable));
     
+    const tablesToSave = this.tableToSave.map(table => ({
+      id: table.id,
+      activated: table.isActivated // Sesuaikan dengan properti yang benar
+    }));
 
     this.loaderService.show(); 
-    this.tableService.saveTable(this.tableToSave).subscribe(
+    this.tableService.saveTable(tablesToSave).subscribe(
       (response) => {
         if (response['isSuccess']==true) {
           console.log('All products saved successfully',response);
@@ -124,6 +123,75 @@ export class MasterTableComponent implements OnInit {
   }
 
 
+  // add table
+
+  // variable berisi nilai dari 1 sampai 99
+  selectedTable: number[] = Array.from({ length: 99 }, (_, i) => i + 1);
+
+  // nomor table yang aktif
+  notableaktif: number[] = [];
+
+  // nomor table yang bisa di aktifkan
+  notableready: number[] = [];
+
+  // mengecek table yang masih tersedia untuk ditambah
+  ceknotable():void{
+
+    // Filter hanya yang memiliki `name` bertipe number
+    this.notableaktif = this.table
+        .filter(t => typeof t.name === "number") // Pastikan name adalah angka
+        .map(t => t.name);
+      
+    console.log("ini this.notableaktif", this.table.filter(t => typeof t.name === "number") // Pastikan name adalah angka
+    .map(t => t.name))
+    console.log("selectedTable",this.selectedTable)
+
+    // Cari angka yang belum ada di notableAktif dan tambahkan ke notableReady
+    this.notableready = this.selectedTable.filter(num => !this.notableaktif.includes(num));
+    
+  }
+
+  // tampungan untuk menyimpan data yang dipilih
+  newtable: number | null = null;
+
+  addtable(): void{
+    this.loaderService.show(); 
+    const toadd ={
+      "name": this.newtable,
+     }
+     console.log("toadd toadd",JSON.stringify(toadd))
+    if(toadd){
+      this.tableService.addTable(toadd).subscribe(
+        (response) => {
+          if (response['isSuccess']==true) {
+            console.log('All products saved successfully',response);
+            this.closeModal();
+            this.showsuccessToast()
+            this.datatableawal()
+            this.newtable = null;
+            
+          } else {
+            console.error('Failed to save products');
+            this.refreshTable()
+            this.closeModal();
+            this.showErrorToast()
+          }
+          // this.datatableawal()
+          this.loaderService.hideWithDelay(2000);
+        },
+        (error) => {
+          console.error('Error saving products:', error);
+          this.refreshTable()
+          this.closeModal();
+          this.showErrorToast()
+          // this.datatableawal()
+          this.loaderService.hideWithDelay(2000);
+        }
+      );
+    }
+  }
+
+
 
   public allTable: AdminTable[] = []
   changedTable: any[] = [];
@@ -135,7 +203,7 @@ export class MasterTableComponent implements OnInit {
       return;
     }
     this.changedTable = this.allTable.filter((table, index) => {
-      return table.activated !== this.originalTable[index].activated; // Bandingkan status
+      return table.isActivated !== this.originalTable[index].isActivated; // Bandingkan status
   
     });
 
