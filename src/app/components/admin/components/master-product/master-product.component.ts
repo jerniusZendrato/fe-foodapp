@@ -278,6 +278,8 @@ export class MasterProductComponent implements OnInit, CanComponentDeactivate{
               ...category,
               checked: false // Set default checked ke `false`
             }));
+            this.categories = this.categories.filter(c => c.name && c.name !== "None");
+
 
             this.onecategory = this.category[0]['name']
             console.log("ini this.category",this.categories)

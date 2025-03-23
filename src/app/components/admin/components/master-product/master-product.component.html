@@ -184,7 +184,7 @@
   
         <tbody *ngFor="let category of groupedProducts | keyvalue" >
           <!-- <h6 style="margin-left: 10px;">{{ category.key }}</h6> -->
-          <tr *ngFor="let products of category.value | filter:searchText:'name':'category':'price':'description'" [class.disabled]="products.category === 'un-category'">
+          <tr *ngFor="let products of category.value | filter:searchText:'name':'category':'price':'description'" [class.disabled]="products.category === ''">
             <td>
               {{ products.name }}
             </td>
@@ -304,10 +304,11 @@
                               <option *ngIf="productToEdit" [ngValue]="productToEdit.category" disabled style="background-color: rgb(216, 216, 216);" selected>
                                 {{ productToEdit.category }}
                               </option>
-                              <option *ngFor="let category of categories"
-                              [value]="category.id">
-                          {{ category.name }}
-                        </option>
+                              <ng-container *ngFor="let category of categories">
+                                <option *ngIf="category.name && category.name !== 'None'" [value]="category.id">
+                                  {{ category.name }}
+                                </option>
+                              </ng-container>
                       </select>
                     </div>
                     

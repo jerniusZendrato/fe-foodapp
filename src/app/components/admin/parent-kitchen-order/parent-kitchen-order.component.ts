@@ -1,3 +1,5 @@
+
+
 import { Component } from '@angular/core';
 import { LoaderService } from '../services/loader.service';
 
@@ -7,6 +9,7 @@ import { LoaderService } from '../services/loader.service';
   styleUrls: ['./parent-kitchen-order.component.css']
 })
 export class ParentKitchenOrderComponent {
+  
     isLoading = false;
   
     constructor(private loaderService: LoaderService) {}

@@ -254,7 +254,7 @@ export class MasterTableComponent implements OnInit {
             const url = URL.createObjectURL(resizedBlob);
             const a = document.createElement("a");
             a.href = url;
-            a.download = "QR_Code_5x7cm.png"; // Nama file saat di-download
+            a.download = `QR_Code_Table_${nametable}_5x7cm.png`; // Nama file saat di-download
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a); // Hapus elemen <a> setelah selesai

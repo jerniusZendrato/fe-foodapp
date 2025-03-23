@@ -58,6 +58,8 @@
         <tbody>
           <!-- <h6 style="margin-left: 10px;">{{ category.key }}</h6> -->
           <tr *ngFor="let category of category | filter:searchText:'name':'quantity'">
+            <ng-container *ngIf="category.name && category.name !== ''">
+
             <td id="category-name" (click)="selectCategory(category.name, category.id)">
               {{ category.name }}
             </td>
@@ -83,6 +85,7 @@
                 </div>
               </div>
             </td>
+          </ng-container>
           </tr>
         </tbody>
       </table>
