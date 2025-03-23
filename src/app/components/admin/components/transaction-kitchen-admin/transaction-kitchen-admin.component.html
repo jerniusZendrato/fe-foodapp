@@ -1,4 +1,4 @@
-<div style="width: 100% ; background-color: #414141; box-sizing: border-box;" >
+<div style="width: 100% ; background-color: #ffffff; box-sizing: border-box;" >
     <div
       style="
         display: flex;
@@ -7,7 +7,7 @@
         top: 0;
         z-index: 2;
         padding: 0;
-        background-color: #414141;
+        background-color: #ffffff;
       "
     >
       <div id="header-menu">
@@ -18,9 +18,12 @@
             <li class="breadcrumb-item active" aria-current="page">Kitchen Admin</li>
           </ol>
         </nav>
-        <div routerLink="/admin/cassier-admin" style="border: 2px solid rgba(0, 0, 0, 0.324);border-radius: 8px; display: flex; align-items: center; padding: 0 10px; cursor: pointer;">
-          <i class="fa-solid fa-arrow-left"></i>
-          <a style="font-size: 18px; padding: 4px 8px;" >Back</a>
+        <div>
+          <i style="font-size: large;" class="fa-solid fa-users">  {{totalorderprocess}}</i>
+        </div>
+        <div routerLink="/admin" style="border-radius: 8px; display: flex; align-items: center; padding: 0 10px; cursor: pointer; color: #FF0000;">
+          
+          <a style="font-size: 18px; padding: 4px 8px;" ><i class="fa-solid fa-house"></i> Back</a>
       </div>
 
       </div>
@@ -28,29 +31,31 @@
 
     <div id="isi-menu">
       
-        <div id="card-menu" style="margin: 20px; display: flex; flex-direction: row;" >
-          <div  style="width: 350px; margin-bottom: 20px; flex-shrink: 0; margin: 0 10px;" *ngFor="let proses of orderprocess">
-            <div class="card shadow ">
-              <div style="  margin-top: 10px; padding: 0 10px; background-color: #f9f9f9;">
-                <div class="mb-3 row">
-                  <label class="col-sm-6 col-form-label">Customer Name:</label>
-                  <div class="col-sm-6">
-                      <p class="form-control-plaintext">{{ proses.customerName }}</p>
-                  </div>
+        <div id="card-menu" style="margin: 20px;   display: flex; flex-direction: row;" >
+          <div  style="width: 350px;   flex-shrink: 0; margin: 0 10px;" *ngFor="let proses of orderprocess; let i = index">
+            <div class="card shadow"  style="border: 1px solid #929292; background-color: white; border-radius: 20px; overflow: hidden;">
+
+              <div style="background-color: #FF0000; color: white; display: flex; flex-direction: row; align-items: center; padding: 0 8px;">
+                <div style="width: 80%; height: 100%;">
+                <div style="display: flex; flex-direction: row; align-items: center; ">
+                  <label style="width: 100%; align-items: center;"> <b>Queue : {{ i + 1 }} </b> </label>
                 </div>
-              
-                <div class="mb-3 row">
-                    <label class="col-sm-6 col-form-label">Table Number:</label>
-                    <div class="col-sm-6">
-                        <p class="form-control-plaintext">{{ proses.tableName }}</p>
-                    </div>
+                <div style="display: flex; flex-direction: column; ">
+                   <p  style="width: 100%; align-items: center; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" >{{ proses.customerName }}</p> 
+                   <p style="width: 100%; align-items: center; margin: 0;" >{{proses.createdAt| date:"HH:mm"}}  ({{proses.type}})</p> 
                 </div>
-              <div >
-              <table class="table table-borderless table-sm " >
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; margin: 0; padding: 6px 2px;">
+                  <p style="margin: 0; font-size: 16px;">TABLE</p>
+                  <h1 style="margin: 0;">{{ proses.tableName }}</h1>
+                </div>
+              </div>
+              <div>
+                <table class="table table-borderless table-sm " >
                   <thead style="position: sticky; top: 0;" >
                       <tr >
-                          <th style="background-color: #f9f9f9;">Item Order</th>
-                          <th style="background-color: #f9f9f9;">Quantity</th>
+                          <th style="background-color: #818181; color: white;">Item Order</th>
+                          <th style="background-color: #818181; color: white;">Quantity</th>
                       </tr>
                   </thead>
                   <tbody >
@@ -65,10 +70,12 @@
                   </tbody>
                 </table>
               </div>
+
               <img class="card-img-top"  >
-              <div class="card-body text-end">
-                  <button  type="button" class="btn btn-success" (click)="patchorderstatus(proses.id)">Done</button>
+              <div class="card-body text-end" style="display: flex; justify-content: center; margin-top: 10px;">
+                  <button  type="button" class="btn btn-success" style="width: 70%; border-radius: 30px; font-size: 16px;" (click)="patchorderstatus(proses.id)">Done</button>
               </div>
+            
             </div>
           </div>
 

@@ -60,7 +60,7 @@
               <th scope="col">NAME</th>
               <th scope="col">TABLE</th>
               <th scope="col">ORDERAN TYPE</th>
-              <th scope="col">DATE</th>
+              <th scope="col">TIME</th>
               <th scope="col">PAYMENT</th>
               <th scope="col">DETAIL</th>
             </tr>
@@ -81,7 +81,7 @@
                 {{dataorder.type}}
               </td>
               <td>
-                {{dataorder.createdAt| date:"yyyy-MM-dd"}}
+                {{dataorder.createdAt| date:"HH:mm:dd"}}
               </td>
               <td>
                 <p *ngIf="dataorder.paymentStatus?.toLowerCase() == 'paid'" style="margin: 2px 6px; border-radius: 5px; background-color: #A2FF99;">{{dataorder.paymentStatus}}</p>
