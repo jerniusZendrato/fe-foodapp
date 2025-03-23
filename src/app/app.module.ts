@@ -35,7 +35,7 @@ import { OrderHistoryDetailComponent } from './fe-customer/pages/order-history-d
 import { SpinnerComponentComponent } from './fe-customer/shared/components/spinner-component/spinner-component.component';
 import { NotFoundComponent } from './fe-customer/pages/not-found/not-found.component';
 import { FilterPipe } from './filter.pipe';
-
+import { ParentKitchenOrderComponent } from './components/admin/parent-kitchen-order/parent-kitchen-order.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -69,6 +69,7 @@ import { FilterPipe } from './filter.pipe';
     SpinnerComponentComponent,
     NotFoundComponent,
     FilterPipe,
+    ParentKitchenOrderComponent
     
     
   ],

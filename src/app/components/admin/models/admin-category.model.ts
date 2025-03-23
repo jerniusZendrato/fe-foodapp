@@ -16,13 +16,22 @@ export interface AdminCategoryselect {
 
 }
 
-
+// patch_______________________________
 export interface patchCategory{
-    category: menu[];
+    category: menupatch[];
 }
 
-export interface menu {
+export interface menupatch {
     id:string;
     isActivated: boolean;
 
 }
+// ____________________________________
+
+// put________________________________
+
+export interface putCategory{
+    name: string;
+}
+
+

@@ -46,10 +46,16 @@ export class ProductService {
   }
 
 
-  saveProducts(products: AdminProduct[]): Observable<any> {
+  savestatusProducts(products: AdminProduct[]): Observable<any> {
     if (products && products.length > 0) {
-      const dataToSend = products;  // Data produk yang akan dikirimkan langsung
-      return this.http.put< {isSuccess: boolean} >(`${environment.API_URL}/product`, dataToSend);
+      const dataToSend = {
+        "product": products.map(p => ({
+          "id": p.id,
+          "isActivated": p.isActivated
+        }))
+      }
+      console.log("dataToSend",dataToSend)
+      return this.http.patch< {isSuccess: boolean} >(`${environment.API_URL}/product/status`, dataToSend);
     } else {
       return new Observable((observer) => {
         observer.error('No valid products to save');
@@ -80,18 +86,12 @@ export class ProductService {
 
 
 
-  updateroduct(product: AdminProduct, image: File,id:string): Observable<any> {
+  updateroduct(product: AdminProduct, image: File|null, id:string): Observable<any> {
     const formData: FormData = new FormData();
     console.log("ini formData",product)
     const idproduct = encodeURIComponent(id);
-    if (product.id) {
-      formData.append('id', product.id);
-    }
     if (product.name) {
       formData.append('name', product.name);
-    }
-    if (image) {
-      formData.append('urlImage', image, image.name);
     }
     if (product.price !== undefined) {
       formData.append('price', product.price.toString());
@@ -99,14 +99,23 @@ export class ProductService {
     if (product.description) {
       formData.append('description', product.description);
     }
-    if (product.category) {
-      formData.append('categoryId', product.category.toString());
-    }
     if (product.categoryId) {
       formData.append('categoryId', product.categoryId.toString());
     }
+    if (image) {
+      formData.append('image', image, image.name);
+    }else{
+      formData.append('image', "null"); 
+    }
+    if(product.isActivated !== null)
+      formData.append('isActivated', product.isActivated.toString()); 
     console.log("ini formData",formData)
     
     return this.http.put<any>(`${this.apiUrl}/${idproduct}`,formData );
+  }
+
+
+  deleteProduct(productId: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${productId}`);
   }
 }

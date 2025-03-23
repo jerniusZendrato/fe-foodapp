@@ -28,9 +28,8 @@ export class CategoryService {
   }
 
   saveCategory(category:any): Observable<any>{
-    if(category && category.length > 0){
-      const dataToSend = category;
-      return this.http.post< {isSuccess: boolean} >(`${environment.API_URL}/category`, dataToSend);
+    if(category){
+      return this.http.post<any>(`${environment.API_URL}/category`, category);
     }else{
       return new Observable((observer) => {
         observer.error('No valid category to save');
@@ -52,6 +51,17 @@ export class CategoryService {
   deleteCategory(categoryId: string): Observable<{ isSuccess: boolean }> {
     if(categoryId){
       return this.http.delete<{ isSuccess: boolean }>(`${environment.API_URL}/category/${categoryId}`);
+    }else {
+      return new Observable((observer) => {
+        observer.error('Failed to delete the category.');
+      });
+    }
+  }
+  putCategory(id:string, name:string): Observable<{ isSuccess: boolean }> {
+    const newname = {"name": name}
+    if(newname){
+      console.log(newname)
+      return this.http.put<{ isSuccess: boolean }>(`${environment.API_URL}/category/${id}`,newname);
     }else {
       return new Observable((observer) => {
         observer.error('Failed to delete the category.');

@@ -30,13 +30,13 @@
       <div id="fileter_kategory" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus"
         data-bs-content="Disabled popover">
         <div style="display: flex; flex-direction: row; align-items: center">
-          <form class="d-flex" role="search" style="margin-left: 30px">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-          </form>
+          <div style="display: flex; flex-direction: row; align-items: center">
+            <input style="margin-left: 30px" type="text" class="form-control" [(ngModel)]="searchText" placeholder="Search" aria-describedby="search-icon">
+        </div>
         </div>
 
         <div style="display: flex; flex-direction: row">
-          <a id="add-button" data-bs-toggle="modal" data-bs-target="#addrpoductModal" (click)="modaladdcategory()"><i
+          <a id="add-button" data-bs-toggle="modal"  data-bs-target="#add_kategory_baru"><i
               class="fa-solid fa-plus"></i> Add</a>
         </div>
       </div>
@@ -57,8 +57,10 @@
 
         <tbody>
           <!-- <h6 style="margin-left: 10px;">{{ category.key }}</h6> -->
-          <tr *ngFor="let category of category">
-            <td id="category-name" (click)="selectCategory(category.name)">
+          <tr *ngFor="let category of category | filter:searchText:'name':'quantity'">
+            <ng-container *ngIf="category.name && category.name !== ''">
+
+            <td id="category-name" (click)="selectCategory(category.name, category.id)">
               {{ category.name }}
             </td>
 
@@ -83,6 +85,7 @@
                 </div>
               </div>
             </td>
+          </ng-container>
           </tr>
         </tbody>
       </table>
@@ -129,14 +132,14 @@
       <div *ngIf="statuschagecategory=='2'">
         <input class="form-control" type="text" value="{{ selectedCategory }}" aria-label="Disabled input example"
           disabled readonly />
-        <input style="margin-top: 10px;" type="text" class="form-control" id="exampleFormControlInput1"
+        <input style="margin-top: 10px;" type="text" class="form-control"  id="exampleFormControlInput1" [(ngModel)]="updatecategorynameSave"
           placeholder="Insert change name" />
         <div style="position: absolute; bottom: 15%; right: 15%">
           <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal"
             (click)="clearselectedCategory()">
             Cancel
           </button>
-          <button type="button" style="margin-left: 5px" class="btn btn-primary btn-sm">
+          <button type="button" style="margin-left: 5px" class="btn btn-primary btn-sm" (click)="update_category()">
             Save changes
           </button>
         </div>

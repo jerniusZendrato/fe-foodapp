@@ -49,11 +49,9 @@ export class MasterProductComponent implements OnInit, CanComponentDeactivate{
       id: ['', Validators.required],
       name: ['', Validators.required],
       price: ['', Validators.required],
-      image: [''],
       description: [''],
-      category: [null, Validators.required],
       categoryId: [null, Validators.required],
-      isActivated: [true],
+      isActivated: [],
     });
     
   }
@@ -118,11 +116,10 @@ export class MasterProductComponent implements OnInit, CanComponentDeactivate{
       this.producteditForm.patchValue({
         id: this.productToEdit.id,
         name: this.productToEdit.name,
-        image: this.productToEdit.urlImage,
         price: this.productToEdit.price,
-        category: this.productToEdit.category,
         categoryId: this.productToEdit.categoryId,
-        description: this.productToEdit.description
+        description: this.productToEdit.description,
+        isActivated :this.productToEdit.isActivated
       });
     }
     
@@ -235,11 +232,12 @@ export class MasterProductComponent implements OnInit, CanComponentDeactivate{
 // button jika ada perubahan status
   buttonsaveproduct() :void{
     // this.productToSave = [...this.allProducts];
-    this.productToSave = JSON.parse(JSON.stringify(this.allProducts));
-    console.log(this.productToSave)
+    this.productToSave = JSON.parse(JSON.stringify(this.changedProducts));
+    // this.productToSave = JSON.parse(JSON.stringify(this.allProducts));
+    console.log("productToSaveproductToSave", this.productToSave)
 
     this.loaderService.show(); 
-    this.productservice.saveProducts(this.productToSave).subscribe(
+    this.productservice.savestatusProducts(this.productToSave).subscribe(
       (response) => {
         if (response['isSuccess']==true) {
           console.log('All products saved successfully',response);
@@ -280,6 +278,8 @@ export class MasterProductComponent implements OnInit, CanComponentDeactivate{
               ...category,
               checked: false // Set default checked ke `false`
             }));
+            this.categories = this.categories.filter(c => c.name && c.name !== "None");
+
 
             this.onecategory = this.category[0]['name']
             console.log("ini this.category",this.categories)
@@ -388,35 +388,46 @@ groupProductsByCategory(): void {
 // update data product--------------------------------------------------
   updateproduct(id:string){
     this.loaderService.show();
-
     if (this.producteditForm.valid) {
+      let isActivated = this.producteditForm.get('isActivated')?.value;
+      if (!isActivated) {
+        isActivated = this.productToEdit?.isActivated;
+      }
+
       const updateproduct: updateAdminProduct = {
         id: this.producteditForm.get('id')?.value,
         name: this.producteditForm.get('name')?.value,
         price: this.producteditForm.get('price')?.value,
         description: this.producteditForm.get('description')?.value,
-        category: this.producteditForm.get('category')?.value?.name,
-        categoryId: this.producteditForm.get('category')?.value?.id,
-        isActivated: this.producteditForm.get('isActivated')?.value,
-      };
-      console.log("updateproduct",updateproduct)
-      if (this.image){
-        this.productservice.updateroduct(updateproduct, this.image, id).subscribe(
-          (savedProduct) => {
-            window.location.reload();
-            this.showsuccessToast()
-          },
-          (error) => {
-            console.log('error :>> ', error);
-            this.showErrorToast()
-          }
-        );
-        this.loaderService.hideWithDelay(2000);
-      } else {
-        this.showErrorToast()
-        console.log("no image")
-        this.loaderService.hideWithDelay(2000);
+        categoryId: this.producteditForm.get('categoryId')?.value,
+        isActivated: isActivated,
+
       }
+      console.log("updateproduct",updateproduct)
+      // if (this.image ){
+      this.productservice.updateroduct(updateproduct, this.image, id).subscribe(
+        (isSuccess) => {
+          this.showsuccessToast()
+          this.image = null
+          this.loaderService.hideWithDelay(2000);
+          this.loadproducts()
+          this.groupProductsByCategory()  
+        },
+        (error) => {
+          console.log('error :>> ', error);
+          this.showErrorToast()
+          this.image = null
+          this.loaderService.hideWithDelay(2000);
+        }
+        );
+        // this.loaderService.hideWithDelay(2000);
+        // this.image = null
+      // } else {
+      //   this.showErrorToast()
+      //   console.log("no image")
+      //   this.loaderService.hideWithDelay(2000);
+      //   this.image = null
+      // }
     }else {
       this.showErrorToast()
       console.log("producteditForm invalid")
@@ -452,9 +463,11 @@ groupProductsByCategory(): void {
           }
         );
         this.loaderService.hideWithDelay(2000);
+        this.image = null
       } else {
         this.showErrorToast()
         this.loaderService.hideWithDelay(2000);
+        this.image = null
       }
     } else {
       this.showErrorToast()
@@ -478,6 +491,38 @@ groupProductsByCategory(): void {
     } else {
       console.log('Image URL is invalid or empty:', imageUrl);
     }
+  }
+
+  // hapus product___________________________________________________
+
+  notifdeleteprodcut(name:string): boolean{
+    return confirm(`Are you sure you want to delete "${name}"? This action cannot be undone.`);
+  }
+  deleteproduct(idproduct: string, namaproduct:string){
+    // this.notifdeleteprodcut(namaproduct)
+    if (this.notifdeleteprodcut(namaproduct)){
+      this.loaderService.show();
+      this.productservice.deleteProduct(idproduct).subscribe({
+        next: () => {
+          this.showsuccessToast()
+          console.log(`${idproduct} has been deleted.`);
+          this.loaderService.hideWithDelay(500);
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+          // Tambahkan kode untuk refresh data atau update UI
+        },
+        
+        error: (err) => {
+          console.error('Error deleting product:', err);
+          this.showErrorToast()
+          this.loaderService.hideWithDelay(500);
+        }
+        
+      });  
+    }
+    
+
   }
 
 

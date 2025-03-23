@@ -17,18 +17,21 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 0 30px;
+    /* padding: 0 30px; */
+    /* border-radius: 20px 20px 20px 0; */
 }
 
 
 #isi-menu{
     padding: 20px 0;
-    margin: 6px 10px;
+    /* margin: 6px 10px; */
     background-color: #f9f9f9;
     box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.2);
     /* border-radius: 0 0 30px 30px; */
     border-radius:  20px;
     align-items: center;
-    height: 80vh;
+    overflow-y: scroll;
+    overflow-x: scroll;
+    height: 90vh;
 
 }

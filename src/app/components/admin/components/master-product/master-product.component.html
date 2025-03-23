@@ -35,13 +35,7 @@
           data-bs-content="Disabled popover"
         >
           <div style="display: flex; flex-direction: row; align-items: center">
-            <!-- menu filter pertama -->
-            <!-- <i
-            class="fa-solid fa-filter"
-            data-bs-toggle="modal"
-            data-bs-target="#modalselectbycategory"
-            style="margin-right: 10px"
-          ></i> -->
+            
   
             <!-- menu filter ke dua -->
             <div id="menu-filter">
@@ -188,9 +182,9 @@
           </tr>
         </thead>
   
-        <tbody *ngFor="let category of groupedProducts | keyvalue">
+        <tbody *ngFor="let category of groupedProducts | keyvalue" >
           <!-- <h6 style="margin-left: 10px;">{{ category.key }}</h6> -->
-          <tr *ngFor="let products of category.value | filter:searchText:'name':'category':'price':'description'">
+          <tr *ngFor="let products of category.value | filter:searchText:'name':'category':'price':'description'" [class.disabled]="products.category === ''">
             <td>
               {{ products.name }}
             </td>
@@ -215,7 +209,7 @@
             </td>
   
             <td>
-              <div
+              <div 
                 style="
                   display: flex;
                   flex-direction: row;
@@ -224,10 +218,11 @@
                   margin: 0 20px;
                 "
               >
-              <div style=" background-color: rgba(0, 0, 255, 0.77); padding: 1px 0 1px 10px; border-radius: 5px;">
+              <div style=" background-color: rgba(0, 0, 255, 0.77); padding: 1px 0 1px 10px; border-radius: 5px;" >
   
-                <div class="form-check form-switch" style="margin: 0;  font-size: 16px;" >
+                <div class="form-check form-switch" style="margin: 0;  font-size: 16px;"  >
                   <input
+                  
                   class="form-check-input"
                   type="checkbox"
                   role="switch"
@@ -237,23 +232,21 @@
               </div>
   
                 <div
+                id="button_edit"
                   (click)="onEditProduct(products)"
                   data-bs-toggle="modal"
                   data-bs-target="#exampleModal"
                   style="margin: 0; padding: 0"
                 >
-                  <!-- <i
-                    style=" font-size: 20px; color: green; cursor: pointer"
-                    class="fa-solid fa-pen-to-square"
-                  ></i> -->
-                  <i
+                  <i  
                     style="background-color: green; padding: 5px 10px; border-radius: 5px; font-size: 16px; color: rgb(255, 255, 255); cursor: pointer"
                     class="fa-solid fa-pen-to-square"
                   ></i>
                 </div>
                 <div style="color: #f80000; ; margin: 0">
                   <i style="background-color: #f80000; padding: 5px 10px; border-radius: 5px; font-size: 16px; color: rgb(255, 255, 255); cursor: pointer"
-                  class="fa-solid fa-trash"></i>
+                  class="fa-solid fa-trash"
+                  (click)="deleteproduct(products.id, products.name)"></i>
                   <!-- <i class="fa-solid fa-trash"></i> -->
                 </div>
               </div>
@@ -306,15 +299,16 @@
                       <select class="form-control"
                               id="productCategory"
                               name="category"
-                              formControlName="category"
+                              formControlName="categoryId"
                               required>
                               <option *ngIf="productToEdit" [ngValue]="productToEdit.category" disabled style="background-color: rgb(216, 216, 216);" selected>
                                 {{ productToEdit.category }}
                               </option>
-                              <option *ngFor="let category of categories"
-                              [ngValue]="category">
-                          {{ category.name }}
-                        </option>
+                              <ng-container *ngFor="let category of categories">
+                                <option *ngIf="category.name && category.name !== 'None'" [value]="category.id">
+                                  {{ category.name }}
+                                </option>
+                              </ng-container>
                       </select>
                     </div>
                     

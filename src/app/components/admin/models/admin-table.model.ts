@@ -3,5 +3,5 @@ export interface AdminTable {
     name: number;
     urlWelcomePage:string;
     qrImage?: string;
-    activated: boolean;
+    isActivated: boolean;
 }

@@ -21,6 +21,7 @@ import { TransactionKitchenAdminComponent } from '../components/admin/components
 import { TransactionHistoryComponent } from '../components/admin/components/transaction-history/transaction-history.component';
 import { NotFoundComponent } from '../fe-customer/pages/not-found/not-found.component';
 import { NavbarComponent } from '../fe-customer/shared/components/navbar/navbar.component';
+import { ParentKitchenOrderComponent } from '../components/admin/parent-kitchen-order/parent-kitchen-order.component';
 
 
 const feCustomerChildren: Routes = [
@@ -93,6 +94,18 @@ const routes: Routes = [
       },
     ],
   },
+  {
+    path: 'kitchen',
+    component: ParentKitchenOrderComponent,
+    children: [
+      {
+        path: '',
+        component: TransactionKitchenAdminComponent,
+        canDeactivate: [UnsavedChangesVerifikasiService],
+      },
+    ],
+  },
+  
   {
     path: '',
     component: FeCustomerComponent,

@@ -1,7 +1,7 @@
 import {  Component, HostListener, OnInit } from '@angular/core';
 import { CategoryService } from '../../services/category.service';
 import { LoaderService } from '../../services/loader.service';
-import { AdminCategory, patchCategory } from '../../models/admin-category.model';
+import { AdminCategory, patchCategory, putCategory } from '../../models/admin-category.model';
 
 @Component({
   selector: 'app-master-category',
@@ -135,7 +135,7 @@ export class MasterCategoryComponent implements OnInit {
         (response)=>{
           if (response['isSuccess']==true) { 
             this.refreshTable()
-            this.showErrorToast()
+            this.showsuccessToast()
           }
           else {
             console.error('Failed to save products');
@@ -158,12 +158,14 @@ export class MasterCategoryComponent implements OnInit {
   }
 
 //----------------------menu add------------------
-  modaladdcategory():void{
-    const modalElement = document.getElementById('add_kategory_baru');
-    const changeModal = new (window as any).bootstrap.Modal(modalElement);
-    changeModal.show();
-  }
+  // modaladdcategory():void{
+  //   const modalElement = document.getElementById('add_kategory_baru');
+  //   const changeModal = new (window as any).bootstrap.Modal(modalElement);
+  //   changeModal.show();
+  // }
   // newCategoryName: string = ''; // Variabel untuk menyimpan input
+
+
   newCategoryName:string = ''
 
   addcategory():void{
@@ -251,10 +253,12 @@ export class MasterCategoryComponent implements OnInit {
 
   // fungsi select category
   selectedCategory: string | null = null;
+  selectedidCategory: string | null = null;
   statuschagecategory: string | null = null;
 
-  selectCategory(categoryName: string): void {
+  selectCategory(categoryName: string, id:string): void {
     this.selectedCategory = categoryName;
+    this.selectedidCategory = id;
     this.statuschagecategory = '1';
     console.log('Selected Category:', this.selectedCategory);
   }
@@ -266,6 +270,36 @@ export class MasterCategoryComponent implements OnInit {
   selectchangeCategory(): void{
     this.statuschagecategory = '2';
   }
+
+  updatecategoryidSave : string|null = null
+  updatecategorynameSave : string =''
+  
+
+  update_category ():void{
+    this.loaderService.show(); 
+    this.updatecategoryidSave =  this.selectedidCategory
+    if(this.updatecategoryidSave && this.updatecategorynameSave){
+      this.categoryservice.putCategory(this.updatecategoryidSave, this.updatecategorynameSave ).subscribe({
+        next: (response) => {
+          console.log('Update successful:', response);
+          this.refreshTable()
+          this.showsuccessToast()
+          this.loaderService.hideWithDelay(2000);
+          this.updatecategorynameSave = ''
+          // Tambahkan logika jika perlu
+        },
+        error: (error) => {
+          this.refreshTable()
+          this.showErrorToast()
+          console.error('Update failed:', error);
+          this.loaderService.hideWithDelay(2000);
+          // Tambahkan pesan error jika diperlukan
+        }}
+    );
+  }
+    
+  }
+  searchText: string = '';
 
 
 
