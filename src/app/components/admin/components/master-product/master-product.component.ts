@@ -42,14 +42,14 @@ export class MasterProductComponent implements OnInit, CanComponentDeactivate{
       category: [null, Validators.required],
       price: ['', Validators.required],
       image: [''],
-      description: [''],
+      description: ['',  Validators.required],
       isActivated: [true],
     });
     this.producteditForm = this.formBuilder.group({
       id: ['', Validators.required],
       name: ['', Validators.required],
       price: ['', Validators.required],
-      description: [''],
+      description: ['',  Validators.required],
       categoryId: [null, Validators.required],
       isActivated: [],
     });
@@ -411,7 +411,13 @@ groupProductsByCategory(): void {
           this.image = null
           this.loaderService.hideWithDelay(2000);
           this.loadproducts()
-          this.groupProductsByCategory()  
+          this.groupProductsByCategory()
+
+          // menutup model jika data benar
+          const modal = (window as any).bootstrap.Modal.getInstance(
+            document.getElementById('modaleditproduct')
+          );
+          modal.hide(); 
         },
         (error) => {
           console.log('error :>> ', error);
@@ -429,9 +435,10 @@ groupProductsByCategory(): void {
       //   this.image = null
       // }
     }else {
-      this.showErrorToast()
-      console.log("producteditForm invalid")
-      this.loaderService.hideWithDelay(2000);
+      this.loaderService.hideWithDelay(500);
+      setTimeout(() => {
+      confirm ("You need to complete all required fields before submitting.!")
+    }, 600);
     }
     
   }
@@ -456,6 +463,10 @@ groupProductsByCategory(): void {
           (savedProduct) => {
             // window.location.reload();
             this.showsuccessToast()
+            const modal = (window as any).bootstrap.Modal.getInstance(
+              document.getElementById('addrpoductModal')
+            );
+            modal.hide(); 
           },
           (error) => {
             console.log('error :>> ', error);
@@ -470,8 +481,11 @@ groupProductsByCategory(): void {
         this.image = null
       }
     } else {
-      this.showErrorToast()
-      this.loaderService.hideWithDelay(2000);
+      // this.showErrorToast()
+      this.loaderService.hideWithDelay(500);
+      setTimeout(() => {
+      confirm ("You need to complete all required fields before submitting.!")
+    }, 600);
     }
   }
 
