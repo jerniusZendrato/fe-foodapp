@@ -15,7 +15,7 @@ import { Modal } from 'bootstrap';
             <ng-content></ng-content>
           </div>
 
-          <div class="modal-footer justify-content-center">
+          <div class="modal-footer justify-content-around">
             <button 
               [ngClass]="cancelButtonClass || 'btn btn-secondary'"
               (click)="onCancel()">
