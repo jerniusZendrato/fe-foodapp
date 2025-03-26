@@ -1,57 +1,70 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, ElementRef, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Modal } from 'bootstrap';
 
 @Component({
   selector: 'app-modal',
-  template: ` <div
-    class="modal fade"
-    id="exampleModal"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">{{ title }}</h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
-          {{ text }}
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
-            {{ leftButtonLabel }}
-          </button>
-          <button
-            type="button"
-            class="btn btn-primary"
-            (click)="onRightButtonClick()"
-          >
-            {{ rightButtonLabel }}
-          </button>
+  template: `
+    <div #modalElement class="modal fade" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog" [ngClass]="position === 'center' ? 'modal-dialog-centered' : ''">
+        <div class="modal-content text-center">  
+          <div class="modal-header">
+            <h5 [ngClass]="titleColor || 'text-dark'" class="fw-bold modal-title w-100">{{ title }}</h5>
+          </div>
+
+          <div class="modal-body">
+            <ng-content></ng-content>
+          </div>
+
+          <div class="modal-footer justify-content-center">
+            <button 
+              [ngClass]="cancelButtonClass || 'btn btn-secondary'"
+              (click)="onCancel()">
+              {{ cancelButtonText }}
+            </button>
+            <button 
+              [ngClass]="confirmButtonClass || 'btn btn-primary'"
+              (click)="onConfirm()">
+              {{ confirmButtonText }}
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>`,
-  styleUrls: ['./modal.component.css'],
+  `
 })
 export class ModalComponent {
-  @Input() title: string = '';
-  @Input() text: string = '';
-  @Input() leftButtonLabel: string = 'Cancel';
-  @Input() rightButtonLabel: string = 'OK';
-  @Output() rightButtonClick = new EventEmitter<void>();
+  @Input() title = '';
+  @Input() titleColor = '';
+  @Input() confirmButtonClass = '';  
+  @Input() cancelButtonClass = '';  
+  @Input() confirmButtonText: string = 'Confirm';  // Default teks tombol "Confirm"
+  @Input() cancelButtonText: string = 'Cancel';    // Default teks tombol "Cancel"
+  @Input() position: 'default' | 'center' = 'default';  // Posisi modal
+  @Output() confirm = new EventEmitter<void>();
+  @Output() cancel = new EventEmitter<void>();
+  
+  @ViewChild('modalElement', { static: true }) modalElement!: ElementRef;
+  private modalInstance!: Modal;
 
-  onRightButtonClick() {
-    this.rightButtonClick.emit();
+  ngAfterViewInit() {
+    this.modalInstance = new Modal(this.modalElement.nativeElement);
+  }
+
+  openModal() {
+    this.modalInstance.show();
+  }
+
+  closeModal() {
+    this.modalInstance.hide();
+  }
+
+  onConfirm() {
+    this.confirm.emit();
+    this.closeModal();
+  }
+
+  onCancel() {
+    this.cancel.emit();
+    this.closeModal();
   }
 }
