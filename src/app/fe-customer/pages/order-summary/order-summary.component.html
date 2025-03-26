@@ -1,189 +1,107 @@
 <app-layout>
-  <div main class="hide-scrollbar-wrapper">
-    <div
-      class="container py-4 hide-scrollbar"
-      style="
-        flex: 1;
-        overflow-y: auto;
-        overflow-x: hidden;
-      "
-    >
-      <!-- Order Header -->
-      <div class="card mb-3 border-0 shadow-sm">
-        <div class="card-body">
-          <div class="d-flex justify-content-between align-items-center mb-3">
-            <h5 class="card-title mb-0">Order Details</h5>
-            <span class="badge bg-success rounded-pill">{{
-              ordered?.type
-            }}</span>
-          </div>
+  <div main class="main-container">
 
-          <div class="d-flex justify-content-between">
-            <p class="text-muted mb-0 small">Order ID</p>
-            <p class="fw-bold mb-0">{{ ordered?.code || ordered?.id }}</p>
-          </div>
+    <div class="text-center">
+      <span class="text-success fw-bold">Order Successful</span>
+    </div>
 
-          <div class="d-flex justify-content-between">
-            <p class="text-muted mb-0 small">Date</p>
-            <p class="mb-0">{{ ordered?.createdAt | date : "medium" }}</p>
-          </div>
+    <div class="order-item" *ngFor="let item of orderedInformation">
+      <span class="order-label">{{ item.label }}</span>
+      <span class="order-value">{{ item.value }}</span>
+    </div>
 
-          <div class="d-flex justify-content-between">
-            <p class="text-muted mb-0 small">Table</p>
-            <p class="mb-0">{{ ordered?.tableName }}</p>
-          </div>
-        </div>
-      </div>
+    <div class="d-flex justify-content-between">
+      <span class="fw-bold m-1" style="font-size: 13px;">Item order ( {{ordered?.totalQuantity}} )</span>
+    </div>
 
-      <!-- Customer Info -->
-      <div class="card mb-3 border-0 shadow-sm">
-        <div class="card-body">
-          <h6 class="card-subtitle mb-2 text-muted">Customer Information</h6>
-          <p class="card-text mb-1">
-            <strong>Name:</strong> {{ ordered?.customerName }}
-          </p>
-          <p class="card-text mb-1">
-            <strong>Served by:</strong> {{ ordered?.adminName }}
-          </p>
-        </div>
-      </div>
+    <div style="margin-bottom: 5px;" *ngFor="let productOrder of ordered?.productOrders">
+      <app-product-card [product]="productOrder" [isEdited]="false"></app-product-card>
+    </div>
 
-      <!-- Order Items -->
-      <div class="card mb-3 border-0 shadow-sm">
-        <div class="card-body">
-          <h6 class="card-subtitle mb-2 text-muted">
-            Order Items ({{ ordered?.totalQuantity }})
-          </h6>
 
-          <div *ngIf="ordered?.productOrders">
-            <div class="list-group list-group-flush">
-              <div
-                *ngFor="let item of ordered?.productOrders || []"
-                class="list-group-item px-0 py-2 border-bottom"
-              >
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <p class="mb-0 fw-medium">{{ item.productName }}</p>
-                    <p class="mb-0 text-muted small">
-                      {{ item.quantity }} x
-                      {{
-                        item.productPrice
-                          | currency : "Rp " : "symbol" : "1.0-0"
-                      }}
-                    </p>
-                  </div>
-                  <span class="fw-bold">{{
-                    item.quantity * item.productPrice
-                      | currency : "Rp " : "symbol" : "1.0-0"
-                  }}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div *ngIf="!ordered?.productOrders?.length" class="text-center py-3">
-            <p class="text-muted">No items in this order</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Payment Summary -->
-      <div class="card mb-4 border-0 shadow-sm">
-        <div class="card-body">
-          <h6 class="card-subtitle mb-3 text-muted">Payment Summary</h6>
-
-          <div class="d-flex justify-content-between mb-2">
-            <span>Subtotal</span>
-            <span>{{
-              ordered?.subTotalPrice | currency : "Rp " : "symbol" : "1.0-0"
-            }}</span>
-          </div>
-
-          <div class="d-flex justify-content-between mb-2">
-            <span>Tax</span>
-            <span>{{
-              ordered?.tax | currency : "Rp " : "symbol" : "1.0-0"
-            }}</span>
-          </div>
-
-          <hr />
-
-          <div class="d-flex justify-content-between fw-bold">
-            <span>Total</span>
-            <span>{{
-              ordered?.totalPrice | currency : "Rp " : "symbol" : "1.0-0"
-            }}</span>
-          </div>
-
-          <div class="d-flex justify-content-between mt-2">
-            <span class="text-muted small">Payment Method</span>
-            <span class="badge bg-light text-dark">{{
-              ordered?.paymentMethod
-            }}</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Action Buttons -->
-      <div class="d-flex justify-content-between p-3">
-        <button
-          type="button"
-          class="btn btn-secondary flex-grow-1 me-2"
-          (click)="derect.toHistoryOrderPage()"
-        >
-          <i class="bi bi-clock-history me-1"></i> Order History
-        </button>
-        <button
-          type="button"
-          class="btn btn-primary flex-grow-1"
-          (click)="derect.toMenuPage()"
-        >
-          <i class="bi bi-plus-circle me-1"></i> New Order
-        </button>
+    <div class="summary-card">
+      <div class="summary-row" *ngFor="let item of orderedPaymentInformation">
+        <span class="summary-label">{{ item.label }}</span>
+        <span class="summary-value"> {{ item.value | currency : "Rp " : "symbol" : "1.0-0"}}</span>
       </div>
     </div>
+
+    <div class="d-flex justify-content-between p-3">
+      <button
+        type="button"
+        class="btn btn-secondary flex-grow-1 me-2"
+        (click)="derect.toHistoryOrderPage()"
+      >
+        <i class="bi bi-clock-history me-1"></i> Order History
+      </button>
+      <button
+        type="button"
+        class="btn btn-primary flex-grow-1"
+        (click)="derect.toMenuPage()"
+      >
+        <i class="bi bi-plus-circle me-1"></i> New Order
+      </button>
+    </div>
+    <div class="section-spacer"></div>
+
   </div>
+
 </app-layout>
 
+
 <style>
-  
-  .hide-scrollbar-wrapper {
-    height: 100%;
-    overflow: hidden;
-    position: relative;
-  }
-
-  .hide-scrollbar {
-    height: 100%;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    padding-right: 17px; 
-    box-sizing: content-box; 
-    scrollbar-width: none; 
-    -ms-overflow-style: none; 
-  }
-
-  .hide-scrollbar::-webkit-scrollbar {
-    width: 0 !important;
-    display: none; 
-  }
-
-  
-  .container.hide-scrollbar {
-    max-width: calc(100% - 17px); 
-  }
-
-  
-  @supports (-webkit-touch-callout: none) {
-    .hide-scrollbar {
-      -webkit-overflow-scrolling: touch;
-    }
-  }
-
-  
-  div[main] {
+  .main-container {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    gap: 8px;
+    padding: 12px;
+    /* background-color: #f9f9f9; */
+  }
+
+  .order-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 10px;
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    font-size: 14px;
+  }
+
+  .order-label {
+    color: #555;
+  }
+
+  .order-value {
+    font-weight: bold;
+    color: #222;
+  }
+
+  .summary-card {
+    margin-top: 16px;
+    padding: 12px;
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+    font-size: 13px;
+  }
+
+  .summary-label {
+    color: #555;
+  }
+
+  .summary-value {
+    font-weight: bold;
+    color: #222;
+  }
+
+  .section-spacer {
+    height: 200px;
   }
 </style>

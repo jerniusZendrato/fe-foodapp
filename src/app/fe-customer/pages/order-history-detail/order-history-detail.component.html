@@ -1,64 +1,107 @@
-<app-layout (goBack)="this.derect.toHistoryOrderPage()">
-    <div main style="padding: 20px;">
-      <div class="d-flex justify-content-center mb-4">
-        <span class="fw-bold fs-3" style="color: #333;">Kantin K’Jaya</span>
-      </div>
-  
-      <div class="p-3 shadow-sm bg-light rounded mb-3" *ngIf="order">
-        <div class="d-flex justify-content-between mb-2">
-          <span style="color: #555;">{{ order.createdAt | date: 'dd MMM yyyy, HH.mm' }}</span>
-          <span class="fw-bold" >#KKJY250307Z6QSZ</span>
-        </div>
-        <ng-container *ngFor="let item of orderInformation">
-          <div class="d-flex justify-content-between" style="padding: 4px 0; border-bottom: 1px solid #eee;">
-            <span style="color: #555;">{{ item.label }}</span>
-            <span style="color: #333;">{{ item.value }}</span>
-          </div>
-        </ng-container>
-      </div>
-  
-      <div class="mt-2 p-3 shadow-sm bg-light rounded mb-3" *ngIf="order">
-        <div class="row" >
-          <div class="col-6">Product Name</div>
-          <div class="col-3">Quantity</div>
-          <div class="col-3">Prices</div>
-        </div>
-      </div>
-  
-      <div class="mt-2 p-3 shadow-sm bg-light rounded mb-4" *ngIf="order">
-        <ng-container *ngFor="let item of order.productOrders">
-          <div class="row" style="padding: 8px 0; border-bottom: 1px solid #eee;">
-            <div class="col-6" style="color: #555;">{{ item.productName }}</div>
-            <div class="col-3" style="color: #555;">{{ item.quantity }}</div>
-            <div class="col-3" style="color: #555;">{{ item.productPrice | currency: 'Rp' }}</div>
-          </div>
-        </ng-container>
-      </div>
+<app-layout>
+  <div main class="main-container">
 
-      <div class="mt-2 p-3 shadow-sm bg-light rounded mb-4" *ngIf="order">
-        <ng-container>
-          <div class="row">
-            <div class="col-4" style="color: #555;"></div>
-            <div class="col-5" style="color: #555;">Subtotal</div>
-            <div class="col-3" style="color: #555;">{{ order.subTotalPrice | currency: 'Rp' }}</div>
-          </div>
-          <div class="row">
-            <div class="col-4" style="color: #555;"></div>
-            <div class="col-5" style="color: #555;">Tax (10%)</div>
-            <div class="col-3" style="color: #555;">{{ order.tax | currency: 'Rp' }}</div>
-          </div>
-          <div class="row" >
-            <div class="col-4" style="color: #555;"></div>
-            <div class="col-5" style="color: #555;">Total</div>
-            <div class="col-3" style="color: #555;">{{ order.totalPrice | currency: 'Rp' }}</div>
-          </div>
-        </ng-container>
-      </div>
-  
-      <div class="d-flex justify-content-center mt-4" *ngIf="order">
-        <button type="button" class="btn btn-primary" style="display: flex; align-items: center; gap: 5px;">
-          Download <i class="fa-solid fa-print"></i>
-        </button>
+    <div class="text-center">
+      <span class="text-success fw-bold">Order Successful</span>
+    </div>
+
+    <div class="order-item" *ngFor="let item of orderedInformation">
+      <span class="order-label">{{ item.label }}</span>
+      <span class="order-value">{{ item.value }}</span>
+    </div>
+
+    <div class="d-flex justify-content-between">
+      <span class="fw-bold m-1" style="font-size: 13px;">Item order ( {{ordered.totalQuantity}} )</span>
+    </div>
+
+    <div style="margin-bottom: 5px;" *ngFor="let productOrder of ordered?.productOrders">
+      <app-product-card [product]="productOrder" [isEdited]="false" [displayImage]="false"></app-product-card>
+    </div>
+
+
+    <div class="summary-card">
+      <div class="summary-row" *ngFor="let item of orderedPaymentInformation">
+        <span class="summary-label">{{ item.label }}</span>
+        <span class="summary-value"> {{ item.value | currency : "Rp " : "symbol" : "1.0-0"}}</span>
       </div>
     </div>
-  </app-layout>
+
+    <div class="d-flex justify-content-between p-3">
+      <button
+        type="button"
+        class="btn btn-secondary flex-grow-1 me-2"
+        (click)="derect.toHistoryOrderPage()"
+      >
+        <i class="bi bi-clock-history me-1"></i> Order History
+      </button>
+      <button
+        type="button"
+        class="btn btn-primary flex-grow-1"
+        (click)="derect.toMenuPage()"
+      >
+        <i class="bi bi-plus-circle me-1"></i> New Order
+      </button>
+    </div>
+    <div class="section-spacer"></div>
+
+  </div>
+
+</app-layout>
+
+
+<style>
+  .main-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px;
+    /* background-color: #f9f9f9; */
+  }
+
+  .order-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 10px;
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    font-size: 14px;
+  }
+
+  .order-label {
+    color: #555;
+  }
+
+  .order-value {
+    font-weight: bold;
+    color: #222;
+  }
+
+  .summary-card {
+    margin-top: 16px;
+    padding: 12px;
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+    font-size: 13px;
+  }
+
+  .summary-label {
+    color: #555;
+  }
+
+  .summary-value {
+    font-weight: bold;
+    color: #222;
+  }
+
+  .section-spacer {
+    height: 200px;
+  }
+</style>

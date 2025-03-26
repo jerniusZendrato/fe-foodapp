@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { OrderLocalStorageCustService } from "../../services/order-local-storage-cust.service";
 import { ProductCust } from "../../models/product-cust.model";
 
@@ -8,13 +8,13 @@ import { ProductCust } from "../../models/product-cust.model";
     <div class="product-card">
       <div class="product-card__content">
         <div class="product-card__image-container">
-          <img
+          <img *ngIf="displayImage" 
             class="product-card__image"
             [src]="product.urlImage"
             [alt]="product.name"
           />
         </div>
-        <div class="product-card__details">
+        <div *ngIf="isEdited" class="product-card__details">
           <h3 class="product-card__name">{{ product.name }}</h3>
           <p class="product-card__description">{{ product.description }}</p>
           <div class="product-card__price-and-button">
@@ -48,6 +48,32 @@ import { ProductCust } from "../../models/product-cust.model";
               >
                 +
               </button>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="!isEdited" class="product-card__details">
+          <h3 class="product-card__name">{{ product.name }}</h3>
+          <p class="product-card__description">{{ product.description }}</p>
+          <div class="product-card__price-and-button">
+            <span class="product-card__price">
+              <strong>{{ product.price | currency : 'Rp' }}</strong>
+            </span>
+            
+            <div
+              class="quantity-container"
+            >
+            
+            <span class="quantity-display" style="
+                display: inline-block;
+                padding: 2px 15px;
+                border: 2px solid #e91e63;
+                border-radius: 5px;
+                background-color: #f8f8f8;
+                font-weight: bold;
+                text-align: center;">
+                {{ product.quantity }}
+            </span>
+
             </div>
           </div>
         </div>
@@ -98,7 +124,7 @@ import { ProductCust } from "../../models/product-cust.model";
 
       .product-card__name {
         margin: 0 0 8px 0;
-        font-size: 1.1rem;
+        font-size: 1.0rem;
         font-weight: bold;
         color: #333;
         white-space: nowrap;
@@ -108,7 +134,7 @@ import { ProductCust } from "../../models/product-cust.model";
 
       .product-card__description {
         margin: 0 0 8px 0;
-        font-size: 0.9rem;
+        font-size: 0.8rem;
         color: #666;
         display: -webkit-box;
         -webkit-line-clamp: 3;
@@ -182,11 +208,13 @@ import { ProductCust } from "../../models/product-cust.model";
     `,
   ],
 })
-export class ProductCardComponent {
+export class ProductCardComponent implements OnInit {
   @Input() product!: any;
+  @Input() isEdited: Boolean = true;
+  @Input() displayImage: Boolean = true;
   @Output() updateProductOrder = new EventEmitter<void>();
 
-  constructor(public order: OrderLocalStorageCustService) {}
+  constructor(public order: OrderLocalStorageCustService) { }
 
   incrementQuantity(product: ProductCust) {
     this.order.incrementQuantity(product);
@@ -199,4 +227,9 @@ export class ProductCardComponent {
     }
   }
 
+  ngOnInit() {
+    console.log(this.product);
+    console.log('this.isEdited :>> ', this.isEdited);
+    console.log('this.product.name :>> ', this.product.name);
+  }
 }

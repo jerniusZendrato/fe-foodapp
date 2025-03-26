@@ -57,11 +57,14 @@ export class CartComponent implements OnInit {
           if (response.isSuccess) {
             // Handle success
           } else {
-            // Handle failure
+            this.showErrorModal()
+          
+          console.log('"object" :>> ');  // Handle failure
           }
         },
         error: (error) => {
-          // Handle error
+
+          this.showErrorModal()
         },
       });
   }
@@ -95,7 +98,7 @@ Nama pelanggan tidak boleh kosong.`);
     console.log('Canceled');
   }
 
-  showErrorModal(message: string): void {
+  showErrorModal(): void {
     this.errorModal.openModal();
   }
 
