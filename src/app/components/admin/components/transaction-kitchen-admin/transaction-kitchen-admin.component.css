@@ -39,3 +39,18 @@
     height: 90vh;
 
 }
+#buttonhome{
+  border-radius: 8px; 
+  display: flex; 
+  align-items: center; 
+  margin: 0 10px; 
+  cursor: pointer; 
+  background-color: white;
+  color: #FF0000;
+  transition: 0.3s ease;
+}
+
+#buttonhome:hover{
+  color: white;
+  background-color: #FF0000;
+}

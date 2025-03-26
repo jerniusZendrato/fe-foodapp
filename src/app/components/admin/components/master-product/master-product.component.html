@@ -356,7 +356,7 @@
                 </div>
                 <div class="mb-3">
                   <label  for="formFile" class="form-label"
-                    >Default file input example</label
+                    >Default file Image</label
                   >
                   <input class="form-control" (change)="onFileSelected($event)" type="file" id="formFile" />
                 </div>
@@ -516,8 +516,8 @@
                     id="formFile"
 
                   />
-                  <div *ngIf="!image" class="is-invalid" style="color: #f80000;">
-                    Product image cannot be empty.
+                  <div *ngIf="!image" class="is-invalid" style="color: #f80000; font-size: 12px;">
+                    *Product image cannot be empty.
                   </div>
                 </div>
               </form>
