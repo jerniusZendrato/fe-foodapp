@@ -24,6 +24,7 @@ import { NavbarComponent } from '../fe-customer/shared/components/navbar/navbar.
 import { ParentKitchenOrderComponent } from '../components/admin/parent-kitchen-order/parent-kitchen-order.component';
 import { ParentAutenticationComponent } from '../components/admin/parent-autentication/parent-autentication.component';
 import { LoginAdminComponent } from '../components/admin/components/login-admin/login-admin.component';
+import { SettingsAdminComponent } from '../components/admin/components/settings-admin/settings-admin.component';
 
 
 const feCustomerChildren: Routes = [
@@ -76,6 +77,12 @@ const routes: Routes = [
       {
         path: 'history',
         component: TransactionHistoryComponent,
+        canDeactivate: [UnsavedChangesVerifikasiService],
+      },
+      
+      {
+        path: 'settings',
+        component: SettingsAdminComponent,
         canDeactivate: [UnsavedChangesVerifikasiService],
       },
     ]

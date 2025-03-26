@@ -1,0 +1,15 @@
+#navbarmenu{
+    background-color: white;
+}
+#navbarmenu h6{
+    margin: 0 20px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.navbar h6.active {
+    color: red;
+    border-bottom: 2px solid red;
+    /* transition: 1s ease; */
+}
+
