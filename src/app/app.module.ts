@@ -34,8 +34,11 @@ import { OrderHistoryCardComponent } from './fe-customer/shared/components/order
 import { OrderHistoryDetailComponent } from './fe-customer/pages/order-history-detail/order-history-detail.component';
 import { SpinnerComponentComponent } from './fe-customer/shared/components/spinner-component/spinner-component.component';
 import { NotFoundComponent } from './fe-customer/pages/not-found/not-found.component';
+import { OrderButtonComponent } from './fe-customer/shared/components/order-button/order-button.component';
 import { FilterPipe } from './filter.pipe';
 import { ParentKitchenOrderComponent } from './components/admin/parent-kitchen-order/parent-kitchen-order.component';
+import { LoginAdminComponent } from './components/admin/components/login-admin/login-admin.component';
+import { ParentAutenticationComponent } from './components/admin/parent-autentication/parent-autentication.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -69,7 +72,11 @@ import { ParentKitchenOrderComponent } from './components/admin/parent-kitchen-o
     SpinnerComponentComponent,
     NotFoundComponent,
     FilterPipe,
-    ParentKitchenOrderComponent
+    ParentKitchenOrderComponent,
+    OrderButtonComponent,
+    ParentKitchenOrderComponent,
+    LoginAdminComponent,
+    ParentAutenticationComponent
     
     
   ],
