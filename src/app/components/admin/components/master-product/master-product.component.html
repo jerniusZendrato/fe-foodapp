@@ -235,7 +235,7 @@
                 id="button_edit"
                   (click)="onEditProduct(products)"
                   data-bs-toggle="modal"
-                  data-bs-target="#exampleModal"
+                  data-bs-target="#modaleditproduct"
                   style="margin: 0; padding: 0"
                 >
                   <i  
@@ -259,7 +259,7 @@
     <!-- modal edit product -->
     <div
       class="modal fade"
-      id="exampleModal"
+      id="modaleditproduct"
       tabindex="-1"
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
@@ -291,6 +291,8 @@
                         id="productName"
                         name="name"
                         required
+                        [class.is-invalid]="producteditForm.controls['name'].invalid && producteditForm.controls['name'].touched"
+                        
                       />
                     </div>
                     
@@ -324,6 +326,8 @@
                         id="productPrice"
                         name="price"
                         required
+                        [class.is-invalid]="producteditForm.controls['price'].invalid && producteditForm.controls['price'].touched"
+                        
                       />
                     </div>
                   </div>
@@ -346,11 +350,13 @@
                     value="{{ productToEdit.description }}"
                     id="productDescription"
                     name="description"
+                    [class.is-invalid]="producteditForm.controls['description'].invalid && producteditForm.controls['description'].touched"
+                        
                   ></textarea>
                 </div>
                 <div class="mb-3">
                   <label  for="formFile" class="form-label"
-                    >Default file input example</label
+                    >Default file Image</label
                   >
                   <input class="form-control" (change)="onFileSelected($event)" type="file" id="formFile" />
                 </div>
@@ -368,7 +374,7 @@
             >
               Close
             </button>
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="updateproduct(productToEdit.id)">Save changes</button>
+            <button type="button" class="btn btn-primary" (click)="updateproduct(productToEdit.id)">Save changes</button>
           </div>
         </div>
       </div>
@@ -380,6 +386,7 @@
       id="addrpoductModal"
       tabindex="-1"
       aria-labelledby="addrpoductModalLabel"
+      data-bs-backdrop="static"
       aria-hidden="true"
     >
       <div class="modal-dialog">
@@ -402,6 +409,7 @@
                       <label for="productName" class="form-label"
                         >Product Name</label
                       >
+                      
                       <input
                         placeholder="insert product name"
                         type="text"
@@ -409,6 +417,7 @@
                         id="productName"
                         name="name"
                         formControlName="name"
+                        [class.is-invalid]="productForm.controls['name'].invalid && productForm.controls['name'].touched"
                         required
                       />
                     </div>
@@ -424,6 +433,7 @@
                         formControlName="category"
                         name="name"
                         [(ngModel)]="selectedCategory"
+                        [class.is-invalid]="productForm.controls['category'].invalid && productForm.controls['category'].touched"
                         required
                       >
                         <option value="" disabled selected>
@@ -448,6 +458,8 @@
                         name="price"
                         formControlName="price"
                         required
+                        [class.is-invalid]="productForm.controls['price'].invalid && productForm.controls['price'].touched"
+                        
                       />
                     </div>
                   </div>
@@ -485,22 +497,28 @@
                     >Description</label
                   >
                   <textarea
-                    class="form-control"
-                    id="productDescription"
-                    name="description"
-                    formControlName="description"
-                  ></textarea>
+                  class="form-control"
+                  id="productDescription"
+                  name="description"
+                  formControlName="description"
+                  [class.is-invalid]="productForm.controls['description'].invalid && productForm.controls['description'].touched"
+                ></textarea>
+                  
                 </div>
                 <div class="mb-3">
                   <label for="formFile" class="form-label"
-                    >Default file input example</label
+                    >Default file Image</label
                   >
                   <input
                     class="form-control"
                     type="file"
                     (change)="onFileSelected($event)"
                     id="formFile"
+
                   />
+                  <div *ngIf="!image" class="is-invalid" style="color: #f80000; font-size: 12px;">
+                    *Product image cannot be empty.
+                  </div>
                 </div>
               </form>
             </div>
@@ -513,7 +531,7 @@
             >
               Close
             </button>
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="saveProduct()">
+            <button type="button" class="btn btn-primary"  (click)="saveProduct()">
               Save
             </button>
           </div>

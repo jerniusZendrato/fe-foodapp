@@ -22,6 +22,7 @@ export class TransactionKitchenAdminComponent implements OnInit {
   public currentDate = new Date().toISOString().split('T')[0]; 
   public status = 'PROCESS'
   public orderprocess: AdminOrderCassier[] = []
+  public totalorderprocess: number = 0
 
   getkitchenorder(): Promise<void>{
     return new Promise((resolve, reject) => {
@@ -36,6 +37,7 @@ export class TransactionKitchenAdminComponent implements OnInit {
               }
               return false;
             });
+            this.totalorderprocess = this.orderprocess.length
             this.loaderService.hideWithDelay(1000);
           }
         }

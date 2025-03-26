@@ -74,13 +74,13 @@
           <tbody>
             <!-- <h6 style="margin-left: 10px;">{{ category.key }}</h6> -->
             <tr *ngFor="let table of table">
-              <td id="category-name" (click)="selecttable(table.qrImage, table.name)">
+              <td>
                 {{ table.name }}
               </td>
   
               <td>
                 
-                <img
+                <img id="category-name" (click)="selecttable(table.qrImage, table.name)"
                   style="object-fit: cover; object-position: center"
                    [src]="table.qrImage" alt="QR Code"
 

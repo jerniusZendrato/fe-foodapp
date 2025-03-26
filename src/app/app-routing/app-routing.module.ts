@@ -22,6 +22,9 @@ import { TransactionHistoryComponent } from '../components/admin/components/tran
 import { NotFoundComponent } from '../fe-customer/pages/not-found/not-found.component';
 import { NavbarComponent } from '../fe-customer/shared/components/navbar/navbar.component';
 import { ParentKitchenOrderComponent } from '../components/admin/parent-kitchen-order/parent-kitchen-order.component';
+import { ParentAutenticationComponent } from '../components/admin/parent-autentication/parent-autentication.component';
+import { LoginAdminComponent } from '../components/admin/components/login-admin/login-admin.component';
+import { SettingsAdminComponent } from '../components/admin/components/settings-admin/settings-admin.component';
 
 
 const feCustomerChildren: Routes = [
@@ -76,6 +79,12 @@ const routes: Routes = [
         component: TransactionHistoryComponent,
         canDeactivate: [UnsavedChangesVerifikasiService],
       },
+      
+      {
+        path: 'settings',
+        component: SettingsAdminComponent,
+        canDeactivate: [UnsavedChangesVerifikasiService],
+      },
     ]
   },
   
@@ -101,6 +110,17 @@ const routes: Routes = [
       {
         path: '',
         component: TransactionKitchenAdminComponent,
+        canDeactivate: [UnsavedChangesVerifikasiService],
+      },
+    ],
+  },
+  {
+    path: 'autentication',
+    component: ParentAutenticationComponent,
+    children: [
+      {
+        path: '',
+        component: LoginAdminComponent,
         canDeactivate: [UnsavedChangesVerifikasiService],
       },
     ],

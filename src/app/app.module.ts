@@ -36,7 +36,6 @@ import { SpinnerComponentComponent } from './fe-customer/shared/components/spinn
 import { NotFoundComponent } from './fe-customer/pages/not-found/not-found.component';
 import { FilterPipe } from './filter.pipe';
 import { ParentKitchenOrderComponent } from './components/admin/parent-kitchen-order/parent-kitchen-order.component';
-import { OrderButtonComponent } from './fe-customer/shared/components/order-button/order-button.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -70,8 +69,7 @@ import { OrderButtonComponent } from './fe-customer/shared/components/order-butt
     SpinnerComponentComponent,
     NotFoundComponent,
     FilterPipe,
-    ParentKitchenOrderComponent,
-    OrderButtonComponent
+    ParentKitchenOrderComponent
     
     
   ],
