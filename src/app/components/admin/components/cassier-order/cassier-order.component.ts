@@ -7,7 +7,10 @@ import { TableService } from '../../services/table.service';
 import { ProductService } from '../../services/product.service';
 import { CategoryService } from '../../services/category.service';
 import { LocalStorageOrderService } from '../../services/local-storage-order.service';
-import { ProductOrder } from '../../models/admin-order-cassier.model';
+import { addProductOrder, ProductOrder } from '../../models/admin-order-cassier.model';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { OrderAdminService } from '../../services/order-admin.service';
+
 
 @Component({
   selector: 'app-cassier-order',
@@ -25,13 +28,86 @@ export class CassierOrderComponent implements OnInit{
     this.selectedDiv = localStorage.getItem('selectedDiv');
   }
 
+  orderForm: FormGroup;
+
   constructor(
+    private formBuilder: FormBuilder,
     private loaderService: LoaderService,
     private tableService: TableService,
     private productservice: ProductService,
     private categoryservice: CategoryService,
-    private localstorageorder: LocalStorageOrderService
-  ){}
+    private localstorageorder: LocalStorageOrderService,
+    private orderService: OrderAdminService
+  ){
+    this.orderForm = this.formBuilder.group({
+          customerName: ['', Validators.required],
+          type: [null, Validators.required],
+          tableId: ['', Validators.required],
+          adminId: ['',Validators.required] ,
+          productOrders: this.formBuilder.array([])
+        });
+  }
+
+  // add order
+  saveorder(): Promise<void>{
+    this.addProductOrder()
+
+    // Pastikan `this.savedProducts` memiliki data sebelum digunakan
+    if (!this.savedProducts || this.savedProducts.length === 0) {
+        console.error("No saved products found.");
+    }
+
+    const addorder: any = {
+      customerName: this.orderForm.get('customerName')?.value,
+      type: 'dine in', //nanti diganti menggunakan fitur pilih
+      tableId: this.orderForm.get('tableId')?.value,
+      adminId : '71451462-2480-41a5-8184-0bbcd523f5d6',
+      productOrders: this.savedProducts.map(product => ({
+        id: product.id ?? '',
+        quantity: product.quantity ?? 0
+      }))
+    }
+    return new Promise((resolve, reject) => {
+      this.loaderService.show();
+      this.orderService.addorder(addorder).subscribe({
+        next: (response: any) => {
+          console.log("Order saved:", response);
+          this.showsuccessToast()
+          this.loaderService.hideWithDelay(1000);
+          this.clearlocalstorage()
+          resolve(); // Selesaikan promise jika berhasil
+        },
+        error: (err: any) => {
+          console.error("Error saving order:", err);
+          this.showErrorToast()
+          this.loaderService.hideWithDelay(1000);
+          reject(err); // Tolak promise jika terjadi error
+        }
+      });
+      this.loaderService.hideWithDelay(1000);
+    });
+  }
+
+  // add order- addproductorder
+  get productOrders(): FormArray {
+    return this.orderForm.get('productOrders') as FormArray;
+  }
+
+  createProductOrder(id: string, quantity: number): FormGroup {
+    return this.formBuilder.group({
+      id: [id, Validators.required],
+      quantity: [quantity, [Validators.required, Validators.min(1)]]
+    });
+  }
+  
+  
+  addProductOrder() { 
+    this.savedProducts.forEach(product => {
+        this.productOrders.push(this.createProductOrder(product.id?? '', product.quantity?? 0));
+    });
+}
+
+  
 
   public datacategory: AdminCategory[] = []
   selectedDiv: string | null = null;
@@ -160,6 +236,18 @@ export class CassierOrderComponent implements OnInit{
     clearlocalstorage(){
       this.localstorageorder.clear()
       this.loadSavedProducts()
+    }
+
+
+    showErrorToast(): void {
+      const toastElement = document.getElementById('errorToast');
+      const toast = new (window as any).bootstrap.Toast(toastElement);
+      toast.show();
+    }
+    showsuccessToast(): void {
+      const toastElement = document.getElementById('successToast');
+      const toast = new (window as any).bootstrap.Toast(toastElement);
+      toast.show();
     }
     
 

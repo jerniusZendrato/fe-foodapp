@@ -1,1 +1,77 @@
-<p>transaction-history works!</p>
+<div style="width: 100%; box-sizing: border-box">
+    <div
+      style="
+        display: flex;
+        flex-direction: column;
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        background-color: #fff9f9;
+      "
+    >
+      <div id="header-menu">
+        <!-- <h5>Master Product</h5> -->
+        <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="/admin">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">History</li>
+          </ol>
+        </nav>
+      </div>
+      <div id="isi-menu02">
+        <div
+          id="fileter_kategory"
+          tabindex="0"
+          data-bs-toggle="popover"
+          data-bs-trigger="hover focus"
+          data-bs-content="Disabled popover"
+        >
+          <div style="display: flex; flex-direction: row; align-items: center">
+            
+  
+            <!-- menu filter ke dua -->
+            <div id="menu-filter">
+              <i
+                class="fa-solid fa-filter"
+              ></i>
+            </div>
+  
+            <div style="display: flex; flex-direction: row; align-items: center">
+                <input style="margin-left: 30px" type="text" class="form-control" placeholder="Search" aria-describedby="search-icon">
+            </div>
+          </div>
+  
+          <div style="display: flex; flex-direction: row">
+            <a
+              id="add-button"
+              data-bs-toggle="modal"
+              data-bs-target="#addrpoductModal"
+              ><i class="fa-solid fa-plus"></i> Add</a
+            >
+            <!-- <button type="button" class="btn btn-primary">Primary</button> -->
+          </div>
+        </div>
+  
+      </div>
+      <div id="isi-menu">
+        <table id="isitabel_product" class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Order ID</th>
+              <th scope="col">Table</th>
+              <th scope="col">Order Type</th>
+              <th scope="col">Date</th>
+              <th scope="col">payment</th>
+              <th scope="col">Total Payment</th>
+              <th scope="col">Costumer</th>
+              <th scope="col">Cashier</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+</div>

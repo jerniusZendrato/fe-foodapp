@@ -12,6 +12,15 @@ export class OrderAdminService {
   constructor(
     private http: HttpClient
   ) { }
+  addorder(order:any): Observable<any>{
+    if(order){
+      return this.http.post<any>(`${environment.API_URL}/order`, order);
+    }else{
+      return new Observable((observer) => {
+        observer.error('No valid order to add');
+      });
+    }
+  }
 
   getorder(date: string):Observable<AdminOrderCassier[]>{
     // Buat parameter query hanya dengan 'date'
@@ -24,4 +33,8 @@ export class OrderAdminService {
       })
     );
   }
+
+  
+  
+
 }
