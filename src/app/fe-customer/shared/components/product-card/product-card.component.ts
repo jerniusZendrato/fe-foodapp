@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { OrderLocalStorageCustService } from "../../services/order-local-storage-cust.service";
-import { ProductCust } from "../../models/product-cust.model";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { OrderLocalStorageCustService } from '../../services/order-local-storage-cust.service';
+import { ProductCust } from '../../models/product-cust.model';
 
 @Component({
   selector: 'app-product-card',
@@ -8,16 +8,17 @@ import { ProductCust } from "../../models/product-cust.model";
     <div class="product-card">
       <div class="product-card__content">
         <div class="product-card__image-container">
-          <img *ngIf="displayImage" 
+          <img
+            *ngIf="displayImage"
             class="product-card__image"
             [src]="product.urlImage"
             [alt]="product.name"
           />
         </div>
-        <div *ngIf="isEdited" class="product-card__details">
+        <div class="product-card__details">
           <h3 class="product-card__name">{{ product.name }}</h3>
           <p class="product-card__description">{{ product.description }}</p>
-          <div class="product-card__price-and-button">
+          <div *ngIf="isEdited" class="product-card__price-and-button">
             <span class="product-card__price">
               <strong>{{ product.price | currency : 'Rp' }}</strong>
             </span>
@@ -50,31 +51,11 @@ import { ProductCust } from "../../models/product-cust.model";
               </button>
             </div>
           </div>
-        </div>
-        <div *ngIf="!isEdited" class="product-card__details">
-          <h3 class="product-card__name">{{ product.name }}</h3>
-          <p class="product-card__description">{{ product.description }}</p>
-          <div class="product-card__price-and-button">
-            <span class="product-card__price">
-              <strong>{{ product.price | currency : 'Rp' }}</strong>
-            </span>
-            
-            <div
-              class="quantity-container"
-            >
-            
-            <span class="quantity-display" style="
-                display: inline-block;
-                padding: 2px 15px;
-                border: 2px solid #e91e63;
-                border-radius: 5px;
-                background-color: #f8f8f8;
-                font-weight: bold;
-                text-align: center;">
-                {{ product.quantity }}
-            </span>
 
-            </div>
+          <div class="product-ordered-card__price-and-button" *ngIf="!isEdited">
+            <span class="quantity-display-ordered">
+              {{ order.getProductQuantity(product.id) }}
+            </span>
           </div>
         </div>
       </div>
@@ -98,13 +79,13 @@ import { ProductCust } from "../../models/product-cust.model";
       }
 
       .product-card__content {
-        display: grid;
-        grid-template-columns: 80px 1fr;
+        display: flex;
         gap: 16px;
         align-items: start;
       }
 
       .product-card__image-container {
+        flex-shrink: 0;
         width: 80px;
         height: 80px;
       }
@@ -120,20 +101,22 @@ import { ProductCust } from "../../models/product-cust.model";
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        flex-grow: 1;
+        min-width: 0; /* Mencegah nama produk melebarkan parent */
       }
 
       .product-card__name {
-        margin: 0 0 8px 0;
-        font-size: 1.0rem;
+        font-size: 1rem;
         font-weight: bold;
         color: #333;
-        white-space: nowrap;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* Batas dua baris */
+        -webkit-box-orient: vertical;
         overflow: hidden;
         text-overflow: ellipsis;
       }
 
       .product-card__description {
-        margin: 0 0 8px 0;
         font-size: 0.8rem;
         color: #666;
         display: -webkit-box;
@@ -146,11 +129,28 @@ import { ProductCust } from "../../models/product-cust.model";
         display: flex;
         justify-content: space-between;
         align-items: center;
+        gap: 8px;
+        min-width: 0; /* Pastikan elemen tidak melebar */
+        flex-wrap: wrap;
       }
 
       .product-card__price {
         font-size: 1rem;
         color: #e91e63;
+        flex-shrink: 0; /* Hindari harga menyusut */
+      }
+
+      .product-ordered-card__price-and-button {
+        display: flex;
+        justify-content: flex-end; /* Memastikan elemen di dalamnya rata kanan */
+        align-items: center;
+        gap: 8px;
+        min-width: 0;
+        flex-wrap: wrap;
+      }
+      
+      .quantity-display-ordered {
+        margin-left: auto; /* Dorong elemen ke kanan */
       }
 
       .product-card__add-button {
@@ -170,16 +170,16 @@ import { ProductCust } from "../../models/product-cust.model";
       }
 
       .rounded-button {
-        width: 24px;
-        height: 24px;
+        width: 28px;
+        height: 28px;
         border-radius: 50%;
         background-color: white;
         border: 2px solid #e91e63;
-        font-size: 0.5rem;
+        font-size: 1rem;
         font-weight: bold;
         color: #e91e63;
         cursor: pointer;
-        display: inline-flex;
+        display: flex;
         align-items: center;
         justify-content: center;
         transition: background-color 0.3s ease, color 0.3s ease;
@@ -191,16 +191,16 @@ import { ProductCust } from "../../models/product-cust.model";
       }
 
       .quantity-display {
-        font-size: 0.9rem;
+        font-size: 1rem;
+        font-weight: bold;
         color: #e91e63;
         text-align: center;
         padding: 0 8px;
       }
 
       .quantity-container {
-        display: inline-flex;
+        display: flex;
         align-items: center;
-        justify-content: space-between;
         border-radius: 4px;
         padding: 4px;
         background-color: #f9f9f9;
@@ -214,7 +214,7 @@ export class ProductCardComponent implements OnInit {
   @Input() displayImage: Boolean = true;
   @Output() updateProductOrder = new EventEmitter<void>();
 
-  constructor(public order: OrderLocalStorageCustService) { }
+  constructor(public order: OrderLocalStorageCustService) {}
 
   incrementQuantity(product: ProductCust) {
     this.order.incrementQuantity(product);
@@ -227,9 +227,5 @@ export class ProductCardComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
-    console.log(this.product);
-    console.log('this.isEdited :>> ', this.isEdited);
-    console.log('this.product.name :>> ', this.product.name);
-  }
+  ngOnInit() {}
 }
