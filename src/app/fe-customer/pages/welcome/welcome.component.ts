@@ -36,7 +36,7 @@ export class WelcomeComponent implements OnInit {
       const tableId = params['table-id'];
       if (tableId) {
 
-        this.tableService.getTable(tableId).subscribe({
+        this.tableService.getActiveTable(tableId).subscribe({
           next: (table) => {
             this.table = table;
             this.tableNo = table.name;

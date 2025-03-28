@@ -31,4 +31,25 @@ export class TableCustService {
         })
       );
   }
+
+  getActiveTable(id: string): Observable<TableCust> {
+    return this.http
+      .get<{ isSuccess: boolean; data: TableCust }>(
+        `${environment.API_URL}/table/${id}/isActive`
+      )
+      .pipe(
+        map((response) => {
+          if (response.isSuccess) {
+            return response.data;
+          } else {
+            throw new Error('Failed to fetch table data');
+          }
+        }),
+        catchError((error) => {
+          console.error('Error occurred while fetching table:', error);
+          return throwError(() => new Error('Failed to fetch table data'));
+        })
+      );
+  }
+
 }
