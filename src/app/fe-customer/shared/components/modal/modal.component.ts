@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, Output, EventEmitter, ViewChild, AfterViewInit } from '@angular/core';
 
 @Component({
   selector: 'app-modal',
@@ -8,6 +8,7 @@ import { Component, ElementRef, Input, Output, EventEmitter, ViewChild } from '@
         <div class="modal-content text-center">  
           <div class="modal-header">
             <h5 [ngClass]="titleColor || 'text-dark'" class="fw-bold modal-title w-100">{{ title }}</h5>
+            <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
           </div>
 
           <div class="modal-body">
@@ -31,39 +32,40 @@ import { Component, ElementRef, Input, Output, EventEmitter, ViewChild } from '@
     </div>
   `
 })
-export class ModalComponent {
+export class ModalComponent implements AfterViewInit {
   @Input() title = '';
   @Input() titleColor = '';
   @Input() confirmButtonClass = '';  
   @Input() cancelButtonClass = '';  
-  @Input() confirmButtonText: string = 'Confirm';  // Default teks tombol "Confirm"
-  @Input() cancelButtonText: string = 'Cancel';    // Default teks tombol "Cancel"
-  @Input() position: 'default' | 'center' = 'default';  // Posisi modal
+  @Input() confirmButtonText: string = 'Confirm';
+  @Input() cancelButtonText: string = 'Cancel';
+  @Input() position: 'default' | 'center' = 'default';
   @Output() confirm = new EventEmitter<void>();
   @Output() cancel = new EventEmitter<void>();
   
   @ViewChild('modalElement', { static: true }) modalElement!: ElementRef;
-  // private modalInstance!: Modal;
+  private modalInstance: any;
 
   ngAfterViewInit() {
-    // this.modalInstance = new Modal(this.modalElement.nativeElement);
+    const modalEl = this.modalElement.nativeElement;
+    this.modalInstance = new (window as any).bootstrap.Modal(modalEl); // Ambil modal dari window.bootstrap
   }
 
   openModal() {
-    // this.modalInstance.show();
+    this.modalInstance.show();
   }
 
   closeModal() {
-    // this.modalInstance.hide();
+    this.modalInstance.hide();
   }
 
   onConfirm() {
-    // this.confirm.emit();
-    // this.closeModal();
+    this.confirm.emit();
+    this.closeModal();
   }
 
   onCancel() {
-    // this.cancel.emit();
-    // this.closeModal();
+    this.cancel.emit();
+    this.closeModal();
   }
 }
