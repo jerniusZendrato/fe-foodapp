@@ -39,6 +39,7 @@ import { FilterPipe } from './filter.pipe';
 import { ParentKitchenOrderComponent } from './components/admin/parent-kitchen-order/parent-kitchen-order.component';
 import { LoginAdminComponent } from './components/admin/components/login-admin/login-admin.component';
 import { ParentAutenticationComponent } from './components/admin/parent-autentication/parent-autentication.component';
+import { SettingsAdminComponent } from './components/admin/components/settings-admin/settings-admin.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -76,7 +77,8 @@ import { ParentAutenticationComponent } from './components/admin/parent-autentic
     OrderButtonComponent,
     ParentKitchenOrderComponent,
     LoginAdminComponent,
-    ParentAutenticationComponent
+    ParentAutenticationComponent,
+    SettingsAdminComponent
     
     
   ],
