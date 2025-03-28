@@ -52,9 +52,22 @@ import { ProductCust } from '../../models/product-cust.model';
             </div>
           </div>
 
-          <div class="product-ordered-card__price-and-button" *ngIf="!isEdited">
-            <span class="quantity-display-ordered">
-              {{ order.getProductQuantity(product.id) }}
+          <div class="product-card__price-and-button" *ngIf="!isEdited">
+            <span class="product-card__price">
+              <strong>{{ product.price | currency : 'Rp' }}</strong>
+            </span>
+            <span
+              class="quantity-display"
+              style="
+                display: inline-block;
+                padding: 2px 15px;
+                border: 2px solid #e91e63;
+                border-radius: 5px;
+                background-color: #f8f8f8;
+                font-weight: bold;
+                text-align: center;"
+            >
+              {{ product.quantity }}
             </span>
           </div>
         </div>
@@ -148,7 +161,7 @@ import { ProductCust } from '../../models/product-cust.model';
         min-width: 0;
         flex-wrap: wrap;
       }
-      
+
       .quantity-display-ordered {
         margin-left: auto; /* Dorong elemen ke kanan */
       }
