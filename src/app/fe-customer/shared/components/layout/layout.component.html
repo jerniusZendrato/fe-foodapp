@@ -31,8 +31,11 @@
             transition: color 0.3s ease;
           "
           aria-label="Menu"
-          (click)="derect.toNavbar()"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasRight"
+          aria-controls="offcanvasRight"
         >
+          <!-- (click)="derect.toNavbar()" -->
           <i class="fa-solid fa-bars"></i>
         </button>
       </div>
@@ -72,4 +75,35 @@
     <app-spinner-component [isLoading]="isLoading"></app-spinner-component>
     <ng-content select="[main]"> </ng-content>
   </div>
+</div>
+
+<div
+  class="offcanvas offcanvas-end"
+  tabindex="-1"
+  id="offcanvasRight"
+  aria-labelledby="offcanvasRightLabel"
+  style="z-index: 9999 !important; background: #f8f9fa"
+>
+  <div class="offcanvas-header">
+    <div style="position: absolute; z-index: 10; margin-top: 24px;">
+      
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="offcanvas"
+        aria-label="Close"
+        style="
+          background: #f8f9fa;
+          border: none;
+          font-size: 24px;
+          cursor: pointer;
+          color: #555;
+        "
+      >
+        <!-- (click)="derect.toMenuPage()" -->
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+  <app-navbar></app-navbar>
 </div>
