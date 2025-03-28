@@ -1,0 +1,57 @@
+.breadcrumb{
+    margin: 12px;
+}
+
+.breadcrumb .breadcrumb-item a{
+    /* font-size: 18px; */
+    text-decoration: none;
+}
+#header-menu{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+}
+#isi-menu02{
+    padding: 10px 50px;
+    margin: 0 10px;
+    background-color: white;
+    box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.4);
+    /* border-radius: 0 0 30px 30px; */
+    border-radius: 20px 20px 0 0;
+    align-items: center;
+
+}
+
+#fileter_kategory{
+    margin: 20px 0;
+    font-size: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+#isi-menu{
+    padding: 20px 0;
+    margin: 6px 10px;
+    background-color: white;
+    box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.4);
+    /* border-radius: 0 0 30px 30px; */
+    border-radius: 0 0 20px 20px;
+    min-height: 65vh;
+    align-items: center;
+
+}
+
+#isi-menu #isitabel_product tbody tr{
+    text-align: center;
+    vertical-align: middle;
+    align-items: center;
+}
+
+#isi-menu #isitabel_product thead tr{
+    text-align: center;
+    vertical-align: middle;
+    align-items: center;
+}

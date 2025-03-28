@@ -36,6 +36,8 @@ export interface AdminOrderCassier {
     quantity?: number;
   }
 
-  // export interface patchstatus{
-
-  // }
+  export interface addProductOrder {
+    id : string;
+    quantity: number;
+    }
+    
