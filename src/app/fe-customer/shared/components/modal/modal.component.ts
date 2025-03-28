@@ -1,5 +1,4 @@
 import { Component, ElementRef, Input, Output, EventEmitter, ViewChild } from '@angular/core';
-import { Modal } from 'bootstrap';
 
 @Component({
   selector: 'app-modal',
@@ -44,27 +43,27 @@ export class ModalComponent {
   @Output() cancel = new EventEmitter<void>();
   
   @ViewChild('modalElement', { static: true }) modalElement!: ElementRef;
-  private modalInstance!: Modal;
+  // private modalInstance!: Modal;
 
   ngAfterViewInit() {
-    this.modalInstance = new Modal(this.modalElement.nativeElement);
+    // this.modalInstance = new Modal(this.modalElement.nativeElement);
   }
 
   openModal() {
-    this.modalInstance.show();
+    // this.modalInstance.show();
   }
 
   closeModal() {
-    this.modalInstance.hide();
+    // this.modalInstance.hide();
   }
 
   onConfirm() {
-    this.confirm.emit();
-    this.closeModal();
+    // this.confirm.emit();
+    // this.closeModal();
   }
 
   onCancel() {
-    this.cancel.emit();
-    this.closeModal();
+    // this.cancel.emit();
+    // this.closeModal();
   }
 }
