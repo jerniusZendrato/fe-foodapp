@@ -236,4 +236,19 @@ export class OrderLocalStorageCustService {
   getTable(): string | number {
     return this.order.tableName;
   }
+
+  isOrderValid(): boolean {
+    if (!this.order.customerName || !this.order.tableId) {
+      console.log("masuk si isOrderValid");
+      console.log('this.order.customerName :>> ', this.order.customerName);
+      console.log('this.order.tableId :>> ', this.order.tableId);
+      return false;
+    }
+    if (this.order && (this.order.productOrders?.length ?? 0) < 0) {
+      return false;
+    }
+
+    console.log("true");
+    return true
+  }
 }

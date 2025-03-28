@@ -149,7 +149,7 @@ import { ProductCust } from "../../models/product-cust.model";
         border-radius: 50%;
         background-color: white;
         border: 2px solid #e91e63;
-        font-size: 0.9rem;
+        font-size: 0.5rem;
         font-weight: bold;
         color: #e91e63;
         cursor: pointer;

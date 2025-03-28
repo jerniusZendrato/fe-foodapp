@@ -1,341 +1,107 @@
 <app-layout [isLoading]="this.isLoading">
   <div main class="main-container">
-    <div
-      style="
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: 16px;
-        padding: 8px 0;
-      "
-    >
-      <span
-        style="font-weight: bold; cursor: pointer"
-        (click)="this.derect.toMenuPage()"
-        >My Order</span
-      >
-      <span
-        style="font-weight: bold; color: #f00; cursor: pointer"
-        data-bs-toggle="modal"
-        data-bs-target="#cancelModal"
-      >
-        Cancel
-      </span>
-    </div>
-    <hr style="border-top: 2px solid #ddd; margin: 8px 0" />
-    <!-- Order Information -->
-    <div
-      *ngFor="let item of orderInformation"
-      style="
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0px 0;
-        border-bottom: 1px solid #eee;
-      "
-    >
-      <span style="color: #555; font-size: 11px;">{{ item.label }}</span>
-      <span style="font-weight: bold; color: #333; font-size: 11px">{{ item.value }}</span>
+
+    <div class="order-item" *ngFor="let item of orderInformation">
+      <span class="order-label">{{ item.label }}</span>
+      <span class="order-value">{{ item.value }}</span>
     </div>
 
-    <!-- payment method -->
+    <div class="d-flex justify-content-between">
+      <span class="fw-bold m-1" style="font-size: 13px;">My order ( {{this.orderService.getProductTotalQuantity()}}
+        )</span>
+      <button class="btn btn-outline-success btn-sm" (click)="this.derect.toMenuPage()">
+        <i class="fa-solid fa-plus mx-2"></i> Add Order
+      </button>
+    </div>
 
-    <div
-      class="card shadow"
-      style="
-        margin-top: 12px;
-        padding: 10px;
-        border: none;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-      "
-    >
-      <span style="font-weight: bold; font-size: 12px">Payment Method</span>
+    <div style="margin-bottom: 5px;" *ngFor="let productOrder of productOrder">
+      <app-product-card [product]="productOrder" (updateProductOrder)="updateProductOrder()"></app-product-card>
+    </div>
 
-      <div style="display: flex; align-items: center; margin-top: 3px">
-        <div
-          style="
-            width: 135px;
-            height: 29px;
-            border-radius: 4px;
-            border: 1px solid #ff0000;
-            display: flex;
-            align-items: center;
-            padding: 0 5px;
-            background-color: transparent;
-          "
-        >
-          <i
-            class="fa-solid fa-cash-register"
-            style="width: 16px; height: 16px; margin-right: 5px; color: #ff0000"
-          ></i>
-          <span style="font-size: 9px; color: #ff0000">
-            <strong> Pay at the cashier</strong></span
-          >
-
-          <div
-            style="
-              width: 12px;
-              height: 12px;
-              border: 1px solid #ff0000;
-              border-radius: 50%;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              margin-left: 4px;
-            "
-          >
-            <div
-              style="
-                width: 8px;
-                height: 8px;
-                background-color: #ff0000;
-                border-radius: 50%;
-              "
-            ></div>
-          </div>
-        </div>
+    <div class="summary-card">
+      <div class="summary-row">
+        <span class="summary-label">Sub Total</span>
+        <span class="summary-value">{{ this.orderService.getSubTotalPrice() | currency : "Rp" }}</span>
+      </div>
+      <div class="summary-row">
+        <span class="summary-label">Tax (10%)</span>
+        <span class="summary-value">{{ this.orderService.getTax() | currency : "Rp" }}</span>
       </div>
     </div>
-
     <div class="section-spacer"></div>
 
-    <!-- my order -->
 
-    <div class="order-section">
-      <span class="fw-bold m-1" style="font-size: 16px">My order</span>
-      <div class="order-list">
-        <div *ngFor="let productOrder of productOrder">
-          <app-product-card
-            [product]="productOrder"
-            (updateProductOrder)="updateProductOrder()"
-          ></app-product-card>
-        </div>
-      </div>
-    </div>
+    <app-order-button (processOrderEvent)="openProssesOrderModal()"></app-order-button>
 
-    <div class="content-wrapper">
-      <div class="container">
-        <div class="row">
-          <div class="col-4 text-end"></div>
-          <div class="col-4 text-start">
-            <span>Sub Total</span>
-          </div>
-          <div class="col-4 text-end">
-            <span class="fw-bold">{{
-              this.orderService.getSubTotalPrice() | currency : "Rp"
-            }}</span>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-4 text-end"></div>
-          <div class="col-4 text-start">
-            <span>Tax (10%)</span>
-          </div>
-          <div class="col-4 text-end">
-            <span class="fw-bold">{{
-              this.orderService.getTax() | currency : "Rp"
-            }}</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Total Payment -->
-      <div
-        style="
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding: 10px 0;
-          margin-top: 5px;
-          border-top: 1px solid #ddd;
-          font-weight: bold;
-          font-size: 20px;
-        "
-      >
-        <span>Total Payment</span>
-        <span>{{ this.orderService.getTotatPrice() | currency : "Rp" }} </span>
-      </div>
-
-      <!-- Buttons -->
-      <div
-        style="
-          display: flex;
-          justify-content: space-around;
-          align-items: center;
-        "
-      >
-        <button
-          style="
-            background-color: red;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 14px;
-            border-radius: 5px;
-            cursor: pointer;
-          "
-          (click)="this.derect.toMenuPage()"
-        >
-          Add Order
-        </button>
-        <button
-          style="
-            background-color: gold;
-            color: black;
-            border: none;
-            padding: 10px 20px;
-            font-size: 14px;
-            border-radius: 5px;
-            cursor: pointer;
-          "
-          data-bs-toggle="modal"
-          data-bs-target="#processModal"
-        >
-          Process
-        </button>
-      </div>
-    </div>
   </div>
 </app-layout>
 
-<!-- Button trigger modal -->
+<app-modal #ProssesOrderModal title="Order Process" titleColor="text-success" confirmButtonClass="btn btn-success"
+  cancelButtonClass="btn btn-outline-secondary" [position]="'center'" confirmButtonText="Process"
+  cancelButtonText="Go Back" (confirm)="placeOrder()" (cancel)="handleCancel()">
+  <p>Is your order correct? <br>
+    Please check your order again <br>
+    so you don't forget anything</p>
+</app-modal>
 
-<!-- Modal cancel -->
-<div
-  class="modal fade"
-  id="cancelModal"
-  data-bs-backdrop="static"
-  data-bs-keyboard="false"
-  tabindex="-1"
-  aria-labelledby="cancelModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div
-        class="modal-header d-flex justify-content-between align-items-center"
-      >
-        <h1
-          class="modal-title fs-5 main-color mx-auto fw-bold"
-          id="cancelModalLabel"
-        >
-          Cancel Order
-        </h1>
-      </div>
-      <div class="modal-body fw-bold text-center">
-        Are you sure you want to <span class="main-color" style="white-space: nowrap;">cancel</span> your order? 
-        Canceling will delete all your order requests.
-    </div>
-    
-    
-            
-      <div class="modal-footer d-flex justify-content-evenly">
-        <button
-          type="button"
-          class="btn btn-outline-secondary"
-          data-bs-dismiss="modal"
-        >
-          Not Sure
-        </button>
-        <button
-          type="button"
-          class="btn"
-          style="background-color: #f00; color: white"
-          data-bs-dismiss="modal"
-          (click)="this.orderService.removeOrder()"
-        >
-          Yes, sure
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
+<app-modal #errorModal title="Order Gagal" confirmButtonClass="btn btn-danger" confirmButtonText="Tutup"
+  [position]="'center'">
+  <p>Order failed, please try again or contact the waiter.</p>
+</app-modal>
 
-<!-- Modal process -->
-<div
-  class="modal fade"
-  id="processModal"
-  data-bs-backdrop="static"
-  data-bs-keyboard="false"
-  tabindex="-1"
-  aria-labelledby="processModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div
-        class="modal-header d-flex justify-content-between align-items-center"
-      >
-        <h1
-          class="modal-title fs-5 mx-auto fw-bold"
-          style="color: #1fac12;"
-          id="processModalLabel"
-        >
-          Order Process
-        </h1>
-      </div>
-      <div class="modal-body fw-bold text-center">
-        Is your order correct?
-        Please check your order again
-        so you don't forget anything
-    </div>
-    
-      <div class="modal-footer d-flex justify-content-evenly">
-        <button
-          type="button"
-          class="btn btn-outline-secondary"
-          data-bs-dismiss="modal"
-        >
-          Cancel
-        </button>
-        <button
-          type="button"
-          class="btn"
-          style="background-color: #1fac12; color: white"
-          data-bs-dismiss="modal"
-          (click)="placeOrder()"
-        >
-          Process
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
 <style>
   .main-container {
     display: flex;
     flex-direction: column;
-    height: 100%;
-    overflow: hidden;
+    gap: 8px;
+    padding: 12px;
+    /* background-color: #f9f9f9; */
   }
 
-  .order-section {
-    flex: 1;
+  .order-item {
     display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    padding: 0 20px;
+    justify-content: space-between;
+    padding: 6px 10px;
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    font-size: 14px;
   }
 
-  .order-list {
-    flex: 1;
-    overflow-y: auto;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    max-height: calc(100% - 10px); /* 50% dari parent minus ruang untuk judul */
+  .order-label {
+    color: #555;
   }
 
-  .order-list::-webkit-scrollbar {
-    display: none;
+  .order-value {
+    font-weight: bold;
+    color: #222;
   }
 
-  .content-wrapper {
-    padding: 20px 20px;
+  .summary-card {
+    margin-top: 16px;
+    padding: 12px;
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+    font-size: 13px;
+  }
+
+  .summary-label {
+    color: #555;
+  }
+
+  .summary-value {
+    font-weight: bold;
+    color: #222;
   }
 
   .section-spacer {
-    height: 20px; /* Anda bisa menyesuaikan tinggi ini sesuai kebutuhan */
+    height: 200px;
   }
 </style>
