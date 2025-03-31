@@ -19,7 +19,7 @@ export class WebsocketService {
 
   private connect() {
     this.stompClient = new Stomp.Client({
-      webSocketFactory: () => new SockJS(`${environment.API_URL}/ws`),
+      webSocketFactory: () => new SockJS(`${environment.API_URL_WS}/ws`),
       reconnectDelay: 5000,
       debug: (msg: string) => console.log(msg),
       onConnect: () => console.log('Connected to WebSocket'),
