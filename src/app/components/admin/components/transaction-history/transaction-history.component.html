@@ -44,17 +44,17 @@
           </div>
   
           <div style="display: flex; flex-direction: row">
-            <a
-              id="add-button"
-              data-bs-toggle="modal"
-              data-bs-target="#addrpoductModal"
-              >Download PDF <i class="fa-solid fa-print"></i></a
+            <button
+            type="button" class="btn btn-primary"
+            data-bs-toggle="modal"  data-bs-target="#downloadhistory"
+            >Download <i class="fa-solid fa-print"></i></button
             >
             <!-- <button type="button" class="btn btn-primary">Primary</button> -->
           </div>
         </div>
         <div id="isi-menu-filter" *ngIf="!isDisabled">
-        <div id="radios-menu" style="display: flex;flex-direction: column; margin-left: 30px;">
+          
+        <!-- <div id="radios-menu" style="display: flex;flex-direction: column; margin-left: 30px;">
           <div class="form-check">
             <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" [(ngModel)]="selectedValue" value="30">
             <label class="form-check-label" for="flexRadioDefault1">
@@ -76,9 +76,22 @@
         </div>
           <ul id="garis-menu-filter">
             <div style="width: 100%; height: 1px; background-color: black"></div>
-          </ul>
+          </ul> -->
+
+          <form class="row g-2">
+            <div class="col-auto">
+              <label for="inputPassword2" class="visually-hidden">Password</label>
+              <input type="password" class="form-control" id="inputPassword2" placeholder="Password">
+            </div>
+            <div class="col-auto">
+              <label for="inputPassword2" class="visually-hidden">Password</label>
+              <input type="password" class="form-control" id="inputPassword2" placeholder="Password">
+            </div>
+            <div class="col-auto">
+              <button type="submit" class="btn btn-primary mb-3">Confirm identity</button>
+            </div>
+          </form>
         </div>
-  
       </div>
       <div id="isi-menu">
         <table id="isitabel_product" class="table table-striped">
@@ -106,8 +119,8 @@
               <td>{{historyorder.customerName}}</td>
               <td>{{historyorder.adminName}}</td>
               <td>
-              <p *ngIf="historyorder.status?.toLowerCase() == 'PROCESS'" style="margin: 2px 6px; border-radius: 5px; background-color: #FBC924;">{{historyorder.status}}</p>
-              <p *ngIf="historyorder.status?.toLowerCase() != 'PROCESS'" style="margin: 2px 6px; border-radius: 5px; background-color: #A2FF99;">{{historyorder.status}}</p>
+              <p *ngIf="historyorder.status?.toLowerCase() === 'process'" style="margin: 2px 6px; border-radius: 5px; background-color: #FBC924;">{{historyorder.status}}</p>
+              <p *ngIf="historyorder.status?.toLowerCase() != 'process'" style="margin: 2px 6px; border-radius: 5px; background-color: #A2FF99;">{{historyorder.status}}</p>
               </td>
             </tr>
           </tbody>
@@ -115,3 +128,31 @@
       </div>
     </div>
 </div>
+
+  <!-- Modal untuk Add category baru -->
+  <div class="modal fade downloadhistory" id="downloadhistory" aria-hidden="true"
+    aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form class="row d-flex justify-content-evenly" >
+            <div class="col-auto">
+              <label for="inputstartdate" class="visually-hidden">Start date</label>
+              <input type="date" class="form-control" id="inputstartdate" placeholder="Start date">
+            </div>
+            <div class="col-auto">
+              <label for="inputenddate" class="visually-hidden">End Date</label>
+              <input type="date" class="form-control" id="inputenddate" placeholder="End Date">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Download</button>
+        </div>
+      </div>
+    </div>
+  </div>

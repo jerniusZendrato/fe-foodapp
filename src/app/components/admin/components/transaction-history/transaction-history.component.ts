@@ -34,7 +34,7 @@ export class TransactionHistoryComponent implements OnInit {
     return new Promise((resolve, reject) => {
       this.loaderService.show(); // Tampilkan loader
   
-      this.orderadmin.getorder(this.currentDate).subscribe(
+      this.orderadmin.getorders().subscribe(
         (response: AdminOrderCassier[]) => {
           this.Historyorder = response; // Simpan data
           this.loaderService.hide(); // Sembunyikan loader
