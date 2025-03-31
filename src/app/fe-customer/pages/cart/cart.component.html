@@ -1,52 +1,80 @@
 <app-layout [isLoading]="this.isLoading">
   <div main class="main-container">
-
     <div class="order-item" *ngFor="let item of orderInformation">
       <span class="order-label">{{ item.label }}</span>
       <span class="order-value">{{ item.value }}</span>
     </div>
 
     <div class="d-flex justify-content-between">
-      <span class="fw-bold m-1" style="font-size: 13px;">My order ( {{this.orderService.getProductTotalQuantity()}}
-        )</span>
-      <button class="btn btn-outline-success btn-sm" (click)="this.derect.toMenuPage()">
+      <span class="fw-bold m-1" style="font-size: 13px"
+        >My order ( {{ this.orderService.getProductTotalQuantity() }} )</span
+      >
+      <button
+        class="btn btn-outline-success btn-sm"
+        (click)="this.derect.toMenuPage()"
+      >
         <i class="fa-solid fa-plus mx-2"></i> Add Order
       </button>
     </div>
 
-    <div style="margin-bottom: 5px;" *ngFor="let productOrder of productOrder">
-      <app-product-card [product]="productOrder" (updateProductOrder)="updateProductOrder()"></app-product-card>
+    <div style="margin-bottom: 5px" *ngFor="let productOrder of productOrder">
+      <app-product-card
+        [product]="productOrder"
+        (updateProductOrder)="updateProductOrder()"
+      ></app-product-card>
     </div>
 
     <div class="summary-card">
       <div class="summary-row">
         <span class="summary-label">Sub Total</span>
-        <span class="summary-value">{{ this.orderService.getSubTotalPrice() | currency : "Rp" }}</span>
+        <span class="summary-value">{{
+          this.orderService.getSubTotalPrice() | currency : "Rp"
+        }}</span>
       </div>
       <div class="summary-row">
         <span class="summary-label">Tax (10%)</span>
-        <span class="summary-value">{{ this.orderService.getTax() | currency : "Rp" }}</span>
+        <span class="summary-value">{{
+          this.orderService.getTax() | currency : "Rp"
+        }}</span>
       </div>
     </div>
     <div class="section-spacer"></div>
 
-
-    <app-order-button (processOrderEvent)="openProssesOrderModal()"></app-order-button>
-
+    <app-order-button
+      (processOrderEvent)="openProssesOrderModal()"
+    ></app-order-button>
   </div>
 </app-layout>
 
-<app-modal #ProssesOrderModal title="Order Process" titleColor="text-success" confirmButtonClass="btn btn-success"
-  cancelButtonClass="btn btn-outline-secondary" [position]="'center'" confirmButtonText="Process"
-  cancelButtonText="Back" (confirm)="placeOrder()" (cancel)="handleCancel()">
-  <p>Is your order correct? <br>
-    Please check your order again <br>
-    so you don't forget anything</p>
+<app-modal
+  #ProssesOrderModal
+  title="Order Process"
+  titleColor="text-success"
+  confirmButtonClass="btn btn-success"
+  cancelButtonClass="btn btn-outline-secondary"
+  [position]="'center'"
+  confirmButtonText="Process"
+  cancelButtonText="Back"
+  (confirm)="placeOrder()"
+  (cancel)="handleCancel()"
+>
+  <p>
+    Is your order correct? <br />
+    Please check your order again <br />
+    so you don't forget anything
+  </p>
 </app-modal>
 
-<app-modal #errorModal title="Order Gagal" confirmButtonClass="btn btn-danger" confirmButtonText="Tutup"
-  [position]="'center'">
-  <p>Order failed, please try again or contact the waiter.</p>
+<app-modal
+  #errorModal
+  title="Order Failed"
+  confirmButtonClass="btn btn-danger"
+  confirmButtonText="Close"
+  [position]="'center'"
+>
+  Please make sure you have scanned the correct table number, entered the
+  customer's name, and selected at least one item before placing your order. If
+  you need assistance, please contact the waiter
 </app-modal>
 
 <style>

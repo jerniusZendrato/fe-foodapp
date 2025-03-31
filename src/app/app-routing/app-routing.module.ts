@@ -25,6 +25,7 @@ import { ParentKitchenOrderComponent } from '../components/admin/parent-kitchen-
 import { ParentAutenticationComponent } from '../components/admin/parent-autentication/parent-autentication.component';
 import { LoginAdminComponent } from '../components/admin/components/login-admin/login-admin.component';
 import { SettingsAdminComponent } from '../components/admin/components/settings-admin/settings-admin.component';
+import { WebsocketComponent } from '../fe-customer/pages/websocket/websocket.component';
 
 
 const feCustomerChildren: Routes = [
@@ -37,6 +38,8 @@ const feCustomerChildren: Routes = [
   { path: 'order/summary', component: OrderSummaryComponent },
   { path: 'history', component: OrderHistoryComponent },
   { path: 'history/:id', component: OrderHistoryDetailComponent },
+  { path: 'websocket', component: WebsocketComponent },
+
 ];
 
 const routes: Routes = [

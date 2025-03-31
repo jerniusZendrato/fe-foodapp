@@ -4,26 +4,8 @@
     flex-direction: column;
     height: 100vh;
     background-color: #f8f9fa;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    position: relative;
   "
 >
-  <!-- Close Button (X) at top left -->
-  <div style="position: absolute; top: 20px; left: 20px; z-index: 10">
-    <button
-      style="
-        background: none;
-        border: none;
-        font-size: 24px;
-        cursor: pointer;
-        color: #555;
-      "
-      (click)="derect.toMenuPage()"
-    >
-      <i class="fas fa-times"></i>
-    </button>
-  </div>
-
   <!-- Navbar Header with Avatar (centered) -->
   <div
     style="
@@ -90,14 +72,20 @@
         >
       </div>
     </div>
-  </div>
-
-  <!-- Footer -->
-  <div
-    style="padding: 1rem; color: black; text-align: center; font-size: 0.9rem"
-  >
-    <p style="margin: 0; opacity: 0.8">
-      powered by <span style="font-weight: bold; color: #2575fc">SBJU</span>
-    </p>
+    <!-- Footer (Powered By) -->
+    <div
+      style="
+        padding: 1rem;
+        color: black;
+        text-align: center;
+        font-size: 0.9rem;
+        margin-top: 450px;
+      "
+    >
+      <p style="margin: 0; opacity: 0.8">
+        powered by <span style="font-weight: bold; color: #2575fc">SBJU</span>
+      </p>
+      <p style="margin: 0; opacity: 0.8">© 2025 All rights reserved</p>
+    </div>
   </div>
 </div>

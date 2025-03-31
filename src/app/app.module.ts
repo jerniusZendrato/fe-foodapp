@@ -40,6 +40,7 @@ import { ParentKitchenOrderComponent } from './components/admin/parent-kitchen-o
 import { LoginAdminComponent } from './components/admin/components/login-admin/login-admin.component';
 import { ParentAutenticationComponent } from './components/admin/parent-autentication/parent-autentication.component';
 import { SettingsAdminComponent } from './components/admin/components/settings-admin/settings-admin.component';
+import { WebsocketComponent } from './fe-customer/pages/websocket/websocket.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -78,7 +79,8 @@ import { SettingsAdminComponent } from './components/admin/components/settings-a
     ParentKitchenOrderComponent,
     LoginAdminComponent,
     ParentAutenticationComponent,
-    SettingsAdminComponent
+    SettingsAdminComponent,
+    WebsocketComponent
     
     
   ],
