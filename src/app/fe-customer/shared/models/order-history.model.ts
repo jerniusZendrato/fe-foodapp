@@ -17,5 +17,6 @@ export interface OrderHistoryCust {
   tax: number;
   totalPrice: number;
   totalQuantity:number;
+  status?: string;
   productOrders?: OrderhistoryItemCust[];
 }

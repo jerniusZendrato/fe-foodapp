@@ -1,28 +1,47 @@
 <app-layout>
   <div main class="main-container">
-
+    
     <div class="text-center">
       <span class="text-success fw-bold">Order Successful</span>
     </div>
 
     <div class="order-item" *ngFor="let item of orderedInformation">
       <span class="order-label">{{ item.label }}</span>
-      <span class="order-value">{{ item.value }}</span>
+      <span *ngIf="item.label != 'Status'" class="order-value">{{ item.value }}</span>
+      <span 
+        *ngIf="item.label == 'Status'" 
+        [ngClass]="{
+          'text-warning': item.value == 'PROCESS',
+          'text-success': item.value == 'DELIVERED',
+        }" 
+        class="order-value"
+      >
+        {{ item.value }}
+      </span>
     </div>
 
     <div class="d-flex justify-content-between">
-      <span class="fw-bold m-1" style="font-size: 13px;">Item order ( {{ordered?.totalQuantity}} )</span>
+      <span class="fw-bold m-1" style="font-size: 13px"
+        >Item order ( {{ ordered?.totalQuantity }} )</span
+      >
     </div>
 
-    <div style="margin-bottom: 5px;" *ngFor="let productOrder of ordered?.productOrders">
-      <app-product-card [product]="productOrder" [isEdited]="false"></app-product-card>
+    <div
+      style="margin-bottom: 5px"
+      *ngFor="let productOrder of ordered?.productOrders"
+    >
+      <app-product-card
+        [product]="productOrder"
+        [isEdited]="false"
+      ></app-product-card>
     </div>
-
 
     <div class="summary-card">
       <div class="summary-row" *ngFor="let item of orderedPaymentInformation">
         <span class="summary-label">{{ item.label }}</span>
-        <span class="summary-value"> {{ item.value | currency : "Rp " : "symbol" : "1.0-0"}}</span>
+        <span class="summary-value">
+          {{ item.value | currency : "Rp " : "symbol" : "1.0-0" }}</span
+        >
       </div>
     </div>
 
@@ -43,11 +62,8 @@
       </button>
     </div>
     <div class="section-spacer"></div>
-
   </div>
-
 </app-layout>
-
 
 <style>
   .main-container {

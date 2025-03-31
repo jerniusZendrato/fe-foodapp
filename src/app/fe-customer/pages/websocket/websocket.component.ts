@@ -14,7 +14,7 @@ export class WebsocketComponent implements OnInit {
 
   ngOnInit() {
     const orderId = '12345'; // Ganti dengan ID order yang sesuai
-    this.websocketService.subscribeToOrder(orderId);
+    this.websocketService.subscribeToOrder();
     this.websocketService.orderStatus$.subscribe(status => {
       this.orderStatus = status;
       // getOrder

@@ -27,14 +27,26 @@ export class WebsocketService {
     this.stompClient.activate();
   }
 
-  subscribeToOrder(orderId: string) {
+  subscribeToOrder() {
     if (!this.stompClient || !this.stompClient.connected) {
       console.warn('WebSocket not connected yet. Retrying in 1 second...');
-      setTimeout(() => this.subscribeToOrder(orderId), 1000);
+      setTimeout(() => this.subscribeToOrder(), 1000);
       return;
     }
 
-    this.stompClient.subscribe(`/topic/orders/${orderId}`, (message) => {
+    this.stompClient.subscribe(`/topic/orders`, (message) => {
+      this.orderStatusSubject.next(message.body);
+    });
+  }
+
+  subscribeToStatusOrder(orderId: string) {
+    if (!this.stompClient || !this.stompClient.connected) {
+      console.warn('WebSocket not connected yet. Retrying in 1 second...');
+      setTimeout(() => this.subscribeToStatusOrder(orderId), 1000);
+      return;
+    }
+
+    this.stompClient.subscribe(`/topic/orders/${orderId}/status`, (message) => {
       this.orderStatusSubject.next(message.body);
     });
   }
