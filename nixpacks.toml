@@ -9,6 +9,13 @@
 [phases.setup]
     nixPkgs = ['...', 'jq'] # jq is needed to parse the outputPath from our angular.json file
 
+# get the output path from our angular.json file
+[phases.output]
+    dependsOn = ['setup']
+    cmds = [
+        'jq -r "[.projects[] | .architect.build.options.outputPath][0]" angular.json > angular_output_path' # save the resulting value into a file so that we can load the file into a variable in the final image
+    ]
+
 # download caddy from nix
 [phases.caddy]
     dependsOn = ['setup'] # make sure this phase runs after the default 'setup' phase
@@ -20,6 +27,6 @@
     dependsOn = ['caddy'] # make sure this phase runs after the 'caddy' phase so that we know we have caddy downloaded
     cmds = ['caddy fmt --overwrite Caddyfile'] # format the Caddyfile to fix any formatting inconsistencies
 
-# compute the output path and start the caddy web server
+# copy caddy and build artifacts to a new image and start the caddy web server
 [start]
-    cmd = 'export ANGULAR_OUTPUT_PATH=$(jq -r "[.projects[] | .architect.build.options.outputPath][0]" angular.json) && exec caddy run --config Caddyfile --adapter caddyfile 2>&1' # load the contents of the output file into a variable and start caddy using the Caddyfile config and caddyfile adapter
+    cmd = 'export ANGULAR_OUTPUT_PATH=$(cat angular_output_path); caddy run --config Caddyfile --adapter caddyfile 2>&1' # start caddy using the Caddyfile config and caddyfile adapter
