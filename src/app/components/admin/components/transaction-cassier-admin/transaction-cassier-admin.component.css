@@ -166,6 +166,22 @@
     align-items: center;
     font-size: 12px;
 }
+#detailorderan #tabledetai01 td{
+    font-size: 12px;
+}
+#detailorderan #tabledetai02 thead tr{
+    text-align: center;
+    vertical-align: middle;
+    align-items: center;
+    font-size: 12px;
+}
+
+#detailorderan #tabledetai02 tbody tr{
+    text-align: center;
+    vertical-align: middle;
+    align-items: center;
+    /* font-size: 12px; */
+}
 
 .fade {
     opacity: 0;

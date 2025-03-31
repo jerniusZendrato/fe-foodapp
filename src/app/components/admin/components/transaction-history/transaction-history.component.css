@@ -55,3 +55,16 @@
     vertical-align: middle;
     align-items: center;
 }
+#isi-menu-filter{
+    /* border: 2px solid black; */
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+    height: 100%;
+    margin: 10px 0;
+    /* overflow-x: auto; */
+}
+#radios-menu .form-check .form-check-label{
+    font-size: small;
+}

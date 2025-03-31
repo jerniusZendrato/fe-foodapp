@@ -14,7 +14,10 @@ export class ParentCassierOrderComponent {
 
   ngOnInit() {
     this.loaderService.isLoading.subscribe((loading) => {
-      this.isLoading = loading;
+      setTimeout(() => {  
+        this.isLoading = loading; // ✅ Panggil toast setelah delay
+      });
+      // this.isLoading = loading;
     });
   }
 

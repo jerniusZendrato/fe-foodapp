@@ -104,6 +104,7 @@ export class TransactionCassierAdminComponent implements OnInit {
   }
 
   public datacategory: AdminCategory[] = []
+  
 
   loadcategory(): Promise<void>{
     return new Promise((resolve, reject) => {
@@ -112,14 +113,16 @@ export class TransactionCassierAdminComponent implements OnInit {
         (Response: AdminCategory[]) => {
           if (Response) {
             this.datacategory = Response
+      //       
+
             console.log("ini category", this.datacategory)
             // this.groupProductsByCategory()
-            this.loaderService.hideWithDelay(1000);
+            this.loaderService.hide();
             resolve();
           }
           else
             console.log("data tidak isSuccess=true")
-            this.loaderService.hideWithDelay(1000);
+            this.loaderService.hide();
           reject()
         }
 
@@ -160,7 +163,27 @@ export class TransactionCassierAdminComponent implements OnInit {
     
     ;}
 
+    //FUNGSI UNTUK DETAIL ORDERAN
+  ordersbyid: AdminOrderCassier[] = [];
+  getorderbyid(id: string): void{
+    if(id){
+      this.loaderService.show();
+      this.orderadmin.getorderbyid(id).subscribe(
+        (Response: AdminOrderCassier[]) => {
+          if(Response){
+            console.log(Response)
+            this.ordersbyid = Response
+            
+            this.loaderService.hideWithDelay(1000);
+          }else{
+            this.loaderService.hideWithDelay(1000);
 
+          }
+        }
+      )
+    }
+  }
+  
   // public datacordercassier: AdminOrderCassier[] = []
   // public currentDate = new Date().toISOString().split('T')[0]; 
 

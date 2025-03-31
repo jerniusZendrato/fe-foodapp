@@ -10,11 +10,11 @@
       "
     >
       <div id="header-menu">
-        <!-- <h3>Cassier Admin</h3> -->
+        <!-- <h3>Cashier Admin</h3> -->
         <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a routerLink="/admin">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Cassier Admin</li>
+            <li class="breadcrumb-item active" aria-current="page">Cashier Admin</li>
           </ol>
         </nav>
       </div>
@@ -42,7 +42,7 @@
   
           <div style="display: flex; flex-direction: row">
             <button  type="button" class="btn btn-primary btn-sm" routerLink="/post">Add New Order</button>
-            <!-- <button  type="button" class="btn btn-primary btn-sm" (click)="moveaddorder()">{{ addneworder ? 'Cassier admin' : 'Add New Order' }}</button> -->
+            <!-- <button  type="button" class="btn btn-primary btn-sm" (click)="moveaddorder()">{{ addneworder ? 'Cashier admin' : 'Add New Order' }}</button> -->
             
           </div>
         </div>
@@ -101,8 +101,8 @@
                 >
               
   
-                  <div style="color: green; font-size: 20px; margin: 0">
-                    <i class="fa-solid fa-print"></i>
+                  <div style="color: green; font-size: 20px; margin: 0; cursor: pointer;">
+                    <i class="fa-solid fa-print" data-bs-toggle="modal" data-bs-target="#detailorderan" (click)="getorderbyid(dataorder.id)"></i>
                   </div>
                 </div>
               </td>
@@ -240,6 +240,89 @@
           </div>
         </div>
         
+      </div>
+    </div>
+  </div>
+
+  <!-- Scrollable modal -->
+  <div class="modal fade" id="detailorderan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-body" *ngFor="let orderid of ordersbyid">
+          <div style="display: flex; flex-direction: column; justify-content: center; justify-content: center;">
+           <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <img
+            src="https://image-storage-order-app.s3.eu-north-1.amazonaws.com/logo/logo.png"
+            alt="Image"
+            alt=""
+            width="80"
+          />
+          </div>
+            <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <h1>WARUNG K'JAYA</h1>
+            <p>CLOSED BILL</p>
+            <table id="tabledetai01" class="table table-borderless">
+              <TBody>
+                <td>
+                <tr><td>{{orderid.createdAt| date: 'dd MMM YYYY, HH:mm'}}</td></tr>
+                <tr><td>Order Type</td></tr>
+                <tr><td>Table Number</td></tr>
+                <tr><td>Cashier</td></tr>
+                <tr><td>Costumer</td></tr>
+                <tr><td>Payment Method</td></tr>
+              </td>
+              <td align="right">
+                <tr><td>{{orderid.code}}</td></tr>
+                <tr><td>{{orderid.type}}</td></tr>
+                <tr><td>{{orderid.tableName}}</td></tr>
+                <tr><td>{{orderid.adminName}}</td></tr>
+                <tr><td>{{orderid.customerName}}</td></tr>
+                <tr><td>Pay at cashier</td></tr>
+              </td>
+              </TBody>
+            </table>
+            <table id="tabledetai02" class="table table-sm table-borderless">
+              <thead class="table-secondary">
+                <tr>
+                  <td>ITEM ORDER</td>
+                  <td>QUANTITY</td>
+                  <td>PRICES</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let detailorderid of orderid.productOrders">
+                  <td>{{detailorderid.name}}</td>
+                  <td>{{detailorderid.quantity}}</td>
+                  <td>{{detailorderid.subTotalPrice | number:'1.2-2'}}</td>
+                </tr>
+              </tbody>
+              <tbody class="table-secondary">
+                <tr>
+                  <td></td>
+                  <td>SubTotal</td>
+                  <td>{{ orderid.subTotalPrice| number:'1.2-2'}}</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>Tax(10%)</td>
+                  <td *ngIf="orderid.subTotalPrice !== undefined">{{(orderid.tax) | number:'1.2-2'}}</td>
+                </tr>
+              </tbody>
+              <tbody>
+                <tr>
+                  <!-- <td></td> -->
+                  <td colspan="2"><b>Total payment</b></td>
+                  <td *ngIf="orderid.subTotalPrice !== undefined">{{orderid.totalPrice | number:'1.2-2'}}</td>
+                </tr>
+              </tbody>
+            </table>
+            <p style="font-size: 24px; margin-top: 20px;">Thank you for coming,</p>
+            <p>don't forget to tell your close friends about our restaurant</p>
+            <button style="margin-top: 40px;" class="btn btn-primary">DOWNLOAD PDF <i class="fa-solid fa-print"></i></button>
+          </div>
+          </div>
+        </div>
+       
       </div>
     </div>
   </div>
