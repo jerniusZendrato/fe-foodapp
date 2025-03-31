@@ -71,11 +71,20 @@ export class CassierOrderComponent implements OnInit{
       this.loaderService.show();
       this.orderService.addorder(addorder).subscribe({
         next: (response: any) => {
-          console.log("Order saved:", response);
-          this.showsuccessToast()
-          this.loaderService.hideWithDelay(1000);
-          this.clearlocalstorage()
-          resolve(); // Selesaikan promise jika berhasil
+          if(response){
+
+            console.log("Order saved:", response);
+            this.clearlocalstorage()
+            this.showsuccessToast()
+            resolve(); // Selesaikan promise jika berhasil
+            this.loaderService.hide();
+          }else{
+            console.error("Error saving order:");
+            this.showErrorToast()
+            this.loaderService.hideWithDelay(1000);
+            reject(); // Tolak promise jika terjadi error
+          }
+          
         },
         error: (err: any) => {
           console.error("Error saving order:", err);

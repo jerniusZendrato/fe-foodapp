@@ -12,6 +12,7 @@ export interface AdminOrderCassier {
     status: string;
     type: string;
     adminId: string;
+    subTotalPrice?: number;
     adminName: string;
     tableName: string;
     tableId: string;
@@ -19,7 +20,7 @@ export interface AdminOrderCassier {
   }
   export interface AdminDetailOrderCassier{
     id : string;
-    productName : string;
+    name : string;
     quantity : number;
     subTotalPrice : number;
   }
@@ -40,4 +41,6 @@ export interface AdminOrderCassier {
     id : string;
     quantity: number;
     }
+
+  
     

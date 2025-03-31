@@ -33,6 +33,18 @@ export class OrderAdminService {
       })
     );
   }
+  getorderbyid(id:string):Observable<AdminOrderCassier[]>{
+    // const params = new HttpParams().set('id', id);
+    return this.http.get<{ isSuccess: boolean; data: AdminOrderCassier[] }>(`${environment.API_URL}/order/${id}`).pipe(
+      map(response => {
+        return Array.isArray(response.data) ? response.data : [response.data]; // Konversi jadi array jika bukan
+  }),
+      catchError(error => {
+        console.error('Terjadi kesalahan saat mengambil produk:', error);
+        return throwError(() => new Error('Gagal mengambil data produk'));
+      })
+    );
+  }
 
   
   

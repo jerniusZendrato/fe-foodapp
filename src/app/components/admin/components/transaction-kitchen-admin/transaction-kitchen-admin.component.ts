@@ -20,6 +20,10 @@ export class TransactionKitchenAdminComponent implements OnInit {
   ){}
 
   public currentDate = new Date().toISOString().split('T')[0]; 
+
+  // ini untuk tanggal kemarin
+  // public currentDate_1 = new Date(new Date().setDate(new Date().getDate() - 1)).toISOString().split('T')[0];
+
   public status = 'PROCESS'
   public orderprocess: AdminOrderCassier[] = []
   public totalorderprocess: number = 0
