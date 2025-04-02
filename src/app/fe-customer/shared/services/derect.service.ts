@@ -20,6 +20,7 @@ export class DerectService {
   }
 
   toOrderSummary() {
+    this.refreshPage();    
     this.router.navigate([`/order/summary`]);
   }
   refreshPage() {

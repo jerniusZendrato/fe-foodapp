@@ -4,6 +4,7 @@ import { DerectService } from 'src/app/fe-customer/shared/services/derect.servic
 import { OrderLocalStorageCustService } from '../../shared/services/order-local-storage-cust.service';
 import { OrderHistoryCust } from '../../shared/models/order-history.model';
 import { WebsocketService } from '../../shared/services/websocket.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-order-summary',
@@ -25,33 +26,40 @@ export class OrderSummaryComponent {
     private cdr: ChangeDetectorRef
   ) {}
 
-  ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
-      this.orderId = params.get('id');
-    });
+  private orderStatusSubscription!: Subscription;
 
+  ngOnInit(): void {
+    
     this.ordered = this.order.getOrdered();
-    console.log('this.ordered :>> ', this.ordered);
 
     this.updateOrderedInformation();
     this.updateOrderedPaymentInformation();
 
     if (this.ordered?.id) {
       this.websocketService.subscribeToStatusOrder(this.ordered.id);
+      console.log("thos.ordered.id :>> ", this.ordered.id);
     } else {
       console.warn('Order ID is null. Cannot subscribe to order status.');
     }
 
-    this.websocketService.orderStatus$.subscribe((status) => {
-      if (this.ordered) {
-        this.ordered = {
-          ...this.ordered,
-          status: status ? status.toUpperCase() : this.ordered.status,
-        };
-        this.updateOrderedInformation();
-        this.cdr.detectChanges();
+    this.orderStatusSubscription = this.websocketService.orderStatus$.subscribe(
+      (status) => {
+        if (this.ordered) {
+          this.ordered = {
+            ...this.ordered,
+            status: status ? status.toUpperCase() : this.ordered.status,
+          };
+          this.updateOrderedInformation();
+          this.cdr.detectChanges();
+        }
       }
-    });
+    );
+  }
+
+  ngOnDestroy(): void {
+    if (this.orderStatusSubscription) {
+      this.orderStatusSubscription.unsubscribe();
+    }
   }
 
   private updateOrderedInformation(): void {
