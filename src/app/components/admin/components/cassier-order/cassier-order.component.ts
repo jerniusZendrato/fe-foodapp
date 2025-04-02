@@ -20,8 +20,6 @@ import { OrderAdminService } from '../../services/order-admin.service';
 export class CassierOrderComponent implements OnInit{
 
   ngOnInit(): void {
-    this.loadcategory()
-    this.groupProductsByCategory()
     this.loadproducts()
     this.loadtable()
     this.loadSavedProducts()
@@ -77,7 +75,6 @@ export class CassierOrderComponent implements OnInit{
             this.clearlocalstorage()
             this.showsuccessToast()
             resolve(); // Selesaikan promise jika berhasil
-            this.loaderService.hide();
           }else{
             console.error("Error saving order:");
             this.showErrorToast()
@@ -92,9 +89,10 @@ export class CassierOrderComponent implements OnInit{
           this.loaderService.hideWithDelay(1000);
           reject(err); // Tolak promise jika terjadi error
         }
-      });
-      this.loaderService.hideWithDelay(1000);
-    });
+      } 
+    );
+    this.loaderService.hideWithDelay(1000)}
+);
   }
 
   // add order- addproductorder
@@ -135,8 +133,10 @@ export class CassierOrderComponent implements OnInit{
       (Response: AdminProduct[]) => {
         if (Response) {
           this.products = Response
+          // pastikan setelah product ada panggil category
+          this.loadcategory()
           console.log(this.products, "this producttt")
-          this.groupProductsByCategory()
+          // this.groupProductsByCategory()
           resolve();
         }
         else
@@ -155,7 +155,9 @@ export class CassierOrderComponent implements OnInit{
           if (Response) {
             this.datacategory = Response
             console.log("ini category", this.datacategory)
-            // this.groupProductsByCategory()
+            // jika category sudah di panggil saat loaderproduct,
+            //  lalu panggil groupProductsByCategory untuk memastikan pengelompokan product by category
+            this.groupProductsByCategory()
             this.loaderService.hideWithDelay(1000);
             resolve();
           }
@@ -174,10 +176,11 @@ export class CassierOrderComponent implements OnInit{
   public groupedProducts: { [key: string]: AdminProduct[] } = {};
 
   groupProductsByCategory(): void {
-
+    
     const activeCategories = this.datacategory
     .filter(category => category.isActivated)
     .map(category => category.name);
+    console.log("activeCategories.length",activeCategories.length)
 
     // cek apakah di roduct memiliki kategory aktif 
     // jika ia maka masukkan data tersebut ke filteredProducts
@@ -202,7 +205,8 @@ export class CassierOrderComponent implements OnInit{
         this.tableService.gettable().subscribe(
           (Response: AdminTable[]) => {
             if (Response) {
-              this.table = Response
+              // this.table = Response
+              this.table = Response.filter(item => item.isActivated);
               console.log("ini table", this.table)
               this.loaderService.hideWithDelay(1000);
               resolve();

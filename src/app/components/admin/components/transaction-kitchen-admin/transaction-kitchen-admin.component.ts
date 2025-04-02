@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LoaderService } from '../../services/loader.service';
 import { KitchenAdminService } from '../../services/kitchen-admin.service';
 import { AdminOrderCassier } from '../../models/admin-order-cassier.model';
+import { WebsocketService } from 'src/app/fe-customer/shared/services/websocket.service';
 
 @Component({
   selector: 'app-transaction-kitchen-admin',
@@ -13,10 +14,13 @@ export class TransactionKitchenAdminComponent implements OnInit {
 
   ngOnInit(): void {
       this.getkitchenorder()
+      this.webSocketService.subscribeToOrder();
+      this.updatekitchenorder()
     }
   constructor(
     private loaderService: LoaderService,
     private ktichenadmin: KitchenAdminService,
+    private webSocketService: WebsocketService
   ){}
 
   public currentDate = new Date().toISOString().split('T')[0]; 
@@ -27,6 +31,36 @@ export class TransactionKitchenAdminComponent implements OnInit {
   public status = 'PROCESS'
   public orderprocess: AdminOrderCassier[] = []
   public totalorderprocess: number = 0
+
+  updatekitchenorder(): void{
+    this.webSocketService.orderStatus$.subscribe(
+      (data) => {
+        try {
+          const parsedData = JSON.parse(data ?? "[]") as {data:AdminOrderCassier[]}; // 🔥 Konversi JSON string ke array
+          if (!parsedData || typeof parsedData !== "object" || !Array.isArray(parsedData.data)) {
+            console.error("Expected an array, but received:", parsedData);
+            return;
+          }
+          this.orderprocess = parsedData.data.filter(order => {
+            if (order.status) {
+              return order.status.toLowerCase() === 'process'
+            }
+            return false;
+          })
+          this.totalorderprocess = this.orderprocess.length
+          this.playNotificationSound()
+          this.neworderToast()
+        }catch (error) {
+          console.error("Error parsing WebSocket data:", error);
+        }
+
+      })
+  }
+
+  playNotificationSound() {
+    const audio = new Audio('assets/notification.mp3'); // Path ke file suara di dalam folder `assets`
+    audio.play().catch(error => console.error("Audio playback failed:", error));
+  }
 
   getkitchenorder(): Promise<void>{
     return new Promise((resolve, reject) => {
@@ -59,6 +93,13 @@ export class TransactionKitchenAdminComponent implements OnInit {
     const toast = new (window as any).bootstrap.Toast(toastElement);
     toast.show();
   }
+  neworderToast(): void {
+    const toastElement = document.getElementById('neworderToast');
+    const toast = new (window as any).bootstrap.Toast(toastElement);
+    toast.show();
+  }
+
+  
   patchorderstatus(orderid:string){
     this.loaderService.show();
     this.ktichenadmin.patchorderstatus(orderid).subscribe(
@@ -83,4 +124,9 @@ export class TransactionKitchenAdminComponent implements OnInit {
     )
   }
 
+  
+
 }
+
+
+
