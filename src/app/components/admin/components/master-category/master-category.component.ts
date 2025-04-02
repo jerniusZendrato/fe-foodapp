@@ -176,6 +176,7 @@ export class MasterCategoryComponent implements OnInit {
       (responce) =>{
         if(responce['isSuccess']==true){
           this.showsuccessToast()
+          this.loadcategory()
           this.refreshTable()
         }else{
           console.error('Failed to save category');
@@ -233,6 +234,7 @@ export class MasterCategoryComponent implements OnInit {
           this.showsuccessToast()
           // supaya menyimpan data awal yang sudah di update
           this.dataproductawal()
+          this.loadcategory()
         } else {
           console.error('Failed to save products');
           this.refreshTable()
@@ -284,6 +286,8 @@ export class MasterCategoryComponent implements OnInit {
           console.log('Update successful:', response);
           this.refreshTable()
           this.showsuccessToast()
+          this.loadcategory()
+          this.clearselectedCategory()
           this.loaderService.hideWithDelay(2000);
           this.updatecategorynameSave = ''
           // Tambahkan logika jika perlu
