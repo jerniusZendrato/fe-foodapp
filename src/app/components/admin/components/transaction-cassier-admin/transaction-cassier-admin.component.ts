@@ -6,6 +6,7 @@ import { OrderAdminService } from '../../services/order-admin.service';
 import { AdminOrderCassier } from '../../models/admin-order-cassier.model';
 import { AdminCategory } from '../../models/admin-category.model';
 import { AdminProduct } from '../../models/admin-product.model';
+import { WebsocketService } from 'src/app/fe-customer/shared/services/websocket.service';
 
 @Component({
   selector: 'app-transaction-cassier-admin',
@@ -13,19 +14,18 @@ import { AdminProduct } from '../../models/admin-product.model';
   styleUrls: ['./transaction-cassier-admin.component.css']
 })
 export class TransactionCassierAdminComponent implements OnInit {
-  ngOnInit(): void {
-  this.getorderview()
-  this.loadcategory()
-  this.groupProductsByCategory()
-    
-  }
   constructor(
     private orderadmin: OrderAdminService,
     private loaderService: LoaderService,
-    private productservice: ProductService,
-    private categoryservice: CategoryService
+    private webSocketService: WebsocketService
 
   ){}
+  ngOnInit(): void {
+  this.getorderview()
+  this.groupProductsByCategory()
+  this.webSocketService.subscribeToOrder();
+  this.updateorderviewwebsocket()
+  }
 
   public orderview: AdminOrderCassier[] = []
   public orderprocess: AdminOrderCassier[] = []
@@ -40,6 +40,37 @@ export class TransactionCassierAdminComponent implements OnInit {
   }
   public currentDate = new Date().toISOString().split('T')[0]; 
 
+  updateorderviewwebsocket(): void{
+    this.webSocketService.orderStatus$.subscribe(
+      (data) => {
+        // confirm("masuk nih")
+        try {
+          const parsedData = JSON.parse(data ?? "[]") as {data:AdminOrderCassier[]}; // 🔥 Konversi JSON string ke array
+          if (!parsedData || typeof parsedData !== "object" || !Array.isArray(parsedData.data)) {
+            console.error("Expected an array, but received:", parsedData);
+            return;
+          }
+        const tanggalSekarang: string = new Date().toISOString().split('T')[0];
+        
+        this.orderview = parsedData.data.filter(order => {
+          console.log('order.createdAt',order.createdAt)
+          if (order.createdAt ) {
+            
+            const createdAtDate = new Date(order.createdAt).toLocaleDateString('en-CA').split('T')[0];
+            // console.log("Order ditemukan:", order);
+            console.log("createdAtDate",createdAtDate,order.customerName)
+            this.neworderToast()
+            return createdAtDate === tanggalSekarang;
+          }
+          return false;
+        });
+        
+      }catch (error) {
+        console.error("Error parsing WebSocket data:", error);
+      }
+      }
+    );
+  }
   getorderview(): Promise<void>{
     return new Promise((resolve, reject) => {
       this.loaderService.show();
@@ -106,30 +137,7 @@ export class TransactionCassierAdminComponent implements OnInit {
   public datacategory: AdminCategory[] = []
   
 
-  loadcategory(): Promise<void>{
-    return new Promise((resolve, reject) => {
-      this.loaderService.show();
-      this.categoryservice.getcategory().subscribe(
-        (Response: AdminCategory[]) => {
-          if (Response) {
-            this.datacategory = Response
-      //       
-
-            console.log("ini category", this.datacategory)
-            // this.groupProductsByCategory()
-            this.loaderService.hide();
-            resolve();
-          }
-          else
-            console.log("data tidak isSuccess=true")
-            this.loaderService.hide();
-          reject()
-        }
-
-      )
-    })
-  }
-
+ 
 
 
 
@@ -182,6 +190,13 @@ export class TransactionCassierAdminComponent implements OnInit {
         }
       )
     }
+  }
+
+
+  neworderToast(): void {
+    const toastElement = document.getElementById('neworderToast');
+    const toast = new (window as any).bootstrap.Toast(toastElement);
+    toast.show();
   }
   
   // public datacordercassier: AdminOrderCassier[] = []

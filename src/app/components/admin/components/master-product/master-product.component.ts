@@ -323,6 +323,7 @@ export class MasterProductComponent implements OnInit, CanComponentDeactivate{
       (Response: AdminProduct[]) => {
         if (Response) {
           this.products = Response
+          this.groupProductsByCategory()
           console.log(this.products, "this producttt")
           resolve();
         }
@@ -467,6 +468,7 @@ groupProductsByCategory(): void {
               document.getElementById('addrpoductModal')
             );
             modal.hide(); 
+            this.loadproducts()
           },
           (error) => {
             console.log('error :>> ', error);
