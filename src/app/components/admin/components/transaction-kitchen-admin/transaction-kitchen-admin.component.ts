@@ -43,6 +43,7 @@ export class TransactionKitchenAdminComponent implements OnInit {
           }
           this.orderprocess = parsedData.data.filter(order => {
             if (order.status) {
+              this.playNotificationSound()
               return order.status.toLowerCase() === 'process'
             }
             return false;
