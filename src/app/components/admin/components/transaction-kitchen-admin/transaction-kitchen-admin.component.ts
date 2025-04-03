@@ -49,7 +49,6 @@ export class TransactionKitchenAdminComponent implements OnInit {
             return false;
           })
           this.totalorderprocess = this.orderprocess.length
-          this.playNotificationSound()
           this.neworderToast()
         }catch (error) {
           console.error("Error parsing WebSocket data:", error);
