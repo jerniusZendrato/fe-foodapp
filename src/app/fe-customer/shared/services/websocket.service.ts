@@ -25,9 +25,10 @@ private connect(): Promise<void> {
     this.stompClient = new Stomp.Client({
       webSocketFactory: () => new SockJS(`${environment.API_URL_WS}/ws`),
       reconnectDelay: 5000,
-      debug: (msg: string) => console.log(msg),
+      debug: (msg: string) => {
+        console.log();
+      },
       onConnect: () => {
-        console.log('Connected to WebSocket');
         this.isConnected = true;
         resolve();
       },

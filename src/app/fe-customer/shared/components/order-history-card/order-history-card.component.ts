@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { OrderHistoryCust as OrderHistory } from '../../models/order-history.model';
 import { DerectService } from '../../services/derect.service';
+import { OrderLocalStorageCustService } from '../../services/order-local-storage-cust.service';
 
 @Component({
   selector: 'app-order-history-card',
@@ -42,6 +43,8 @@ import { DerectService } from '../../services/derect.service';
         </div>
         <div>
           <button
+            (click)="order.id && reorder(order.id)"
+            class="rounded-button"
             style="background-color: #28a745; border: none; color: white; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; display: flex; align-items: center; transition: background-color 0.3s;"
           >
             Order Again
@@ -55,5 +58,19 @@ import { DerectService } from '../../services/derect.service';
 export class OrderHistoryCardComponent {
   @Input() order!: OrderHistory;
 
-  constructor(public derect: DerectService) {}
+  constructor(
+    public derect: DerectService,
+    private readonly orderService: OrderLocalStorageCustService
+  ) {}
+
+  reorder(orderId: string) {
+    const success = this.orderService.makeOrderAgain(orderId);
+    if (success) {
+      // Navigasi ke halaman order atau tampilkan pesan sukses
+      this.derect.toMenuPage();
+    } else {
+      // Tampilkan pesan error
+      console.error('Failed to reorder');
+    }
+  }
 }

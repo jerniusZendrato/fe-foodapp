@@ -1,4 +1,12 @@
 export interface OrderhistoryItemCust {
+  category: string;
+  categoryId: string;
+  description: string;
+  urlImage: string;
+  name: string;
+  id: string;
+  productId: string;
+  price: number;
   productName: string;
   quantity: number;
   productPrice: number;
