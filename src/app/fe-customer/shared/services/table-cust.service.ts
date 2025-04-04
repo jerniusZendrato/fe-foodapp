@@ -26,7 +26,6 @@ export class TableCustService {
           }
         }),
         catchError((error) => {
-          console.error('Error occurred while fetching table:', error);
           return throwError(() => new Error('Failed to fetch table data'));
         })
       );
@@ -46,7 +45,6 @@ export class TableCustService {
           }
         }),
         catchError((error) => {
-          console.error('Error occurred while fetching table:', error);
           return throwError(() => new Error('Failed to fetch table data'));
         })
       );
