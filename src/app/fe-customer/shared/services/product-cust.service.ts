@@ -22,7 +22,6 @@ export class ProductCustService {
         }
       }),
       catchError((error) => {
-        console.error('Error occurred while fetching product:', error);
         return throwError(() => new Error('Failed to fetch product data'));
       })
     );

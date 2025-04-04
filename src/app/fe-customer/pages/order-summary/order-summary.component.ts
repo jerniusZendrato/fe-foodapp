@@ -37,7 +37,6 @@ export class OrderSummaryComponent {
 
     if (this.ordered?.id) {
       this.websocketService.subscribeToStatusOrder(this.ordered.id);
-      console.log("thos.ordered.id :>> ", this.ordered.id);
     } else {
       console.warn('Order ID is null. Cannot subscribe to order status.');
     }
@@ -63,7 +62,6 @@ export class OrderSummaryComponent {
   }
 
   private updateOrderedInformation(): void {
-    console.log('this.ordered :>> ', this.ordered);
     this.orderedInformation = [
       {
         label: this.ordered?.createdAt
