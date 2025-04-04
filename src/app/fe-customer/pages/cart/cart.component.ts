@@ -28,14 +28,14 @@ export class CartComponent implements OnInit {
   constructor(
     public orderService: OrderLocalStorageCustService,
     public derect: DerectService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.orderInformation = [
       { label: 'Order Type', value: this.orderService.getOrderType() },
       { label: 'Table Number', value: this.orderService.getTable() },
       { label: 'Costumer', value: this.orderService.getCostumerName() },
-      { label: 'Payment Method', value: "Pay at the cashier" },
+      { label: 'Payment Method', value: 'Pay at the cashier' },
     ];
 
     this.order = this.orderService.getOrder();
@@ -57,14 +57,11 @@ export class CartComponent implements OnInit {
           if (response.isSuccess) {
             // Handle success
           } else {
-            this.showErrorModal()
-          
-          console.log('"object" :>> ');  // Handle failure
+            this.showErrorModal();
           }
         },
         error: (error) => {
-
-          this.showErrorModal()
+          this.showErrorModal();
         },
       });
   }
@@ -77,29 +74,23 @@ Meja tidak boleh kosong.
 Nama pelanggan tidak boleh kosong.`);
   }
 
-
-
   updateProductOrder(): void {
     this.productOrder = this.orderService.getProductOrder();
   }
 
-  @ViewChild('ProssesOrderModal', { static: false }) ProssesOrderModal!: ModalComponent;
+  @ViewChild('ProssesOrderModal', { static: false })
+  ProssesOrderModal!: ModalComponent;
   @ViewChild('errorModal', { static: false }) errorModal!: ModalComponent;
 
   openProssesOrderModal() {
     this.ProssesOrderModal.openModal();
   }
 
-  handleConfirm() {
-    console.log('Confirmed');
-  }
+  handleConfirm() {}
 
-  handleCancel() {
-    console.log('Canceled');
-  }
+  handleCancel() {}
 
   showErrorModal(): void {
     this.errorModal.openModal();
   }
-
 }
