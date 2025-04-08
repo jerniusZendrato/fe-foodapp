@@ -51,7 +51,7 @@
           <div class="inputsettings" style="display: flex; flex-direction: row; justify-content: start; width: 60%;">
             <div>
                 <label class="form-label">Date of Birth</label>
-                <input type="text" class="form-control lg" id="inputfirstname">
+                <input type="date" class="form-control lg" id="inputfirstname">
             </div>
           </div>
           <div class="inputsettings" style="display: flex; flex-direction: row; justify-content: start; width: 60%;">
@@ -61,7 +61,7 @@
                 <!-- <input type="password" class="form-control lg" id="inputfirstname"> -->
                 <input [type]="showPassword_editprofile ? 'text' : 'password'" class="form-control" id="passwordedit" [(ngModel)]="passwordedit">
                 <button style="border: 0 solid;" class="btn btn-outline-secondary" type="button" id="togglePasswordedit" (click)="togglePassword(1)">
-                  <i  [ngClass]="showPassword_editprofile ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'" ></i>
+                  <i  [ngClass]="showPassword_editprofile ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'" ></i>
                   <!-- <i class="fa-solid fa-eye-slash"></i> -->
                 </button>
               </div>
@@ -78,7 +78,7 @@
               <div class="input-group">
               <input [type]="showPasswordnow_changepassword ? 'text' : 'password'" class="form-control" id="passwordnow" [(ngModel)]="passwordnow">
               <button style="border: 0 solid;" class="btn btn-outline-secondary" type="button" id="togglePasswordnow" (click)="togglePassword(2)">
-                <i  [ngClass]="showPasswordnow_changepassword ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'" ></i>
+                <i  [ngClass]="showPasswordnow_changepassword ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'" ></i>
                 
               </button>
             </div>
@@ -89,7 +89,7 @@
           <div class="input-group">
           <input [type]="showPasswordnew_changepassword ? 'text' : 'password'" [ngClass]="status === '2' ? 'form-control border border-danger' : 'form-control'" id="passwordnew" [(ngModel)]="passwordnew">
           <button style="border: 0 solid;" class="btn btn-outline-secondary" type="button" id="togglePasswordnew" (click)="togglePassword(3)">
-            <i  [ngClass]="showPasswordnew_changepassword ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'" ></i>
+            <i  [ngClass]="showPasswordnew_changepassword ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'" ></i>
             
           </button>
         </div>
@@ -99,7 +99,7 @@
           <div class="input-group">
           <input [type]="showPasswordconf_changepassword ? 'text' : 'password'" [ngClass]="status === '2' ? 'form-control border border-danger' : 'form-control'" id="passwordconf" [(ngModel)]="passwordconf">
           <button style="border: 0 solid;" class="btn btn-outline-secondary" type="button" id="togglePasswordconf" (click)="togglePassword(4)" disabled>
-            <i  [ngClass]="showPasswordconf_changepassword ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'" ></i>
+            <i  [ngClass]="showPasswordconf_changepassword ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'" ></i>
             
           </button>
         </div>
