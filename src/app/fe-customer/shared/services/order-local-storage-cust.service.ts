@@ -32,7 +32,7 @@ export class OrderLocalStorageCustService {
 
   constructor(
     private readonly derect: DerectService,
-    private readonly orderService: OrderCustService
+    private readonly orderService: OrderCustService    
   ) {
     this.initializeOrder();
     const storedOrder = this.getOrder();
@@ -113,6 +113,7 @@ export class OrderLocalStorageCustService {
   private handleSuccessfulOrder(order: OrderHistoryCust): void {
     localStorage.removeItem(this.STORAGE_KEY_ORDER);
     this.order.productOrders = [];
+    console.log('Order inserted handleSuccessfulOrder successfully:', order);
     this.saveOrder(this.order);
     this.pushOrderd(order);
     this.addOrderToHistory(order);
@@ -239,16 +240,58 @@ export class OrderLocalStorageCustService {
 
   isOrderValid(): boolean {
     if (!this.order.customerName || !this.order.tableId) {
-      console.log("masuk si isOrderValid");
-      console.log('this.order.customerName :>> ', this.order.customerName);
-      console.log('this.order.tableId :>> ', this.order.tableId);
       return false;
     }
     if (this.order && (this.order.productOrders?.length ?? 0) < 0) {
       return false;
     }
 
-    console.log("true");
-    return true
+    return true;
+  }
+
+  makeOrderAgain(orderId: string): boolean {
+    
+    // Get order history from local storage
+    const orderHistory = this.getHistoryOrder();
+    if (!orderHistory) {
+      console.error('No order history found');
+      return false;
+    }
+
+    // Find the order with matching orderId
+
+    const orderToRepeat = orderHistory.find(order => order.id === orderId);
+    if (!orderToRepeat) {
+      console.error('Order not found in history');
+      return false;
+    }
+
+    // Clear current order
+    this.order.productOrders = [];
+    
+    // 
+    // Convert order history items to product orders
+    orderToRepeat.productOrders?.forEach((item: OrderhistoryItemCust) => {
+      console.log('Item:', item);
+      const product: Product = {
+        id: item.productId,               
+        quantity: item.quantity ?? 0,
+        price: item.price,                
+        name: item.name,                  
+        urlImage: item.urlImage,
+        description: item.description,
+        category: item.category ?? null,  
+        categoryId: item.categoryId ?? "",
+        isActivated: true,
+      };
+      
+      this.order.productOrders?.push({ ...product, quantity: product.quantity ?? 0 });
+      console.log('Order to repeat:', this.order.productOrders);
+    });
+
+    
+    // Save the new order
+    this.saveOrder(this.order);
+    return true;
   }
 }

@@ -22,23 +22,22 @@
     <!-- Burger Icon Button -->
     <div style="position: absolute; top: 10px; right: 10px">
       <button
-          style="
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 24px;
-            color: white;
-            transition: color 0.3s ease;
-          "
-          aria-label="Menu"
-          data-bs-toggle="offcanvas"
-          data-bs-target="#offcanvasRight"
-          aria-controls="offcanvasRight"
-        >
-          <!-- (click)="derect.toNavbar()" -->
-          <i class="fa-solid fa-bars"></i>
-        </button>
-    
+        style="
+          background: none;
+          border: none;
+          cursor: pointer;
+          font-size: 24px;
+          color: white;
+          transition: color 0.3s ease;
+        "
+        aria-label="Menu"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#offcanvasRight"
+        aria-controls="offcanvasRight"
+      >
+        <!-- (click)="derect.toNavbar()" -->
+        <i class="fa-solid fa-bars"></i>
+      </button>
     </div>
 
     <!-- brand image -->
@@ -250,8 +249,7 @@
   style="z-index: 9999 !important; background: #f8f9fa"
 >
   <div class="offcanvas-header">
-    <div style="position: absolute; z-index: 10; margin-top: 24px;">
-      
+    <div style="position: absolute; z-index: 10; margin-top: 24px">
       <button
         type="button"
         class="btn-close"
@@ -272,3 +270,11 @@
   </div>
   <app-navbar></app-navbar>
 </div>
+
+<style>
+  @media (max-width: 768px) {
+    .offcanvas.offcanvas-end {
+      width: 80% !important;
+    }
+  }
+</style>

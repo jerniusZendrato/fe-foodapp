@@ -25,6 +25,7 @@ export class OrderCustService {
       .pipe(
         map((response) => {
           if (response.isSuccess) {
+            console.log('Order inserted successfully insertOrder :', response.data);
             return response;
           } else {
             throw new Error('Failed to insert data');
