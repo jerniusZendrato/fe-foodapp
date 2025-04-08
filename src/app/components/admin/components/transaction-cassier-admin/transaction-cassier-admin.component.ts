@@ -78,7 +78,7 @@ export class TransactionCassierAdminComponent implements OnInit {
         (Response: AdminOrderCassier[]) => {
           if (Response) {
             const tanggalSekarang: string = new Date().toISOString().split('T')[0];
-            console.log("tanggalSekarang",tanggalSekarang)
+            // console.log("orderview",orderview)
 
              // Filter hanya order yang dibuat hari ini
              
@@ -93,7 +93,6 @@ export class TransactionCassierAdminComponent implements OnInit {
               }
               return false;
             });
-            
 
             // memasukkan status prosess ke orderprocess
             this.orderprocess = Response.filter(order =>{

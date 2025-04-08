@@ -115,7 +115,7 @@ export class TransactionKitchenAdminComponent implements OnInit {
         }
         console.log("masuk ke sini jka gagal atau berhasil save")
         this.getkitchenorder()
-        this.loaderService.hideWithDelay(200);
+        this.loaderService.hideWithDelay(2000);
       },
       (error) => {
         this.loaderService.hideWithDelay(2000);
