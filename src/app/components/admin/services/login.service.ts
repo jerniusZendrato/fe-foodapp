@@ -16,7 +16,7 @@ export class LoginService {
         user_id: user_id,
         password: password
       };
-      return this.http.post<{ isSuccess: boolean, data:AdminLogin}>(`${environment.API_URL}/auth/login`,body);
+      return this.http.post<{ isSuccess: boolean, data:AdminLogin[]}>(`${environment.API_URL}/auth/login`,body);
     }else {
           return new Observable((observer) => {
             observer.error('No valid to login! ');

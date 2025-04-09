@@ -12,6 +12,7 @@ import { AdminLogin } from '../../models/admin-login.model';
 export class LoginAdminComponent implements OnInit {
   async ngOnInit() {
 
+
   }
   constructor(
     private loaderService: LoaderService,
@@ -30,7 +31,12 @@ export class LoginAdminComponent implements OnInit {
       this.loginservice.loginservice(this.user_id,this.password).subscribe({
         next: (Response: any) =>{
           if(Response.isSuccess === true){
+            // if(localStorage.getItem('datalogin')){
+            //   localStorage.removeItem('datalogin');
+            // }
             this.datalogin = Response.data
+            // ngk usah hapus data lama karena langsung nge-update data jika ada perubahan
+            localStorage.setItem('datalogin', JSON.stringify([this.datalogin]));
             this.showsuccessToast()
             this.router.navigate(['/admin']);
           }
