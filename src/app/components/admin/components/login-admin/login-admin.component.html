@@ -25,18 +25,63 @@
         <i class="fa-solid fa-circle-user" style="color: #f80000; font-size: 80px;"></i>
         <div style="width: 80%; margin: 30px;">
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+            <input type="text" class="form-control" id="floatingInput" placeholder="User ID" [(ngModel)]="user_id" >
             <label for="floatingInput">User ID</label>
           </div>
           <div class="form-floating">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" [(ngModel)]="password">
             <label for="floatingPassword">Password</label>
           </div>
         </div>
-        <button type="button" style="width: 80%;" routerLink="/admin" class="btn btn-primary">Login</button>
+        <button type="button" style="width: 80%;" class="btn btn-primary" (click)="login()">Login</button>
         <footer style="position: fixed; bottom: 0">
             <p style="font-size: 12px; margin-bottom: 50px;">Powered By <a href=" https://sbju-company-production.up.railway.app/" style="text-decoration: none;">SJBU25</a></p>
         </footer>
     </div>
  </div>
 </div>
+
+
+  <!-- Toast -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div
+      id="successToast"
+      class="toast align-items-center text-bg-success border-0"
+      role="alert"
+      aria-live="assertive"
+      aria-atomic="true"
+    >
+      <div class="d-flex">
+        <div class="toast-body">Your operation was successful!</div>
+        <button
+          type="button"
+          class="btn-close btn-close-white me-2 m-auto"
+          data-bs-dismiss="toast"
+          aria-label="Close"
+        ></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Error -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div
+      id="errorToast"
+      class="toast align-items-center text-bg-danger border-0"
+      role="alert"
+      aria-live="assertive"
+      aria-atomic="true"
+    >
+      <div class="d-flex">
+        <div class="toast-body">Something went wrong! Please try again.</div>
+        <button
+          type="button"
+          class="btn-close btn-close-white me-2 m-auto"
+          data-bs-dismiss="toast"
+          aria-label="Close"
+        ></button>
+      </div>
+    </div>
+  </div>
+
+

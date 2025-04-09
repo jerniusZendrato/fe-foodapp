@@ -96,4 +96,7 @@ export class TransactionHistoryComponent implements OnInit {
     )
   }
 
+    // menu search text
+    searchText: string = '';
+
 }
