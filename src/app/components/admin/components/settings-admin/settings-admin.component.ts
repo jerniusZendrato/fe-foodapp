@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoaderService } from '../../services/loader.service';
+import { AdminLogin } from '../../models/admin-login.model';
 
 @Component({
   selector: 'app-settings-admin',
@@ -8,6 +9,7 @@ import { LoaderService } from '../../services/loader.service';
 })
 export class SettingsAdminComponent implements OnInit {
   async ngOnInit() {
+    this.userlogin()
 
   }
   constructor(
@@ -60,6 +62,34 @@ export class SettingsAdminComponent implements OnInit {
     }
   }
 
+
+  datalogin: AdminLogin[]=[]
+  
+    userlogin(){
+      const data = localStorage.getItem('datalogin')
+      if (data) {
+        this.datalogin = JSON.parse(data);
+        console.log("this.datalogin",this.datalogin)
+      }
+    }
+
+
+  selectedImage: File | null = null;
+  imagePreviewUrl: string | null = null;
+
+  onImageSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files[0]) {
+      this.selectedImage = input.files[0];
+
+      const reader = new FileReader();
+    reader.onload = () => {
+      this.imagePreviewUrl = reader.result as string;
+    };
+    reader.readAsDataURL(this.selectedImage);
+    }
+  }
 
 
 

@@ -17,35 +17,41 @@
   </h6>
     </nav>
     <div id="menu01" class="show"  *ngIf="activeItem === 'Edit Profile'" style="display: flex; flex-direction: column; align-items: center; justify-content: center; ">
-        <div style="width: 150px; height: 150px; position: relative; margin: 30px 0; cursor: pointer;">
-            <img style=" object-fit: cover;" src="https://cdn-2.tstatic.net/wartakota/foto/bank/images/jago_20180216_185417.jpg" class="rounded-circle" alt="Gambar Bulat" width="150" height="150">
-            <div class="rounded-circle" style="background-color: red; position: absolute; bottom: 0; right: 10px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
-                <i class="fa-solid fa-pencil" style="color: white;"></i>
+        <div style=" width: 150px; height: 150px; position: relative; margin: 30px 0; cursor: pointer;">
+
+          <img *ngIf="imagePreviewUrl; else defaultImage" style=" object-fit: cover;" [src]="imagePreviewUrl"  class="rounded-circle" alt="Gambar Bulat" width="150" height="150">
+          <!-- Fallback: jika imagePreviewUrl tidak ada -->
+          <ng-template #defaultImage>
+          <img style=" object-fit: cover; opacity: 50%;" src="../../../../../assets/user.png"  class="rounded-circle" alt="Gambar Bulat" width="150" height="150">
+          </ng-template>
+            <div (click)="imageInput.click()" class="rounded-circle" style="background-color: red; position: absolute; bottom: 0; right: 10px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                <i  class="fa-solid fa-pencil" style="color: white;" ></i>
+                <input type="file" #imageInput (change)="onImageSelected($event)" hidden/>
             </div>
         </div>
         <div class="inputsettings" style="display: flex; flex-direction: row; justify-content: space-between; width: 60%;">
             
             <div>
                 <label class="form-label">First Name</label>
-                <input type="text" class="form-control lg" id="inputfirstname">
+                <input type="text" class="form-control lg" id="inputfirstname" [(ngModel)]="datalogin[0].name">
             </div>
             <div>
                 <label for="inputPassword4" class="form-label">Last Name</label>
-                <input type="text" class="form-control lg" id="inputlastname">
+                <input type="text" class="form-control lg" id="inputlastname" disabled>
             </div>
         </div>
 
         <div class="inputsettings" style="display: flex; flex-direction: row; justify-content: start; width: 60%;">
             <div>
                 <label class="form-label">User ID</label>
-                <input type="text" class="form-control lg" id="inputuserid" disabled>
+                <input type="text" class="form-control lg" id="inputuserid" [(ngModel)]="datalogin[0].user_id" disabled>
             </div>
           </div>
 
           <div class="inputsettings" style="display: flex; flex-direction: row; justify-content: start; width: 60%;">
             <div>
                 <label class="form-label">position</label>
-                <input type="text" class="form-control lg" id="inputposition" disabled>
+                <input type="text" class="form-control lg" id="inputposition" [(ngModel)]="datalogin[0].role" disabled>
             </div>
           </div>
           <div class="inputsettings" style="display: flex; flex-direction: row; justify-content: start; width: 60%;">
@@ -58,11 +64,9 @@
             <div>
                 <label class="form-label">Password</label>
                 <div class="input-group">
-                <!-- <input type="password" class="form-control lg" id="inputfirstname"> -->
-                <input [type]="showPassword_editprofile ? 'text' : 'password'" class="form-control" id="passwordedit" [(ngModel)]="passwordedit">
-                <button style="border: 0 solid;" class="btn btn-outline-secondary" type="button" id="togglePasswordedit" (click)="togglePassword(1)">
+                <input [type]="showPassword_editprofile ? 'text' : 'password'" class="form-control" id="passwordedit" [(ngModel)]="passwordedit" disabled>
+                <button style="border: 0 solid;" class="btn btn-outline-secondary" type="button" id="togglePasswordedit" disabled (click)="togglePassword(1)">
                   <i  [ngClass]="showPassword_editprofile ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'" ></i>
-                  <!-- <i class="fa-solid fa-eye-slash"></i> -->
                 </button>
               </div>
             </div>

@@ -26,6 +26,7 @@ import { ParentAutenticationComponent } from '../components/admin/parent-autenti
 import { LoginAdminComponent } from '../components/admin/components/login-admin/login-admin.component';
 import { SettingsAdminComponent } from '../components/admin/components/settings-admin/settings-admin.component';
 import { WebsocketComponent } from '../fe-customer/pages/websocket/websocket.component';
+import { authAdminGuard } from './auth-admin.guard';
 
 
 const feCustomerChildren: Routes = [
@@ -46,6 +47,8 @@ const routes: Routes = [
   {
     path: 'admin',
     component: ParentAdminComponent,
+    canActivate: [authAdminGuard], // Proteksi rute dengan guard
+    
     children: [
       {
         path: '',
@@ -57,6 +60,7 @@ const routes: Routes = [
         path: 'product',
         component: MasterProductComponent,
         canDeactivate: [UnsavedChangesVerifikasiService],
+        
       },
       {
         path: 'category',
