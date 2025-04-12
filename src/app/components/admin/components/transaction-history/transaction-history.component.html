@@ -30,16 +30,16 @@
             
   
             <!-- menu filter ke dua -->
-            <div id="menu-filter">
+            <!-- <div id="menu-filter">
               <i
-              class="fa-solid fa-filter"
+              class="fa-solid fa-filter" 
               (click)="toggleDisabled()"
               [ngClass]="{ 'color-menu-filter': !isDisabled }"
             ></i>
-            </div>
+            </div> -->
   
             <div style="display: flex; flex-direction: row; align-items: center">
-                <input style="margin-left: 30px" type="text" class="form-control" placeholder="Search" aria-describedby="search-icon">
+                <input style="margin-left: 30px" type="text" class="form-control" [(ngModel)]="searchText" placeholder="Search" aria-describedby="search-icon">
             </div>
           </div>
   
@@ -108,7 +108,7 @@
               <th scope="col">Status</th>
             </tr>
           </thead>
-          <tbody *ngFor="let historyorder of Historyorder">
+          <tbody *ngFor="let historyorder of Historyorder |filter:searchText:'code':'tableName':'type':'totalPrice':'customerName':'status'">
             <tr>
               <td>{{historyorder.code}}</td>
               <td>{{historyorder.tableName}}</td>
@@ -141,17 +141,17 @@
           <form class="row d-flex justify-content-evenly" >
             <div class="col-auto">
               <label for="inputstartdate" class="visually-hidden">Start date</label>
-              <input type="date" class="form-control" id="inputstartdate" placeholder="Start date">
+              <input type="date" class="form-control" id="inputstartdate" placeholder="Start date"[(ngModel)]="startDatetoexcel">
             </div>
             <div class="col-auto">
               <label for="inputenddate" class="visually-hidden">End Date</label>
-              <input type="date" class="form-control" id="inputenddate" placeholder="End Date">
+              <input type="date" class="form-control" id="inputenddate" placeholder="End Date" [(ngModel)]="endDatetoeexcel">
             </div>
           </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Download</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="exportFilteredToExcel()">Download</button>
         </div>
       </div>
     </div>

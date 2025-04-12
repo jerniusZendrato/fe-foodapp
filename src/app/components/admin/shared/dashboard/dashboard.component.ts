@@ -1,16 +1,23 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { SidebarService } from '../../services/sidebar.service';
+import { AdminLogin } from '../../models/admin-login.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent  {  // ✅ Implement AfterViewInit
+export class DashboardComponent implements OnInit  {  // ✅ Implement AfterViewInit
   @ViewChild(SidebarComponent) SidebarComponent!: SidebarComponent;
   isRotated : boolean= false;
-  constructor(private sidebarService: SidebarService) {}
+  ngOnInit(): void {
+    this.userlogin()
+  }
+  constructor(private sidebarService: SidebarService,
+    private router: Router
+  ) {}
   
   calltoggleSidebar() {  
     this.isRotated = !this.isRotated;  // ✅ Toggle nilai dari true ke false atau sebaliknya
@@ -18,6 +25,19 @@ export class DashboardComponent  {  // ✅ Implement AfterViewInit
     console.log('isRotated:', this.isRotated); // Debugging
   }
 
+  datalogin: AdminLogin[]=[]
+
+  userlogin(){
+    const data = localStorage.getItem('datalogin')
+    if (data) {
+      this.datalogin = JSON.parse(data);
+      console.log("this.datalogin",this.datalogin)
+    }
+  }
+  signout(){
+        localStorage.removeItem('datalogin');
+        this.router.navigate(['/autentication']);
+  }
   
 
 

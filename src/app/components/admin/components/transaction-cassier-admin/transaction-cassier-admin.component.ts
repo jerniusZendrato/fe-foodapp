@@ -64,6 +64,27 @@ export class TransactionCassierAdminComponent implements OnInit {
           }
           return false;
         });
+
+        // data orderan status process
+        this.orderprocess = parsedData.data.filter(order =>{
+          if (order.createdAt && order.status) {
+            const createdAtDate = new Date(order.createdAt).toISOString().split('T')[0];
+            return createdAtDate === tanggalSekarang && order.status.toLowerCase() === 'process';
+          }
+          return false;
+        });
+        console.log("this.orderprocess", this.orderprocess)
+
+        // data orderan status delivered
+        this.orderdeliverd = parsedData.data.filter(order => {
+          if (order.createdAt && order.status) {
+            const createdAtDate = new Date(order.createdAt).toISOString().split('T')[0];
+            // console.log('createdAtDateEEEE',order.status.toLowerCase())
+            return createdAtDate === tanggalSekarang && order.status.toLowerCase() === 'delivered';
+          }
+          return false;
+        });
+
         
       }catch (error) {
         console.error("Error parsing WebSocket data:", error);
@@ -78,7 +99,7 @@ export class TransactionCassierAdminComponent implements OnInit {
         (Response: AdminOrderCassier[]) => {
           if (Response) {
             const tanggalSekarang: string = new Date().toISOString().split('T')[0];
-            console.log("tanggalSekarang",tanggalSekarang)
+            // console.log("orderview",orderview)
 
              // Filter hanya order yang dibuat hari ini
              
@@ -93,7 +114,6 @@ export class TransactionCassierAdminComponent implements OnInit {
               }
               return false;
             });
-            
 
             // memasukkan status prosess ke orderprocess
             this.orderprocess = Response.filter(order =>{

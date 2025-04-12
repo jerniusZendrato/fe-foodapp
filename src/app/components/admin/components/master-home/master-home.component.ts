@@ -15,6 +15,7 @@ export class MasterHomeComponent {
 
     this.loaderService.show();
     this.loaderService.hideWithDelay(1000);
+    console.log("localStorage.getItem('datalogin')",localStorage.getItem('datalogin'))
   }
 
 

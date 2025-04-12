@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { OrderAdminService } from '../../services/order-admin.service';
 import { LoaderService } from '../../services/loader.service';
 import { AdminOrderCassier } from '../../models/admin-order-cassier.model';
+// import * as XLSX from 'xlsx';
+import * as FileSaver from 'file-saver';
+
+
 
 @Component({
   selector: 'app-transaction-history',
@@ -50,10 +54,49 @@ export class TransactionHistoryComponent implements OnInit {
   }
   
 
-  getPastDate(days: number): string {
-    const date = new Date();
-    date.setDate(date.getDate() - days);
-    return date.toISOString();
-}
+  startDatetoexcel: Date = new Date();;  // format: 'YYYY-MM-DD'
+  endDatetoeexcel: Date = new Date();;
+
+  exportFilteredToExcel(){
+    this.orderadmin.getorders().subscribe(
+      (response: AdminOrderCassier[]) => {
+        // if(this.startDatetoexcel && this.endDatetoeexcel){
+          const datatoexcel = response.filter(order =>{
+          const createdDate = new Date(order.createdAt)
+          const start = new Date(this.startDatetoexcel);
+          const end = new Date(this.endDatetoeexcel);
+          return createdDate >= start && createdDate <= end;
+      })
+          const detailOrder = datatoexcel.flatMap(order => order.productOrders);
+
+          const simplifiedData = datatoexcel.filter(orderfix =>({
+            code : orderfix.code,
+            customerName: orderfix.customerName,
+            type: orderfix.type,
+            tableName: orderfix.tableName,
+            adminName: orderfix.adminName,
+            createdAt: orderfix.createdAt,
+            paymentStatus: orderfix.paymentStatus,
+            paymentPaidAt: orderfix.paymentPaidAt,
+            status: orderfix.status,
+            deliveredAt: orderfix.deliveredAt,
+            totalPrice: orderfix.totalPrice
+          }))
+          console.log("simplifiedData",datatoexcel)
+          // const worksheet = XLSX.utils.json_to_sheet(simplifiedData);
+          // const workbook = { Sheets: { 'Orders': worksheet }, SheetNames: ['Orders'] };
+          // const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+          // const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
+          // FileSaver.saveAs(blob, `Orders_${this.startDatetoexcel}_to_${this.endDatetoeexcel}.xlsx`);
+      // }
+      // else{
+      //   confirm("tolong lengkapi data")
+      // }
+    }
+    )
+  }
+
+    // menu search text
+    searchText: string = '';
 
 }

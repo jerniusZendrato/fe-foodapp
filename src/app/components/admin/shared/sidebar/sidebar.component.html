@@ -24,7 +24,7 @@
               Master
             </a>
             <div class="collapse" id="collapseExample">
-              <div>
+              <div class="listmenu" style="margin-left: 20px;">
                 <a routerLink="/admin/product" class="nav-link"> Product </a>
                 <a routerLink="/admin/category" class="nav-link"> Category </a>
                 <a routerLink="/admin/table"class="nav-link"> Table </a>
@@ -44,7 +44,7 @@
               Transaksi
             </a>
             <div class="collapse" id="collapseExample2">
-              <div>
+              <div class="listmenu" style="margin-left: 20px;">
                 <a routerLink="/post" class="nav-link"> Point of Sales </a>
                 <a routerLink="/admin/cassier-admin" class="nav-link"> Cassier Admin </a>
                 <a routerLink="/kitchen"  class="nav-link"> Kitchen Admin </a>
@@ -53,16 +53,38 @@
             </div>
           </li>
           <li>
-            <a href="#" class="nav-link">
+            <a class="nav-link"
+            class="nav-link"
+            data-bs-toggle="collapse"
+            href="#collapseExample4"
+            role="button"
+            aria-expanded="false"
+            aria-controls="collapseExample">
               <i class="fa-solid fa-bars-progress"></i>
-              Finansial
+              Finance
             </a>
+            <div class="collapse" id="collapseExample4">
+              <div class="listmenu" style="margin-left: 20px;">
+                <a routerLink="/admin" class="nav-link"> Finance</a>
+              </div>
+            </div>
           </li>
           <li>
-            <a href="#" class="nav-link">
+            <a class="nav-link"
+            data-bs-toggle="collapse"
+              href="#collapseExample3"
+              role="button"
+              aria-expanded="false"
+              aria-controls="collapseExample">
               <i class="fa-solid fa-users"></i>
               Manajemen User
             </a>
+            <div class="collapse" id="collapseExample3">
+              <div class="listmenu" style="margin-left: 20px;">
+                <a routerLink="/admin" class="nav-link"> Ads </a>
+                <a routerLink="/admin" class="nav-link"> User </a>
+              </div>
+            </div>
           </li>
         </ul>
       </div>
@@ -143,7 +165,7 @@
             class="dropdown-menu dropdown-menu-end"
             aria-labelledby="dropdownMenuButton"
           >
-            <li><a class="dropdown-item" href="#">Keuangan</a></li>
+            <li><a class="dropdown-item">Finance</a></li>
           </ul>
           <!-- </li> -->
         </div>
@@ -165,7 +187,8 @@
             class="dropdown-menu dropdown-menu-end"
             aria-labelledby="dropdownMenuButton"
           >
-            <li><a class="dropdown-item" href="#">Manajemen User</a></li>
+            <li><a class="dropdown-item" href="#">Ads</a>
+              <a class="dropdown-item" href="#">User</a></li>
           </ul>
           <!-- </li> -->
         </div>

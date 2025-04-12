@@ -41,6 +41,7 @@ export class TransactionKitchenAdminComponent implements OnInit {
             console.error("Expected an array, but received:", parsedData);
             return;
           }
+          // if (this.getkitchenorderrespone != parsedData.data){
           this.orderprocess = parsedData.data.filter(order => {
             if (order.status) {
               this.playNotificationSound()
@@ -48,6 +49,7 @@ export class TransactionKitchenAdminComponent implements OnInit {
             }
             return false;
           })
+        // }
           this.totalorderprocess = this.orderprocess.length
           this.neworderToast()
         }catch (error) {
@@ -61,7 +63,7 @@ export class TransactionKitchenAdminComponent implements OnInit {
     const audio = new Audio('assets/notification.mp3'); // Path ke file suara di dalam folder `assets`
     audio.play().catch(error => console.error("Audio playback failed:", error));
   }
-
+  
   getkitchenorder(): Promise<void>{
     return new Promise((resolve, reject) => {
       this.loaderService.show();
@@ -114,7 +116,7 @@ export class TransactionKitchenAdminComponent implements OnInit {
         }
         console.log("masuk ke sini jka gagal atau berhasil save")
         this.getkitchenorder()
-        this.loaderService.hideWithDelay(200);
+        this.loaderService.hideWithDelay(2000);
       },
       (error) => {
         this.loaderService.hideWithDelay(2000);
