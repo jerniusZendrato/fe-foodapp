@@ -7,3 +7,12 @@ export interface UserAdmin {
     role: string;
     user_id: string;
 }
+
+export interface changeUserAdmin {
+    user_id:string;
+    oldPassword: number;
+    newPassword:string;
+    
+}
+
+

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { environment } from 'src/app/environment/environment';
 import { AdminLogin } from '../models/admin-login.model';
 
@@ -39,7 +39,20 @@ export class LoginService {
     if(image && image != null){
       formData.append('image', image, image.name);
     }
-      return this.http.put<any>(`${this.apiUrl}/${id}`,formData );
+      return this.http.put<{isSuccess: boolean, data:AdminLogin[]}>(`${this.apiUrl}/${id}`,formData );
   }
+
+  changepass(id: string, oldpass: string, newpass: string): Observable<any> {
     
+    if(id && oldpass && newpass){
+      const formData= {
+        user_id : id,
+        oldPassword: oldpass,
+        newPassword: newpass
+        
+      }
+      return this.http.put<any>(`${this.apiUrl}/change-password`,formData );
+    }
+    return throwError(() => new Error('Semua field harus diisi'));
+  }  
 }
