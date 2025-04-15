@@ -9,6 +9,9 @@ import { AdminLogin } from '../models/admin-login.model';
 })
 export class LoginService {
 
+
+  private apiUrl = `${environment.API_URL}/users/me`;
+
   constructor(private http: HttpClient) { }
   loginservice(user_id: string, password: string): Observable<any>{
     if(user_id &&password){
@@ -23,4 +26,20 @@ export class LoginService {
           });
         }
   }
+
+  updatelogin(id: string, image: File|null, name: string, birthday: string): Observable<any> {
+    const formData: FormData = new FormData();
+    if(name){
+      formData.append('name', name);
+    }
+    if(birthday){
+      const dateObj = new Date(birthday);
+      formData.append('birthday', dateObj.toISOString().split('T')[0]);
+    }
+    if(image && image != null){
+      formData.append('image', image, image.name);
+    }
+      return this.http.put<any>(`${this.apiUrl}/${id}`,formData );
+  }
+    
 }

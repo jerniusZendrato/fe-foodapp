@@ -16,6 +16,16 @@ export class SidebarComponent implements OnInit {
       this.isSidebarVisible = state;
       console.log('Sidebar state updated:', this.isSidebarVisible);
     });
+
+    this.cek_role()
+  }
+  
+  role_user: string =''
+  cek_role(){
+    const userData = JSON.parse(localStorage.getItem('datalogin') || '[]');
+    const role = userData[0]?.role;
+    this.role_user = role
+
   }
   
 
