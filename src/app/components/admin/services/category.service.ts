@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { AdminCategory, patchCategory } from '../models/admin-category.model';
@@ -9,11 +9,21 @@ import { environment } from 'src/app/environment/environment';
 })
 export class CategoryService {
 
-  
-  constructor(private http: HttpClient) { }
+
+  constructor(private http: HttpClient) {
+    
+   }
+
 
   getcategory():Observable<AdminCategory[]>{
-    return this.http.get<{ isSuccess: boolean; data: AdminCategory[] }>(`${environment.API_URL}/category`).pipe(
+    const dataLoginString = localStorage.getItem('datalogin');
+    const token = dataLoginString ? JSON.parse(dataLoginString).token : null;
+
+    const headers = new HttpHeaders({
+    Authorization: `Bearer ${token}`
+    });
+
+    return this.http.get<{ isSuccess: boolean; data: AdminCategory[] }>(`${environment.API_URL}/category`,{ headers }).pipe(
       map(response => response.data),
       catchError(error => {
         console.error('Terjadi kesalahan saat mengambil produk:', error);
@@ -29,7 +39,7 @@ export class CategoryService {
 
   saveCategory(category:any): Observable<any>{
     if(category){
-      return this.http.post<any>(`${environment.API_URL}/category`, category);
+      return this.http.post<any>(`${environment.API_URL}/categoryx`, category);
     }else{
       return new Observable((observer) => {
         observer.error('No valid category to save');

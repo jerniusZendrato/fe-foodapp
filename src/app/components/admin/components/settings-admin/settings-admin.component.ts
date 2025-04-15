@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { LoaderService } from '../../services/loader.service';
 import { AdminLogin } from '../../models/admin-login.model';
+import { LoginService } from '../../services/login.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-settings-admin',
@@ -13,7 +15,9 @@ export class SettingsAdminComponent implements OnInit {
 
   }
   constructor(
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private loginservice: LoginService
+
   ){}
 
   menuItems: string[] = ['Edit Profile', 'Change Password'];
@@ -66,9 +70,11 @@ export class SettingsAdminComponent implements OnInit {
   datalogin: AdminLogin[]=[]
   
     userlogin(){
+      this.loaderService.show();
       const data = localStorage.getItem('datalogin')
       if (data) {
         this.datalogin = JSON.parse(data);
+        this.loaderService.hideWithDelay(800);
         console.log("this.datalogin",this.datalogin)
       }
     }
@@ -89,6 +95,44 @@ export class SettingsAdminComponent implements OnInit {
     };
     reader.readAsDataURL(this.selectedImage);
     }
+  }
+
+  savesetting(){
+    this.loaderService.show();
+    const dataupdate = {
+      name: this.datalogin[0].name,
+      birthday: this.datalogin[0].birthday
+    }
+      this.loginservice.updatelogin(this.datalogin[0].user_id,this.selectedImage, this.datalogin[0].name, this.datalogin[0].birthday ).subscribe (
+        (isSuccess) => {
+          this.showsuccessToast()
+          this.loaderService.hideWithDelay(2000);
+          this.userlogin()
+          console.log("sukses")
+        },
+        (error) => {
+          console.log('error :>> ', error);
+          this.showErrorToast()
+          this.loaderService.hideWithDelay(2000);
+        }
+      )
+     
+  }
+
+  closeModal() {
+    const modalElement = document.getElementById('changeModal');
+    const changeModal = new (window as any).bootstrap.Modal(modalElement);
+    changeModal.hide();
+  }
+  showErrorToast(): void {
+    const toastElement = document.getElementById('errorToast');
+    const toast = new (window as any).bootstrap.Toast(toastElement);
+    toast.show();
+  }
+  showsuccessToast(): void {
+    const toastElement = document.getElementById('successToast');
+    const toast = new (window as any).bootstrap.Toast(toastElement);
+    toast.show();
   }
 
 

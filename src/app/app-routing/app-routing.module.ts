@@ -27,6 +27,7 @@ import { LoginAdminComponent } from '../components/admin/components/login-admin/
 import { SettingsAdminComponent } from '../components/admin/components/settings-admin/settings-admin.component';
 import { WebsocketComponent } from '../fe-customer/pages/websocket/websocket.component';
 import { authAdminGuard } from './auth-admin.guard';
+import { ManajemenUserComponent } from '../components/admin/components/manajemen-user/manajemen-user.component';
 
 
 const feCustomerChildren: Routes = [
@@ -60,37 +61,45 @@ const routes: Routes = [
         path: 'product',
         component: MasterProductComponent,
         canDeactivate: [UnsavedChangesVerifikasiService],
+        canActivate: [authAdminGuard],
         
       },
       {
         path: 'category',
         component: MasterCategoryComponent,
         canDeactivate: [UnsavedChangesVerifikasiService],
+        canActivate: [authAdminGuard],
       },
       {
         path: 'table',
         component: MasterTableComponent,
         canDeactivate: [UnsavedChangesVerifikasiService],
+        canActivate: [authAdminGuard],
       },
       {
         path: 'cassier-admin',
         component: TransactionCassierAdminComponent,
         canDeactivate: [UnsavedChangesVerifikasiService],
-      },
-      {path: 'kitchen-admin',
-        component: TransactionKitchenAdminComponent,
-        canDeactivate: [UnsavedChangesVerifikasiService],
+        canActivate: [authAdminGuard],
       },
       {
         path: 'history',
         component: TransactionHistoryComponent,
         canDeactivate: [UnsavedChangesVerifikasiService],
+        canActivate: [authAdminGuard],
       },
       
       {
         path: 'settings',
         component: SettingsAdminComponent,
         canDeactivate: [UnsavedChangesVerifikasiService],
+        canActivate: [authAdminGuard],
+      },
+      {
+        path: 'user',
+        component: ManajemenUserComponent,
+        canDeactivate: [UnsavedChangesVerifikasiService],
+        canActivate: [authAdminGuard],
       },
     ]
   },
@@ -98,6 +107,7 @@ const routes: Routes = [
   {
     path: 'post',
     component: ParentCassierOrderComponent,
+    canActivate: [authAdminGuard], // Proteksi rute dengan guard
     children: [
       {
         path: '',
@@ -107,12 +117,14 @@ const routes: Routes = [
       {path: 'kitchen-admin',
         component: TransactionKitchenAdminComponent,
         canDeactivate: [UnsavedChangesVerifikasiService],
+        canActivate: [authAdminGuard],
       },
     ],
   },
   {
     path: 'kitchen',
     component: ParentKitchenOrderComponent,
+    // canActivate: [authAdminGuard],
     children: [
       {
         path: '',
@@ -124,6 +136,7 @@ const routes: Routes = [
   {
     path: 'autentication',
     component: ParentAutenticationComponent,
+    // canActivate: [authAdminGuard],
     children: [
       {
         path: '',

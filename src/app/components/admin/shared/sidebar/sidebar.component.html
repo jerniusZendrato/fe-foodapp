@@ -23,10 +23,14 @@
               <i class="fa-solid fa-database"></i>
               Master
             </a>
-            <div class="collapse" id="collapseExample">
-              <div class="listmenu" style="margin-left: 20px;">
+            <div class="collapse" id="collapseExample" >
+              <div class="listmenu" style="margin-left: 20px;" *ngIf="role_user !== 'KITCHEN_ADMIN' && role_user !== 'CASSIER_ADMIN'">
                 <a routerLink="/admin/product" class="nav-link"> Product </a>
                 <a routerLink="/admin/category" class="nav-link"> Category </a>
+                <a routerLink="/admin/table"class="nav-link"> Table </a>
+              </div>
+              <!-- Untuk role kitchen_admin dan cassier_admin, hanya tampilkan Table -->
+              <div class="listmenu" style="margin-left: 20px;" *ngIf="role_user === 'KITCHEN_ADMIN' || role_user === 'CASSIER_ADMIN'">
                 <a routerLink="/admin/table"class="nav-link"> Table </a>
               </div>
             </div>
@@ -44,10 +48,20 @@
               Transaksi
             </a>
             <div class="collapse" id="collapseExample2">
-              <div class="listmenu" style="margin-left: 20px;">
+              <div class="listmenu" style="margin-left: 20px;" *ngIf="role_user !== 'KITCHEN_ADMIN' && role_user !== 'CASSIER_ADMIN'">
                 <a routerLink="/post" class="nav-link"> Point of Sales </a>
                 <a routerLink="/admin/cassier-admin" class="nav-link"> Cassier Admin </a>
                 <a routerLink="/kitchen"  class="nav-link"> Kitchen Admin </a>
+                <a routerLink="/admin/history" class="nav-link"> History</a>
+              </div>
+
+              <div class="listmenu" style="margin-left: 20px;"*ngIf="role_user === 'KITCHEN_ADMIN'">
+                <a routerLink="/kitchen"  class="nav-link"> Kitchen Admin </a>
+                <a routerLink="/admin/history" class="nav-link"> History</a>
+              </div>
+              <div class="listmenu" style="margin-left: 20px;"*ngIf="role_user === 'CASSIER_ADMIN'">
+                <a routerLink="/post" class="nav-link"> Point of Sales </a>
+                <a routerLink="/admin/cassier-admin" class="nav-link"> Cassier Admin </a>
                 <a routerLink="/admin/history" class="nav-link"> History</a>
               </div>
             </div>
@@ -64,7 +78,7 @@
               Finance
             </a>
             <div class="collapse" id="collapseExample4">
-              <div class="listmenu" style="margin-left: 20px;">
+              <div class="listmenu" style="margin-left: 20px;" *ngIf="role_user !== 'KITCHEN_ADMIN' && role_user !== 'CASSIER_ADMIN'">
                 <a routerLink="/admin" class="nav-link"> Finance</a>
               </div>
             </div>
@@ -80,9 +94,9 @@
               Manajemen User
             </a>
             <div class="collapse" id="collapseExample3">
-              <div class="listmenu" style="margin-left: 20px;">
-                <a routerLink="/admin" class="nav-link"> Ads </a>
-                <a routerLink="/admin" class="nav-link"> User </a>
+              <div class="listmenu" style="margin-left: 20px;" *ngIf="role_user !== 'KITCHEN_ADMIN' && role_user !== 'CASSIER_ADMIN'">
+                <a routerLink="/admin/user" class="nav-link"> Ads </a>
+                <a routerLink="/admin/user" class="nav-link"> User</a>
               </div>
             </div>
           </li>
@@ -115,12 +129,22 @@
           <ul
             class="dropdown-menu dropdown-menu-end"
             aria-labelledby="dropdownMenuButton"
+            *ngIf="role_user !== 'KITCHEN_ADMIN' && role_user !== 'CASSIER_ADMIN'"
           >
             
             <li><a class="dropdown-item" routerLink="/admin/product">Product</a></li>
             <li><a class="dropdown-item" routerLink="/admin/category">Category</a></li>
             <li><a class="dropdown-item" routerLink="/admin/table">Table</a></li>
           </ul>
+
+          <ul
+            class="dropdown-menu dropdown-menu-end"
+            aria-labelledby="dropdownMenuButton"
+            *ngIf="role_user === 'KITCHEN_ADMIN' || role_user === 'CASSIER_ADMIN'"
+          >
+            <li><a class="dropdown-item" routerLink="/admin/table">Table</a></li>
+          </ul>
+
           <!-- </li> -->
         </div>
         <div class="btn-group dropend">
@@ -139,14 +163,41 @@
           <ul
             class="dropdown-menu dropdown-menu-end"
             aria-labelledby="dropdownMenuButton"
+            *ngIf="role_user !== 'KITCHEN_ADMIN' && role_user !== 'CASSIER_ADMIN'"
           >
             <li><a class="dropdown-item" routerLink="/post">Point of Sales</a></li>
             <li><a class="dropdown-item" routerLink="/admin/cassier-admin">Cassier Admin</a></li>
             <li><a class="dropdown-item" routerLink="/kitchen">Kitchen Admin</a></li>
             <li><a class="dropdown-item" routerLink="/admin/history">History</a></li>
           </ul>
-          <!-- </li> -->
+
+
+
+          <!-- user kitchen admin -->
+          <ul
+            class="dropdown-menu dropdown-menu-end"
+            aria-labelledby="dropdownMenuButton"
+            *ngIf="role_user === 'KITCHEN_ADMIN'"
+          >
+            <li><a class="dropdown-item" routerLink="/kitchen">Kitchen Admin</a></li>
+            <li><a class="dropdown-item" routerLink="/admin/history">History</a></li>
+          </ul>
+
+
+          <!-- user cassier admin -->
+          <ul
+            class="dropdown-menu dropdown-menu-end"
+            aria-labelledby="dropdownMenuButton"
+            *ngIf="role_user === 'CASSIER_ADMIN'"
+          >
+            <li><a class="dropdown-item" routerLink="/post">Point of Sales</a></li>
+            <li><a class="dropdown-item" routerLink="/admin/cassier-admin">Cassier Admin</a></li>
+            <li><a class="dropdown-item" routerLink="/admin/history">History</a></li>
+          </ul>
+
         </div>
+
+
   
         <div class="btn-group dropend">
           <!-- <li class="nav-item"> -->
@@ -164,6 +215,7 @@
           <ul
             class="dropdown-menu dropdown-menu-end"
             aria-labelledby="dropdownMenuButton"
+            *ngIf="role_user !== 'KITCHEN_ADMIN' && role_user !== 'CASSIER_ADMIN'"
           >
             <li><a class="dropdown-item">Finance</a></li>
           </ul>
@@ -186,9 +238,11 @@
           <ul
             class="dropdown-menu dropdown-menu-end"
             aria-labelledby="dropdownMenuButton"
+            *ngIf="role_user !== 'KITCHEN_ADMIN' && role_user !== 'CASSIER_ADMIN'"
           >
-            <li><a class="dropdown-item" href="#">Ads</a>
-              <a class="dropdown-item" href="#">User</a></li>
+            <li>
+              <a class="dropdown-item" routerLink="/admin/user">Ads</a>
+              <a class="dropdown-item" routerLink="/admin/user">User</a></li>
           </ul>
           <!-- </li> -->
         </div>

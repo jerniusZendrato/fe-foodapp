@@ -1,0 +1,114 @@
+<div style="width: 100%; box-sizing: border-box">
+  <div
+    style="
+      display: flex;
+      flex-direction: column;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      background-color: #fff9f9;
+    "
+  >
+    <div id="header-menu">
+      <!-- <h5>Master Product</h5> -->
+      <nav
+        style="
+          --bs-breadcrumb-divider: url(&#34;data:image/svg + xml,%3Csvgxmlns='http://www.w3.org/2000/svg'width='8'height='8'%3E%3Cpathd='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z'fill='%236c757d'/%3E%3C/svg%3E&#34;
+          );
+        "
+        aria-label="breadcrumb"
+      >
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a routerLink="/admin">Home</a></li>
+          <li class="breadcrumb-item active" aria-current="page">History</li>
+        </ol>
+      </nav>
+      <div id="edit-status" class="form-check form-switch" style="position: relative;">
+        <button
+         type="button" class="btn btn-success btn-sm" >Save Changes</button>
+        
+      </div>
+    </div>
+    <div id="isi-menu02">
+      <div
+        id="fileter_kategory"
+        tabindex="0"
+        data-bs-toggle="popover"
+        data-bs-trigger="hover focus"
+        data-bs-content="Disabled popover"
+      >
+        <div style="display: flex; flex-direction: row; align-items: center">
+          <div style="display: flex; flex-direction: row; align-items: center">
+            <input
+              style="margin-left: 30px"
+              type="text"
+              class="form-control"
+              placeholder="Search"
+              aria-describedby="search-icon"
+            />
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: row">
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#downloadhistory"
+          >
+            Add 
+          </button>
+          <!-- <button type="button" class="btn btn-primary">Primary</button> -->
+        </div>
+      </div>
+      </div>
+      <div id="isi-menu">
+        <table id="isitabel_product" class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Birthday</th>
+              <th scope="col">Role</th>
+              <th scope="col">User ID</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let user of user">
+            <tr>
+              <td>{{user.name}}</td>
+              <td>{{user.birthday}}</td>
+              <td>{{user.role}}</td>
+              <td>{{user.user_id}}</td>
+              <td>
+                <div 
+                  style="
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-evenly;
+                    align-items: center;
+                    margin: 0 20px;
+                  "
+                >
+                <div style=" background-color: rgba(0, 0, 255, 0.77); padding: 1px 0 1px 10px; border-radius: 5px;" >
+    
+                  <div class="form-check form-switch" style="margin: 0;  font-size: 16px;"  >
+                    <input
+                    
+                    class="form-check-input"
+                    type="checkbox"
+                    role="switch"
+                    />
+                  </div>
+                </div>
+                  <div style="color: #f80000; ; margin: 0">
+                    <i style="background-color: #f80000; padding: 5px 10px; border-radius: 5px; font-size: 16px; color: rgb(255, 255, 255); cursor: pointer"
+                    class="fa-solid fa-trash"></i>
+                    <!-- <i class="fa-solid fa-trash"></i> -->
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+</div>

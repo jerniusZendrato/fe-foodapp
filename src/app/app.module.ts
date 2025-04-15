@@ -41,6 +41,7 @@ import { LoginAdminComponent } from './components/admin/components/login-admin/l
 import { ParentAutenticationComponent } from './components/admin/parent-autentication/parent-autentication.component';
 import { SettingsAdminComponent } from './components/admin/components/settings-admin/settings-admin.component';
 import { WebsocketComponent } from './fe-customer/pages/websocket/websocket.component';
+import { ManajemenUserComponent } from './components/admin/components/manajemen-user/manajemen-user.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -80,7 +81,8 @@ import { WebsocketComponent } from './fe-customer/pages/websocket/websocket.comp
     LoginAdminComponent,
     ParentAutenticationComponent,
     SettingsAdminComponent,
-    WebsocketComponent
+    WebsocketComponent,
+    ManajemenUserComponent
     
     
   ],
