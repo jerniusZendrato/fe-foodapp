@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { LoaderService } from '../../services/loader.service';
 import { AdminLogin } from '../../models/admin-login.model';
 import { LoginService } from '../../services/login.service';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-settings-admin',
@@ -16,7 +15,7 @@ export class SettingsAdminComponent implements OnInit {
   }
   constructor(
     private loaderService: LoaderService,
-    private loginservice: LoginService
+    private loginservice: LoginService,
 
   ){}
 
@@ -74,6 +73,7 @@ export class SettingsAdminComponent implements OnInit {
       const data = localStorage.getItem('datalogin')
       if (data) {
         this.datalogin = JSON.parse(data);
+        console.log("this.datalogin",this.datalogin)
         this.loaderService.hideWithDelay(800);
         console.log("this.datalogin",this.datalogin)
       }
@@ -99,16 +99,21 @@ export class SettingsAdminComponent implements OnInit {
 
   savesetting(){
     this.loaderService.show();
-    const dataupdate = {
-      name: this.datalogin[0].name,
-      birthday: this.datalogin[0].birthday
-    }
-      this.loginservice.updatelogin(this.datalogin[0].user_id,this.selectedImage, this.datalogin[0].name, this.datalogin[0].birthday ).subscribe (
+      this.loginservice.updatelogin(this.datalogin[0].id,this.selectedImage, this.datalogin[0].name, this.datalogin[0].birthday ).subscribe (
         (isSuccess) => {
-          this.showsuccessToast()
-          this.loaderService.hideWithDelay(2000);
-          this.userlogin()
-          console.log("sukses")
+          if (isSuccess.isSuccess === true){
+            const updatedData = isSuccess.data
+            localStorage.setItem('datalogin', JSON.stringify([updatedData]));
+            console.log("updatedData",updatedData)
+            this.showsuccessToast()
+            this.loaderService.hideWithDelay(2000);
+            localStorage.setItem('datalogin', JSON.stringify(this.datalogin));
+            this.imagePreviewUrl = null
+            this.selectedImage = null
+  
+            this.userlogin()
+            console.log("sukses")
+          }
         },
         (error) => {
           console.log('error :>> ', error);
@@ -117,6 +122,31 @@ export class SettingsAdminComponent implements OnInit {
         }
       )
      
+  }
+
+
+  gantipassword(){
+    this.loaderService.show();
+    this.savechangepassword(this.passwordnew,this.passwordconf)
+    if(this.passwordnew === this.passwordconf){
+      this.loginservice.changepass(this.datalogin[0].user_id, this.passwordnow, this.passwordnew ).subscribe(
+        (isSuccess) => {
+          this.showsuccessToast()
+          this.loaderService.hideWithDelay(2000);
+          this.passwordnow = ''
+          this.passwordnew = ''
+          this.passwordconf = ''
+
+        },
+        (error) => {
+          console.log('error :>> ', error);
+          this.showErrorToast()
+          this.loaderService.hideWithDelay(2000);
+        }
+
+      )
+    }
+    this.loaderService.hideWithDelay(2000);
   }
 
   closeModal() {

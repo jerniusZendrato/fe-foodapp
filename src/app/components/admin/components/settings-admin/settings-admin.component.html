@@ -19,7 +19,12 @@
     <div id="menu01" class="show"  *ngIf="activeItem === 'Edit Profile'" style="display: flex; flex-direction: column; align-items: center; justify-content: center; ">
         <div style=" width: 150px; height: 150px; position: relative; margin: 30px 0; cursor: pointer;">
 
-          <img *ngIf="imagePreviewUrl; else defaultImage" style=" object-fit: cover;" [src]="imagePreviewUrl"  class="rounded-circle" alt="Gambar Bulat" width="150" height="150">
+          <img *ngIf="imagePreviewUrl; else checkDataLogin" style=" object-fit: cover;" [src]="imagePreviewUrl"  class="rounded-circle" alt="Gambar Bulat" width="150" height="150">
+
+          <ng-template #checkDataLogin>
+            <img *ngIf="datalogin[0].url_image; else defaultImage" style=" object-fit: cover;" [src]="datalogin[0].url_image" class="rounded-circle" alt="Gambar Bulat" width="150" height="150">
+          </ng-template>
+
           <!-- Fallback: jika imagePreviewUrl tidak ada -->
           <ng-template #defaultImage>
           <img style=" object-fit: cover; opacity: 50%;" src="../../../../../assets/user.png"  class="rounded-circle" alt="Gambar Bulat" width="150" height="150">
@@ -109,7 +114,7 @@
         </div>
       </div>
 
-        <button  type="button" style="margin: 30px 0;" class="btn btn-primary" (click)="savechangepassword(passwordnew,passwordconf)">Save Changes</button>
+        <button  type="button" style="margin: 30px 0;" class="btn btn-primary" (click)="gantipassword()">Save Changes</button>
     </div>
     </div>
 </div>

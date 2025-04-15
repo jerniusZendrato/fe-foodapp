@@ -3,7 +3,9 @@ export interface AdminLogin {
     user_id: string,
     birthday: string
     name: string,
-    token: string
+    id: string,
+    token: string,
+    url_image: string
 }
 
 export interface PostLogin {
