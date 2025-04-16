@@ -20,15 +20,10 @@
       >
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a routerLink="/admin">Home</a></li>
-          <li class="breadcrumb-item active" aria-current="page">History</li>
+          <li class="breadcrumb-item active" aria-current="page">User</li>
         </ol>
       </nav>
-      <div id="edit-status" class="form-check form-switch" style="position: relative;">
-        <button
-         type="button" class="btn btn-success btn-sm" >Save Changes</button>
-        
-      </div>
-    </div>
+        </div>
     <div id="isi-menu02">
       <div
         id="fileter_kategory"
@@ -43,6 +38,7 @@
               style="margin-left: 30px"
               type="text"
               class="form-control"
+              [(ngModel)]="searchText"
               placeholder="Search"
               aria-describedby="search-icon"
             />
@@ -53,7 +49,7 @@
             type="button"
             class="btn btn-primary"
             data-bs-toggle="modal"
-            data-bs-target="#downloadhistory"
+            data-bs-target="#adduserModal"
           >
             Add 
           </button>
@@ -72,7 +68,7 @@
               <th scope="col">Action</th>
             </tr>
           </thead>
-          <tbody *ngFor="let user of user">
+          <tbody *ngFor="let user of user| filter:searchText:'name':'birthday':'role':'user_id'">
             <tr>
               <td>{{user.name}}</td>
               <td>{{user.birthday}}</td>
@@ -88,18 +84,8 @@
                     margin: 0 20px;
                   "
                 >
-                <div style=" background-color: rgba(0, 0, 255, 0.77); padding: 1px 0 1px 10px; border-radius: 5px;" >
-    
-                  <div class="form-check form-switch" style="margin: 0;  font-size: 16px;"  >
-                    <input
-                    
-                    class="form-check-input"
-                    type="checkbox"
-                    role="switch"
-                    />
-                  </div>
-                </div>
-                  <div style="color: #f80000; ; margin: 0">
+                
+                  <div style="color: #f80000; ; margin: 0" (click)="deleteuser(user.id,user.name)">
                     <i style="background-color: #f80000; padding: 5px 10px; border-radius: 5px; font-size: 16px; color: rgb(255, 255, 255); cursor: pointer"
                     class="fa-solid fa-trash"></i>
                     <!-- <i class="fa-solid fa-trash"></i> -->
@@ -112,3 +98,167 @@
       </div>
     </div>
 </div>
+
+
+  <!-- add product -->
+  <div
+  class="modal fade"
+  id="adduserModal"
+  tabindex="-1"
+  aria-labelledby="addrpoductModalLabel"
+  data-bs-backdrop="static"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addrpoductModalLabel">Add User</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <form>
+            <div id="modal_data">
+              <div id="data_edit">
+                <div class="mb-3">
+                  <label for="productName" class="form-label"
+                    >User Name</label
+                  >
+                  
+                  <input
+                    placeholder="insert product name"
+                    type="text"
+                    class="form-control"
+                    id="productName"
+                    name="name"
+                    [(ngModel)]="username"
+                    required
+                  />
+                </div>
+
+                <div class="mb-3">
+                    <label for="productName" class="form-label"
+                      >Date of Birth</label
+                    >
+                    
+                    <input
+                      placeholder="insert product name"
+                      type="date"
+                      class="form-control"
+                      id="productName"
+                      name="name"
+                      [(ngModel)]="birthuser"
+                      required
+                    />
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="category" class="form-label">Position</label>
+                    <select
+                      class="form-control"
+                      id="category"
+                      name="name"
+                      required
+                      [(ngModel)]="selectedRole"
+                    >
+                      <option value="" disabled selected>Choose Category</option>
+                      <option *ngFor="let r of role" [value]="r">{{ r }}</option>
+                    </select>
+                  </div>
+
+                  
+              </div>
+              <div id="add_modal_img">
+                <img
+                  id="img01"
+                  style="
+                    object-fit: cover;
+                    object-position: center;
+                    border-radius: 9px;
+                    transition: transform 0.3s ease;
+                  "
+                  alt=" "
+                  height="150"
+                  width="150"
+                />
+                <ng-template #defaultImage>
+                  <img
+                    style="
+                      object-fit: cover;
+                      object-position: center;
+                      border-radius: 9px;
+                    "
+                    alt="Default Image"
+                    height="150"
+                    width="150"
+                  />
+                </ng-template>
+              </div>
+            </div>
+           
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+        >
+          Close
+        </button>
+        <button type="button" class="btn btn-primary" (click)="adduser()">
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+   <!-- Toast -->
+   <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div
+      id="successToast"
+      class="toast align-items-center text-bg-success border-0"
+      role="alert"
+      aria-live="assertive"
+      aria-atomic="true"
+    >
+      <div class="d-flex">
+        <div class="toast-body">Your operation was successful!</div>
+        <button
+          type="button"
+          class="btn-close btn-close-white me-2 m-auto"
+          data-bs-dismiss="toast"
+          aria-label="Close"
+        ></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Error -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div
+      id="errorToast"
+      class="toast align-items-center text-bg-danger border-0"
+      role="alert"
+      aria-live="assertive"
+      aria-atomic="true"
+    >
+      <div class="d-flex">
+        <div class="toast-body">Something went wrong! Please try again.</div>
+        <button
+          type="button"
+          class="btn-close btn-close-white me-2 m-auto"
+          data-bs-dismiss="toast"
+          aria-label="Close"
+        ></button>
+      </div>
+    </div>
+  </div>
+
