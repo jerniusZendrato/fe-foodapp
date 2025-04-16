@@ -7,7 +7,8 @@ import { AdminOrderCassier } from '../../models/admin-order-cassier.model';
 import { AdminCategory } from '../../models/admin-category.model';
 import { AdminProduct } from '../../models/admin-product.model';
 import { WebsocketService } from 'src/app/fe-customer/shared/services/websocket.service';
-
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 @Component({
   selector: 'app-transaction-cassier-admin',
   templateUrl: './transaction-cassier-admin.component.html',
@@ -244,6 +245,99 @@ export class TransactionCassierAdminComponent implements OnInit {
   //   })
 
   // }
+
+
+  downloadpdf(){
+    // const element = document.getElementById('bill');
+
+    
+    // if (element) {
+    //   setTimeout(() => {
+    //     html2canvas(element, { 
+    //       useCORS: true,       // Mendukung CORS untuk gambar eksternal
+    //       scale: 2,            // Menambah resolusi gambar untuk kualitas lebih baik
+    //       logging: true,       // Menampilkan log untuk debugging (opsional)
+    //       backgroundColor: '#fff'  // Memastikan latar belakang putih
+    //     }).then((canvas) => {
+    //       const imgData = canvas.toDataURL('image/png');  // Mengubah gambar menjadi data URL
+    //       const pdf = new jsPDF('p', 'mm');  // Membuat dokumen PDF tanpa ukuran spesifik
+
+    //       // Mendapatkan lebar dan tinggi gambar dalam PDF agar sesuai dengan elemen
+    //       const pdfWidth = pdf.internal.pageSize.getWidth();
+    //       const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+    //       // Menambah gambar ke PDF dengan ukuran yang sesuai
+    //       pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);  // Menambah gambar ke halaman PDF di posisi (0, 0)
+
+    //       // Menyimpan PDF dengan nama 'laporan.pdf'
+    //       pdf.save('laporan.pdf');
+    //     }).catch(error => {
+    //       console.error("Error generating PDF:", error);  // Menangani error jika terjadi
+    //     });
+    //   }, 500);  // 500ms delay untuk memastikan elemen telah ter-render
+    // }
+
+    // if (element) {
+    //   setTimeout(() => {
+    //     html2canvas(element, { 
+    //       useCORS: true,       // Mendukung CORS untuk gambar eksternal
+    //       scale: 2,            // Menambah resolusi gambar untuk kualitas lebih baik
+    //       logging: true,       // Menampilkan log untuk debugging (opsional)
+    //       backgroundColor: '#fff'  // Memastikan latar belakang putih
+    //     }).then((canvas) => {
+    //       // Mengonversi canvas menjadi data URL gambar PNG
+    //       const imgData = canvas.toDataURL('image/png');
+
+    //       // Membuat elemen gambar baru untuk menampilkan gambar hasil screenshot
+    //       const link = document.createElement('a');
+    //       link.href = imgData;
+    //       link.download = 'screenshot.png';  // Nama file gambar yang akan diunduh
+    //       link.click();  // Memicu download gambar
+    //     }).catch(error => {
+    //       console.error("Error generating image:", error);  // Menangani error jika terjadi
+    //     });
+    //   }, 500);  // 500ms delay untuk memastikan elemen telah ter-render
+    // }
+
+    const element = document.getElementById('bill') as HTMLElement;
+
+if (element) {
+  // Simpan style sebelumnya
+  const prevMaxHeight = element.style.maxHeight;
+  const prevOverflow = element.style.overflow;
+
+  // Ubah style supaya seluruh isi modal terlihat
+  element.style.maxHeight = 'none';
+  element.style.overflow = 'visible';
+
+  setTimeout(() => {
+    html2canvas(element, {
+      useCORS: true,             // Mendukung CORS untuk gambar eksternal
+      scale: 2,                  // Menambah resolusi gambar
+      logging: true,             // Debugging opsional
+      backgroundColor: '#fff'    // Latar putih agar tidak transparan
+    }).then((canvas) => {
+      // Konversi hasil screenshot jadi data URL PNG
+      const imgData = canvas.toDataURL('image/png');
+
+      // Buat link untuk unduh file
+      const link = document.createElement('a');
+      link.href = imgData;
+      link.download = 'screenshot.png';
+      link.click();
+
+      // Kembalikan style ke semula
+      element.style.maxHeight = prevMaxHeight;
+      element.style.overflow = prevOverflow;
+    }).catch(error => {
+      console.error("Error generating image:", error);
+    });
+  }, 500); // Tunggu render benar-benar selesai
+}
+
+
+
+}
 
 
 }

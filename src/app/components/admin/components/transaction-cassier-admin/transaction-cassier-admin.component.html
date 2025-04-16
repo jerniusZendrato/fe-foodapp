@@ -248,7 +248,7 @@
   <div class="modal fade" id="detailorderan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
-        <div class="modal-body" *ngFor="let orderid of ordersbyid">
+        <div id="bill" class="modal-body" *ngFor="let orderid of ordersbyid">
           <div style="display: flex; flex-direction: column; justify-content: center; justify-content: center;">
            <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
             <img
@@ -258,7 +258,7 @@
             width="80"
           />
           </div>
-            <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <div  style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
             <h1>WARUNG K'JAYA</h1>
             <p>CLOSED BILL</p>
             <table id="tabledetai01" class="table table-borderless">
@@ -318,10 +318,10 @@
             </table>
             <p style="font-size: 24px; margin-top: 20px;">Thank you for coming,</p>
             <p>don't forget to tell your close friends about our restaurant</p>
-            <button style="margin-top: 40px;" class="btn btn-primary">DOWNLOAD PDF <i class="fa-solid fa-print"></i></button>
-          </div>
           </div>
         </div>
+      </div>
+      <button style="margin-top: 40px;" class="btn btn-primary" (click)="downloadpdf()">DOWNLOAD PDF <i class="fa-solid fa-print"></i></button>
        
       </div>
     </div>
