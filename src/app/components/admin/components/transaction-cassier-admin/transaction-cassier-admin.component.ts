@@ -309,6 +309,7 @@ if (element) {
   // Ubah style supaya seluruh isi modal terlihat
   element.style.maxHeight = 'none';
   element.style.overflow = 'visible';
+  this.loaderService.show();
 
   setTimeout(() => {
     html2canvas(element, {
@@ -333,6 +334,7 @@ if (element) {
       console.error("Error generating image:", error);
     });
   }, 500); // Tunggu render benar-benar selesai
+  this.loaderService.hideWithDelay(1000);
 }
 
 
