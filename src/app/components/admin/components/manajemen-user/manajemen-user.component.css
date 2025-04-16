@@ -57,3 +57,20 @@
     vertical-align: middle;
     align-items: center;
 }
+.modal-body form #modal_data{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+#add_modal_img{
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    border: 2px solid black; 
+    width: 155px; 
+    height: 155px; 
+    margin-right: 30px;  
+    border-radius: 8px;
+
+}

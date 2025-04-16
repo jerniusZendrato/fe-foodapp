@@ -16,3 +16,11 @@ export interface changeUserAdmin {
 }
 
 
+export interface addUserAdmin {
+    name:string;
+    birthday: string;
+    roles:string;
+    
+}
+
+
