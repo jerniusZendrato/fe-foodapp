@@ -107,7 +107,7 @@ export class SettingsAdminComponent implements OnInit {
             console.log("updatedData",updatedData)
             this.showsuccessToast()
             this.loaderService.hideWithDelay(2000);
-            localStorage.setItem('datalogin', JSON.stringify(this.datalogin));
+            // localStorage.setItem('datalogin', JSON.stringify(this.datalogin));
             this.imagePreviewUrl = null
             this.selectedImage = null
   
