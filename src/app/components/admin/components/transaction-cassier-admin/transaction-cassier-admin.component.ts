@@ -214,11 +214,7 @@ export class TransactionCassierAdminComponent implements OnInit {
   }
 
 
-  neworderToast(): void {
-    const toastElement = document.getElementById('neworderToast');
-    const toast = new (window as any).bootstrap.Toast(toastElement);
-    toast.show();
-  }
+  
   
   // public datacordercassier: AdminOrderCassier[] = []
   // public currentDate = new Date().toISOString().split('T')[0]; 
@@ -247,99 +243,93 @@ export class TransactionCassierAdminComponent implements OnInit {
   // }
 
 
-  downloadpdf(){
-    // const element = document.getElementById('bill');
-
-    
-    // if (element) {
-    //   setTimeout(() => {
-    //     html2canvas(element, { 
-    //       useCORS: true,       // Mendukung CORS untuk gambar eksternal
-    //       scale: 2,            // Menambah resolusi gambar untuk kualitas lebih baik
-    //       logging: true,       // Menampilkan log untuk debugging (opsional)
-    //       backgroundColor: '#fff'  // Memastikan latar belakang putih
-    //     }).then((canvas) => {
-    //       const imgData = canvas.toDataURL('image/png');  // Mengubah gambar menjadi data URL
-    //       const pdf = new jsPDF('p', 'mm');  // Membuat dokumen PDF tanpa ukuran spesifik
-
-    //       // Mendapatkan lebar dan tinggi gambar dalam PDF agar sesuai dengan elemen
-    //       const pdfWidth = pdf.internal.pageSize.getWidth();
-    //       const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-
-    //       // Menambah gambar ke PDF dengan ukuran yang sesuai
-    //       pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);  // Menambah gambar ke halaman PDF di posisi (0, 0)
-
-    //       // Menyimpan PDF dengan nama 'laporan.pdf'
-    //       pdf.save('laporan.pdf');
-    //     }).catch(error => {
-    //       console.error("Error generating PDF:", error);  // Menangani error jika terjadi
-    //     });
-    //   }, 500);  // 500ms delay untuk memastikan elemen telah ter-render
-    // }
-
-    // if (element) {
-    //   setTimeout(() => {
-    //     html2canvas(element, { 
-    //       useCORS: true,       // Mendukung CORS untuk gambar eksternal
-    //       scale: 2,            // Menambah resolusi gambar untuk kualitas lebih baik
-    //       logging: true,       // Menampilkan log untuk debugging (opsional)
-    //       backgroundColor: '#fff'  // Memastikan latar belakang putih
-    //     }).then((canvas) => {
-    //       // Mengonversi canvas menjadi data URL gambar PNG
-    //       const imgData = canvas.toDataURL('image/png');
-
-    //       // Membuat elemen gambar baru untuk menampilkan gambar hasil screenshot
-    //       const link = document.createElement('a');
-    //       link.href = imgData;
-    //       link.download = 'screenshot.png';  // Nama file gambar yang akan diunduh
-    //       link.click();  // Memicu download gambar
-    //     }).catch(error => {
-    //       console.error("Error generating image:", error);  // Menangani error jika terjadi
-    //     });
-    //   }, 500);  // 500ms delay untuk memastikan elemen telah ter-render
-    // }
-
+  downloadpdf(id:string,paymentStatus: string){
+   const idorder = id
+   const paymentstatus = paymentStatus
+   console.log("paymentstatus",paymentstatus)
     const element = document.getElementById('bill') as HTMLElement;
 
-if (element) {
-  // Simpan style sebelumnya
-  const prevMaxHeight = element.style.maxHeight;
-  const prevOverflow = element.style.overflow;
+    if (element) {
+      // Simpan style sebelumnya
+      const prevMaxHeight = element.style.maxHeight;
+      const prevOverflow = element.style.overflow;
 
-  // Ubah style supaya seluruh isi modal terlihat
-  element.style.maxHeight = 'none';
-  element.style.overflow = 'visible';
-  this.loaderService.show();
+      // Ubah style supaya seluruh isi modal terlihat
+      element.style.maxHeight = 'none';
+      element.style.overflow = 'visible';
+      this.loaderService.show();
 
-  setTimeout(() => {
-    html2canvas(element, {
-      useCORS: true,             // Mendukung CORS untuk gambar eksternal
-      scale: 2,                  // Menambah resolusi gambar
-      logging: true,             // Debugging opsional
-      backgroundColor: '#fff'    // Latar putih agar tidak transparan
-    }).then((canvas) => {
-      // Konversi hasil screenshot jadi data URL PNG
-      const imgData = canvas.toDataURL('image/png');
+      setTimeout(() => {
+        html2canvas(element, {
+          useCORS: true,             // Mendukung CORS untuk gambar eksternal
+          scale: 2,                  // Menambah resolusi gambar
+          logging: true,             // Debugging opsional
+          backgroundColor: '#fff'    // Latar putih agar tidak transparan
+        }).then((canvas) => {
+          // Konversi hasil screenshot jadi data URL PNG
+          const imgData = canvas.toDataURL('image/png');
 
-      // Buat link untuk unduh file
-      const link = document.createElement('a');
-      link.href = imgData;
-      link.download = 'screenshot.png';
-      link.click();
+          // Buat link untuk unduh file
+          const link = document.createElement('a');
+          link.href = imgData;
+          link.download = 'screenshot.png';
+          link.click();
 
-      // Kembalikan style ke semula
-      element.style.maxHeight = prevMaxHeight;
-      element.style.overflow = prevOverflow;
-    }).catch(error => {
-      console.error("Error generating image:", error);
-    });
-  }, 500); // Tunggu render benar-benar selesai
-  this.loaderService.hideWithDelay(1000);
-}
+          // Kembalikan style ke semula
+          element.style.maxHeight = prevMaxHeight;
+          element.style.overflow = prevOverflow;
+        }).catch(error => {
+          console.error("Error generating image:", error);
+        });
+      }, 500); // Tunggu render benar-benar selesai
+      if(paymentstatus !='PAID'){
+        this.updatepaymentstatus(idorder)
+      }
+      this.loaderService.hideWithDelay(1000);
+    }
+  }
+
+  updatepaymentstatus(orderid:string){
+    this.orderadmin.patchpaymentstatus(orderid).subscribe(
+      (response) => {
+        if (response['isSuccess']==true){
+          console.log('saved successfully',response);
+          this.getorderview()
+          this.groupProductsByCategory()
+          this.showsuccessToast()
+        }
+        else {
+          console.error('Failed to save');
+          this.showErrorToast()
+        }
+        console.log("masuk ke sini jka gagal atau berhasil save")
+        
+        this.loaderService.hideWithDelay(2000);
+      },
+      (error) => {
+        this.loaderService.hideWithDelay(2000);
+        console.error('Error saving:', error);
+        this.showErrorToast()
+      }
+    )
+  }
 
 
-
-}
+  showsuccessToast(): void {
+    const toastElement = document.getElementById('successToast');
+    const toast = new (window as any).bootstrap.Toast(toastElement);
+    toast.show();
+  }
+  showErrorToast(): void {
+    const toastElement = document.getElementById('errorToast');
+    const toast = new (window as any).bootstrap.Toast(toastElement);
+    toast.show();
+  }
+  neworderToast(): void {
+    const toastElement = document.getElementById('neworderToast');
+    const toast = new (window as any).bootstrap.Toast(toastElement);
+    toast.show();
+  }
 
 
 }

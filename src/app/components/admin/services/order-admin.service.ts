@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { AdminOrderCassier } from '../models/admin-order-cassier.model';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { environment } from 'src/app/environment/environment';
+import { HistoryOrderAdmin } from '../models/history-order-admin.model';
 
 @Injectable({
   providedIn: 'root'
@@ -36,10 +37,12 @@ export class OrderAdminService {
 
   
 
-  getorders():Observable<AdminOrderCassier[]>{
+  // data tarikan hystory order
+
+  getorders():Observable<HistoryOrderAdmin[]>{
     // Buat parameter query hanya dengan 'date'
     // const params = new HttpParams().set('date', date);
-    return this.http.get<{ isSuccess: boolean; data: AdminOrderCassier[] }>(`${environment.API_URL}/order`).pipe(
+    return this.http.get<{ isSuccess: boolean; data: HistoryOrderAdmin[] }>(`${environment.API_URL}/order`).pipe(
       map(response => response.data),
       catchError(error => {
         console.error('Terjadi kesalahan saat mengambil produk:', error);
@@ -60,6 +63,22 @@ export class OrderAdminService {
         return throwError(() => new Error('Gagal mengambil data produk'));
       })
     );
+  }
+
+  patchpaymentstatus(status: string):Observable<any>{
+    if (status && status.length > 0) {
+      const params = encodeURIComponent(status);
+      const body = {
+        "paymentStatus": "paid"
+    }
+      return this.http.patch<{ isSuccess: boolean}>(`${environment.API_URL}/order/${params}/paymentStatus`,  body);
+      
+    }else {
+      return new Observable((observer) => {
+        observer.error('No valid category to save');
+      }
+    )
+  }
   }
 
   
