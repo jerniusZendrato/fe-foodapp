@@ -247,8 +247,8 @@
   <!-- Scrollable modal -->
   <div class="modal fade" id="detailorderan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-      <div class="modal-content">
-        <div id="bill" class="modal-body" *ngFor="let orderid of ordersbyid">
+      <div class="modal-content" *ngFor="let orderid of ordersbyid">
+        <div id="bill" class="modal-body">
           <div style="display: flex; flex-direction: column; justify-content: center; justify-content: center;">
            <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
             <img
@@ -320,8 +320,8 @@
             <p>don't forget to tell your close friends about our restaurant</p>
           </div>
         </div>
+      <button style="margin-top: 40px;" class="btn btn-primary" (click)="downloadpdf(orderid.id, orderid.paymentStatus)">DOWNLOAD PDF <i class="fa-solid fa-print"></i></button>
       </div>
-      <button style="margin-top: 40px;" class="btn btn-primary" (click)="downloadpdf()">DOWNLOAD PDF <i class="fa-solid fa-print"></i></button>
        
       </div>
     </div>
@@ -339,3 +339,50 @@
       </div>
     </div>
   </div>
+
+
+
+  
+<!-- Toast -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div
+    id="successToast"
+    class="toast align-items-center text-bg-success border-0"
+    role="alert"
+    aria-live="assertive"
+    aria-atomic="true"
+  >
+    <div class="d-flex">
+      <div class="toast-body">Your operation was successful!</div>
+      <button
+        type="button"
+        class="btn-close btn-close-white me-2 m-auto"
+        data-bs-dismiss="toast"
+        aria-label="Close"
+      ></button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast Error -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div
+    id="errorToast"
+    class="toast align-items-center text-bg-danger border-0"
+    role="alert"
+    aria-live="assertive"
+    aria-atomic="true"
+  >
+    <div class="d-flex">
+      <div class="toast-body">Something went wrong! Please try again.</div>
+      <button
+        type="button"
+        class="btn-close btn-close-white me-2 m-auto"
+        data-bs-dismiss="toast"
+        aria-label="Close"
+      ></button>
+    </div>
+  </div>
+</div>
+
+

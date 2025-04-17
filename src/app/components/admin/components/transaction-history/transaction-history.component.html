@@ -97,27 +97,36 @@
         <table id="isitabel_product" class="table table-striped">
           <thead>
             <tr>
-              <th scope="col">Order ID</th>
-              <th scope="col">Table</th>
-              <th scope="col">Order Type</th>
-              <th scope="col">Date</th>
-              <th scope="col">payment</th>
-              <th scope="col">Total Payment</th>
-              <th scope="col">Costumer</th>
-              <th scope="col">Cashier</th>
+              <th>Code</th>
+              <th>Customer</th>
+              <th>Table</th>
+              <th>Status</th>
+              <th>Total Price</th>
+              <th>Created At</th>
+              <th>Detail Orders</th>
               <th scope="col">Status</th>
             </tr>
           </thead>
           <tbody *ngFor="let historyorder of Historyorder |filter:searchText:'code':'tableName':'type':'totalPrice':'customerName':'status'">
             <tr>
-              <td>{{historyorder.code}}</td>
+              <td>{{ historyorder.code }}</td>
+              <td>{{ historyorder.customerName }}</td>
+              <td>{{ historyorder.tableName }}</td>
+              <td>{{ historyorder.status }}</td>
+              <td>{{ historyorder.totalPrice | number }}</td>
+              <td>{{ historyorder.createdAt }}</td>
+              <td>{{ getDetailOrder(historyorder) }}</td>
+
+
+
+              <!-- <td>{{historyorder.code}}</td>
               <td>{{historyorder.tableName}}</td>
               <td>{{historyorder.type}}</td>
               <td>{{historyorder.createdAt | date:'dd/MM/yyyy HH:mm'}}</td>
               <td>{{historyorder.paymentPaidAt}}</td>
               <td>{{historyorder.totalPrice | number:'1.2-2'}}</td>
               <td>{{historyorder.customerName}}</td>
-              <td>{{historyorder.adminName}}</td>
+              <td>{{historyorder.adminName}}</td> -->
               <td>
               <p *ngIf="historyorder.status?.toLowerCase() === 'process'" style="margin: 2px 6px; border-radius: 5px; background-color: #FBC924;">{{historyorder.status}}</p>
               <p *ngIf="historyorder.status?.toLowerCase() != 'process'" style="margin: 2px 6px; border-radius: 5px; background-color: #A2FF99;">{{historyorder.status}}</p>
@@ -141,17 +150,17 @@
           <form class="row d-flex justify-content-evenly" >
             <div class="col-auto">
               <label for="inputstartdate" class="visually-hidden">Start date</label>
-              <input type="date" class="form-control" id="inputstartdate" placeholder="Start date"[(ngModel)]="startDatetoexcel">
+              <input type="date" class="form-control" id="inputstartdate" placeholder="Start date"[(ngModel)]="startDatetoexcel"name="startDate">
             </div>
             <div class="col-auto">
               <label for="inputenddate" class="visually-hidden">End Date</label>
-              <input type="date" class="form-control" id="inputenddate" placeholder="End Date" [(ngModel)]="endDatetoeexcel">
+              <input type="date" class="form-control" id="inputenddate" placeholder="End Date" [(ngModel)]="endDatetoeexcel" name="endDate">
             </div>
           </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="exportFilteredToExcel()">Download</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="exportToExcel()">Download</button>
         </div>
       </div>
     </div>
