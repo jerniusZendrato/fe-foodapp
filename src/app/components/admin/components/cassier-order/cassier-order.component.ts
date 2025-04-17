@@ -57,12 +57,14 @@ export class CassierOrderComponent implements OnInit{
 
     const data = localStorage.getItem('datalogin')
     const datalogin = JSON.parse(data as string);
+    console.log("datalogin",datalogin[0].id)
     const addorder: any = {
       customerName: this.orderForm.get('customerName')?.value,
       type: 'dine in', //nanti diganti menggunakan fitur pilih
       tableId: this.orderForm.get('tableId')?.value,
-      adminId : '71451462-2480-41a5-8184-0bbcd523f5d6',
-      // adminId: datalogin.id,
+      // adminId : '71451462-2480-41a5-8184-0bbcd523f5d6',
+      adminId: datalogin[0].id,
+      
       productOrders: this.savedProducts.map(product => ({
         id: product.id ?? '',
         quantity: product.quantity ?? 0
@@ -250,7 +252,7 @@ export class CassierOrderComponent implements OnInit{
 
 
     clearlocalstorage(){
-      this.localstorageorder.clear()
+      this.localstorageorder.removeItem('selectedProducts');
       this.loadSavedProducts()
     }
 

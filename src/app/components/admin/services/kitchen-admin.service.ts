@@ -14,7 +14,8 @@ export class KitchenAdminService {
   ) { }
 
   getkitchenorder(date:string, status:string):Observable<AdminOrderCassier[]>{
-    const params = new HttpParams().set('date', date).set('orderStatus', status);
+    // const params = new HttpParams().set('date', date).set('orderStatus', status);
+    const params = new HttpParams().set('orderStatus', status);
     return this.http.get<{ isSuccess: boolean; data: AdminOrderCassier[] }>(`${environment.API_URL}/order`,{params}).pipe(
       map(response => response.data),
       catchError(error => {
