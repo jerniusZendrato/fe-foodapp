@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { OrderAdminService } from '../../services/order-admin.service';
 import { LoaderService } from '../../services/loader.service';
 import { AdminOrderCassier } from '../../models/admin-order-cassier.model';
-// import * as XLSX from 'xlsx';
+import * as XLSX from 'xlsx';
 import * as FileSaver from 'file-saver';
+import { HistoryOrderAdmin } from '../../models/history-order-admin.model';
 
 
 
@@ -31,7 +32,7 @@ export class TransactionHistoryComponent implements OnInit {
   }
 
   selectedValue = 'ALL'; // Nilai default
-  public Historyorder: AdminOrderCassier[] = []
+  public Historyorder: HistoryOrderAdmin[] = []
   
   public currentDate = new Date().toISOString().split('T')[0]; 
   getorderview(): Promise<void> {
@@ -39,8 +40,9 @@ export class TransactionHistoryComponent implements OnInit {
       this.loaderService.show(); // Tampilkan loader
   
       this.orderadmin.getorders().subscribe(
-        (response: AdminOrderCassier[]) => {
+        (response: HistoryOrderAdmin[]) => {
           this.Historyorder = response; // Simpan data
+          this.getDetailOrder(this.Historyorder)
           this.loaderService.hide(); // Sembunyikan loader
           resolve(); // Beri tahu bahwa proses selesai
         },
@@ -52,51 +54,82 @@ export class TransactionHistoryComponent implements OnInit {
       );
     });
   }
+
+  getDetailOrder(order: any): string {
+    if (order?.productOrders && Array.isArray(order.productOrders)) {
+      return order.productOrders
+        .map((item: any) => {
+          const name = item.name ?? 'Unknown';
+          const quantity = item.quantity ?? 0;
+          const price = item.price ?? 0;
+          return `${name} x${quantity} (${price.toLocaleString()})`;
+        })
+        .join(', ');
+    }
+  
+    return '-'; // fallback kalau nggak ada productOrders
+  }
   
 
   startDatetoexcel: Date = new Date();;  // format: 'YYYY-MM-DD'
   endDatetoeexcel: Date = new Date();;
 
-  exportFilteredToExcel(){
-    this.orderadmin.getorders().subscribe(
-      (response: AdminOrderCassier[]) => {
-        // if(this.startDatetoexcel && this.endDatetoeexcel){
-          const datatoexcel = response.filter(order =>{
-          const createdDate = new Date(order.createdAt)
-          const start = new Date(this.startDatetoexcel);
-          const end = new Date(this.endDatetoeexcel);
-          return createdDate >= start && createdDate <= end;
-      })
-          const detailOrder = datatoexcel.flatMap(order => order.productOrders);
 
-          const simplifiedData = datatoexcel.filter(orderfix =>({
-            code : orderfix.code,
-            customerName: orderfix.customerName,
-            type: orderfix.type,
-            tableName: orderfix.tableName,
-            adminName: orderfix.adminName,
-            createdAt: orderfix.createdAt,
-            paymentStatus: orderfix.paymentStatus,
-            paymentPaidAt: orderfix.paymentPaidAt,
-            status: orderfix.status,
-            deliveredAt: orderfix.deliveredAt,
-            totalPrice: orderfix.totalPrice
-          }))
-          console.log("simplifiedData",datatoexcel)
-          // const worksheet = XLSX.utils.json_to_sheet(simplifiedData);
-          // const workbook = { Sheets: { 'Orders': worksheet }, SheetNames: ['Orders'] };
-          // const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-          // const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
-          // FileSaver.saveAs(blob, `Orders_${this.startDatetoexcel}_to_${this.endDatetoeexcel}.xlsx`);
-      // }
-      // else{
-      //   confirm("tolong lengkapi data")
-      // }
-    }
-    )
+
+  exportToExcel(): void {
+
+
+    // Pastikan startDatetoexcel dan endDatetoeexcel adalah objek Date
+    const startDate = new Date(this.startDatetoexcel);
+    const endDate = new Date(this.endDatetoeexcel);
+
+    const startDateStr = startDate.toISOString().split('T')[0];
+    const endDateStr = endDate.toISOString().split('T')[0];
+
+    console.log("ini start ",startDateStr,", ini end ",endDateStr)
+    
+    // Filter data sesuai dengan rentang tanggal
+    const filteredData = this.Historyorder.filter((order: any) => {
+      const orderDate = new Date(order.createdAt).toISOString().split('T')[0];
+      return orderDate >= startDateStr && orderDate <= endDateStr;
+    });
+
+    // Convert filtered data ke format Excel
+    const exportData = filteredData.map((order: any) => ({
+      Code: order.code,
+      Customer: order.customerName,
+      subtotal: order.subTotalPrice,
+      tax: order.tax,
+      Total: order.totalPrice,
+      paymentStatus: order.paymentStatus,
+      Created: order.createdAt,
+      paymentPaidAt: order.paymentPaidAt,
+      deliveredAt: order.deliveredAt,
+      productOrders:  this.getDetailOrder(order)
+    }));
+
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportData);
+    const workbook: XLSX.WorkBook = { Sheets: { 'Orders': worksheet }, SheetNames: ['Orders'] };
+    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+
+    // Auto width kolom
+    const wscols = Object.keys(exportData[0]).map(k => ({ wch: 30 }));
+    worksheet['!cols'] = wscols;
+    this.saveAsExcelFile(excelBuffer, `Orders_${startDateStr}_to_${endDateStr}`);
   }
+
+  private saveAsExcelFile(buffer: any, fileName: string): void {
+    const data: Blob = new Blob([buffer], { type: EXCEL_TYPE });
+    FileSaver.saveAs(data, `${fileName}_${new Date().getTime()}.xlsx`);
+  }
+
+
 
     // menu search text
     searchText: string = '';
 
 }
+
+
+const EXCEL_TYPE =
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';

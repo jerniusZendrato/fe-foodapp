@@ -44,6 +44,8 @@ export class UserAdminServiceService {
       })
     );
   }
+
+  
   deleteuser(id:string): Observable<any> {
     return this.http.delete(`${environment.API_URL}/users/me/${id}`);
   }
